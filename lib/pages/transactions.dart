@@ -110,48 +110,75 @@ class _TransactionsState extends State<Transactions> {
       expensesByCategory[category] = (expensesByCategory[category] ?? 0) + amount;
     }
 
-    // Get unique categories
-    Set<String> categories =
-        testData.map((e) => e['category'] as String).toSet();
-    categories.add('All Categories');
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, constraints) {
           final totalWidth = constraints.maxWidth;
-          final rightColumnWidth = 400.0; // Fixed width for the right column
-          final minLeftColumnWidth = 600.0; // Minimum width for the left column
-          final leftColumnWidth = (totalWidth - rightColumnWidth)
-              .clamp(minLeftColumnWidth, double.infinity);
+          final rightColumnWidth = 400.0;
+          final minLeftColumnWidth = 600.0;
 
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                width: leftColumnWidth,
-                constraints: BoxConstraints(minWidth: minLeftColumnWidth),
-                decoration: BoxDecoration(
-                  border: Border(
-                    right: BorderSide(color: Colors.grey[300]!, width: 1),
+          if (totalWidth >= minLeftColumnWidth + rightColumnWidth) {
+            // Wide layout
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(color: Colors.grey[300]!, width: 1),
+                      ),
+                    ),
+                    child: _buildTransactionList(
+                        groupedExpenses, sortedDates, false),
                   ),
                 ),
-                child: _buildTransactionList(groupedExpenses, sortedDates),
-              ),
-              Container(
-                width: rightColumnWidth,
-                child: SingleChildScrollView(
-                  child: _buildRightColumn(),
+                Container(
+                  width: rightColumnWidth,
+                  child: SingleChildScrollView(
+                    child: _buildRightColumn(),
+                  ),
                 ),
+              ],
+            );
+          } else {
+            // Narrow layout
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      return ConstrainedBox(
+                        constraints:
+                            BoxConstraints(maxHeight: constraints.maxHeight),
+                        child: _buildRightColumn(),
+                      );
+                    },
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.grey[300]!, width: 1),
+                      ),
+                    ),
+                    child: _buildTransactionList(
+                        groupedExpenses, sortedDates, true),
+                  ),
+                ],
               ),
-            ],
-          );
+            );
+          }
         },
       ),
     );
   }
 
-  Widget _buildTransactionList(Map<String, List<Map<String, dynamic>>> groupedExpenses, List<String> sortedDates) {
+  Widget _buildTransactionList(
+      Map<String, List<Map<String, dynamic>>> groupedExpenses,
+      List<String> sortedDates,
+      bool isNarrowLayout) {
     Set<String> categories =
         testData.map((e) => e['category'] as String).toSet();
     Set<String> persons = testData.map((e) => e['paidBy'] as String).toSet();
@@ -272,8 +299,11 @@ class _TransactionsState extends State<Transactions> {
             ],
           ),
         ),
-        Expanded(
+        Flexible(
+          fit: isNarrowLayout ? FlexFit.loose : FlexFit.tight,
           child: ListView.builder(
+            shrinkWrap: isNarrowLayout,
+            physics: isNarrowLayout ? NeverScrollableScrollPhysics() : null,
             itemCount: sortedDates.length,
             itemBuilder: (context, index) {
               String date = sortedDates[index];

@@ -69,13 +69,18 @@ class _TransactionsState extends State<Transactions> {
   ];
   Map<String, double> expensesByCategory = {};
   Set<String> selectedCategories = Set<String>();
+  Set<String> selectedPersons = Set<String>();
 
   List<Map<String, dynamic>> getFilteredExpenses() {
-    if (selectedCategories.isEmpty) {
+    if (selectedCategories.isEmpty && selectedPersons.isEmpty) {
       return testData;
     } else {
       return testData
-          .where((expense) => selectedCategories.contains(expense['category']))
+          .where((expense) =>
+              (selectedCategories.isEmpty ||
+                  selectedCategories.contains(expense['category'])) &&
+              (selectedPersons.isEmpty ||
+                  selectedPersons.contains(expense['paidBy'])))
           .toList();
     }
   }
@@ -112,26 +117,36 @@ class _TransactionsState extends State<Transactions> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  right: BorderSide(color: Colors.grey[300]!, width: 1),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final totalWidth = constraints.maxWidth;
+          final rightColumnWidth = 400.0; // Fixed width for the right column
+          final minLeftColumnWidth = 600.0; // Minimum width for the left column
+          final leftColumnWidth = (totalWidth - rightColumnWidth)
+              .clamp(minLeftColumnWidth, double.infinity);
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: leftColumnWidth,
+                constraints: BoxConstraints(minWidth: minLeftColumnWidth),
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(color: Colors.grey[300]!, width: 1),
+                  ),
+                ),
+                child: _buildTransactionList(groupedExpenses, sortedDates),
+              ),
+              Container(
+                width: rightColumnWidth,
+                child: SingleChildScrollView(
+                  child: _buildRightColumn(),
                 ),
               ),
-              child: _buildTransactionList(groupedExpenses, sortedDates),
-            ),
-          ),
-          Container(
-            width: 400,
-            child: SingleChildScrollView(
-              child: _buildRightColumn(),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
@@ -139,6 +154,7 @@ class _TransactionsState extends State<Transactions> {
   Widget _buildTransactionList(Map<String, List<Map<String, dynamic>>> groupedExpenses, List<String> sortedDates) {
     Set<String> categories =
         testData.map((e) => e['category'] as String).toSet();
+    Set<String> persons = testData.map((e) => e['paidBy'] as String).toSet();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,53 +166,108 @@ class _TransactionsState extends State<Transactions> {
             children: [
               Text('All Transactions',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              PopupMenuButton<String>(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        selectedCategories.isEmpty
-                            ? 'Filter'
-                            : selectedCategories.join(', '),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Icon(Icons.arrow_drop_down, color: Colors.white),
-                    ],
-                  ),
-                ),
-                itemBuilder: (BuildContext context) {
-                  return categories.map((String category) {
-                    return PopupMenuItem<String>(
-                      value: category,
-                      child: StatefulBuilder(
-                        builder: (BuildContext context, StateSetter setState) {
-                          return CheckboxListTile(
-                            title: Text(category),
-                            value: selectedCategories.contains(category),
-                            onChanged: (bool? value) {
-                              setState(() {
-                                if (value == true) {
-                                  selectedCategories.add(category);
-                                } else {
-                                  selectedCategories.remove(category);
-                                }
-                              });
-                              this.setState(() {}); // Update the main state
-                            },
+              ElevatedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext context) {
+                      return StatefulBuilder(
+                        builder:
+                            (BuildContext context, StateSetter setModalState) {
+                          return Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Filter by Category',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 20),
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  children: categories.map((String category) {
+                                    return FilterChip(
+                                      label: Text(category),
+                                      selected:
+                                          selectedCategories.contains(category),
+                                      onSelected: (bool selected) {
+                                        setModalState(() {
+                                          if (selected) {
+                                            selectedCategories.add(category);
+                                          } else {
+                                            selectedCategories.remove(category);
+                                          }
+                                        });
+                                        setState(
+                                            () {}); // Update the main state
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  'Filter by Person',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 20),
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  children: persons.map((String person) {
+                                    return FilterChip(
+                                      label: Text(person),
+                                      selected:
+                                          selectedPersons.contains(person),
+                                      onSelected: (bool selected) {
+                                        setModalState(() {
+                                          if (selected) {
+                                            selectedPersons.add(person);
+                                          } else {
+                                            selectedPersons.remove(person);
+                                          }
+                                        });
+                                        setState(
+                                            () {}); // Update the main state
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
                           );
                         },
-                      ),
-                    );
-                  }).toList();
+                      );
+                    },
+                  );
                 },
-                onSelected:
-                    (_) {}, // This is needed but we don't use the selection directly
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      selectedCategories.isEmpty && selectedPersons.isEmpty
+                          ? 'Filter'
+                          : '${selectedCategories.length + selectedPersons.length} selected',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(Icons.filter_list, color: Colors.white),
+                  ],
+                ),
               ),
             ],
           ),
@@ -207,11 +278,15 @@ class _TransactionsState extends State<Transactions> {
             itemBuilder: (context, index) {
               String date = sortedDates[index];
               List<Map<String, dynamic>> expenses = groupedExpenses[date]!;
-              
-              // Filter expenses based on selected categories
-              if (selectedCategories.isNotEmpty) {
+                
+              // Filter expenses based on selected categories and persons
+              if (selectedCategories.isNotEmpty || selectedPersons.isNotEmpty) {
                 expenses = expenses
-                    .where((e) => selectedCategories.contains(e['category']))
+                    .where((e) =>
+                        (selectedCategories.isEmpty ||
+                            selectedCategories.contains(e['category'])) &&
+                        (selectedPersons.isEmpty ||
+                            selectedPersons.contains(e['paidBy'])))
                     .toList();
               }
 
@@ -282,13 +357,13 @@ class _TransactionsState extends State<Transactions> {
     }
 
     // Calculate total amount
-    double totalAmount = amountByPerson.values.reduce((a, b) => a + b);
+    double totalAmount = amountByPerson.values.fold(0, (a, b) => a + b);
 
     // Prepare data for the pie chart
     List<PieChartSectionData> sections = amountByPerson.entries.map((entry) {
       String person = entry.key;
       double amount = entry.value;
-      double percentage = (amount / totalAmount) * 100;
+      double percentage = totalAmount > 0 ? (amount / totalAmount) * 100 : 0;
       Color color = Colors.primaries[amountByPerson.keys.toList().indexOf(person) % Colors.primaries.length];
 
       return PieChartSectionData(
@@ -312,13 +387,15 @@ class _TransactionsState extends State<Transactions> {
           Text('Spending by Person', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
           Expanded(
-            child: PieChart(
-              PieChartData(
-                sections: sections,
-                centerSpaceRadius: 40,
-                sectionsSpace: 0,
-              ),
-            ),
+            child: totalAmount > 0
+                ? PieChart(
+                    PieChartData(
+                      sections: sections,
+                      centerSpaceRadius: 40,
+                      sectionsSpace: 0,
+                    ),
+                  )
+                : Center(child: Text('No data available')),
           ),
           SizedBox(height: 20),
           ...amountByPerson.entries.map((entry) {
@@ -377,7 +454,8 @@ class _TransactionsState extends State<Transactions> {
         expensesByDayAndCategory[date]![category] = (expensesByDayAndCategory[date]![category] ?? 0) + amount;
         categories.add(category);
 
-        double dailyTotal = expensesByDayAndCategory[date]!.values.reduce((a, b) => a + b);
+        double dailyTotal =
+            expensesByDayAndCategory[date]!.values.fold(0, (a, b) => a + b);
         if (dailyTotal > maxDailyTotal) {
           maxDailyTotal = dailyTotal;
         }

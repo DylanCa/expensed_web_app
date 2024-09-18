@@ -101,13 +101,15 @@ class _TransactionsState extends State<Transactions> {
     }
 
     // Sort dates in descending order
-    List<String> sortedDates = groupedExpenses.keys.toList()..sort((a, b) => b.compareTo(a));
+    List<String> sortedDates = groupedExpenses.keys.toList()
+      ..sort((a, b) => b.compareTo(a));
 
     // Calculate total expenses by category
     for (var expense in testData) {
       String category = expense['category'];
       double amount = expense['amount'];
-      expensesByCategory[category] = (expensesByCategory[category] ?? 0) + amount;
+      expensesByCategory[category] =
+          (expensesByCategory[category] ?? 0) + amount;
     }
 
     return Scaffold(
@@ -137,7 +139,7 @@ class _TransactionsState extends State<Transactions> {
                 Container(
                   width: rightColumnWidth,
                   child: SingleChildScrollView(
-                    child: _buildRightColumn(),
+                    child: _buildRightColumn(false),
                   ),
                 ),
               ],
@@ -147,14 +149,9 @@ class _TransactionsState extends State<Transactions> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      return ConstrainedBox(
-                        constraints:
-                            BoxConstraints(maxHeight: constraints.maxHeight),
-                        child: _buildRightColumn(),
-                      );
-                    },
+                  Container(
+                    width: double.infinity,
+                    child: _buildRightColumn(true),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height,
@@ -308,7 +305,7 @@ class _TransactionsState extends State<Transactions> {
             itemBuilder: (context, index) {
               String date = sortedDates[index];
               List<Map<String, dynamic>> expenses = groupedExpenses[date]!;
-                
+
               // Filter expenses based on selected categories and persons
               if (selectedCategories.isNotEmpty || selectedPersons.isNotEmpty) {
                 expenses = expenses
@@ -356,28 +353,57 @@ class _TransactionsState extends State<Transactions> {
     );
   }
 
-  Widget _buildRightColumn() {
-    return Column(
-      children: [
-        Container(
-          height: 400,
-          child: _buildSpendingLimits(),
+  Widget _buildRightColumn(bool isNarrowLayout) {
+    if (isNarrowLayout) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Container(
+              constraints: BoxConstraints(minWidth: 400),
+              width: 450,
+              height: 450,
+              child: _buildSpendingLimits(),
+            ),
+            Container(
+              width: 1,
+              height: 450,
+              color: Colors.grey[300],
+            ),
+            Container(
+              constraints: BoxConstraints(minWidth: 400),
+              width: 450,
+              height: 450,
+              child: _buildExpenseLastWeek(),
+            ),
+          ],
         ),
-        Container(
-          height: 1,
-          color: Colors.grey[300],
-        ),
-        Container(
-          height: 450,
-          child: _buildExpenseLastWeek(),
-        ),
-      ],
-    );
+      );
+    } else {
+      return Column(
+        children: [
+          SizedBox(
+            height: 450,
+            width: 450,
+            child: _buildSpendingLimits(),
+          ),
+          Container(
+            height: 1,
+            color: Colors.grey[300],
+          ),
+          SizedBox(
+            height: 450,
+            width: 450,
+            child: _buildExpenseLastWeek(),
+          ),
+        ],
+      );
+    }
   }
 
   Widget _buildSpendingLimits() {
     List<Map<String, dynamic>> filteredExpenses = getFilteredExpenses();
-    
+
     // Calculate total amount paid by each person
     Map<String, double> amountByPerson = {};
     for (var expense in filteredExpenses) {
@@ -394,7 +420,9 @@ class _TransactionsState extends State<Transactions> {
       String person = entry.key;
       double amount = entry.value;
       double percentage = totalAmount > 0 ? (amount / totalAmount) * 100 : 0;
-      Color color = Colors.primaries[amountByPerson.keys.toList().indexOf(person) % Colors.primaries.length];
+      Color color = Colors.primaries[
+          amountByPerson.keys.toList().indexOf(person) %
+              Colors.primaries.length];
 
       return PieChartSectionData(
         color: color,
@@ -414,7 +442,8 @@ class _TransactionsState extends State<Transactions> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Spending by Person', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text('Spending by Person',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
           Expanded(
             child: totalAmount > 0
@@ -431,7 +460,9 @@ class _TransactionsState extends State<Transactions> {
           ...amountByPerson.entries.map((entry) {
             String person = entry.key;
             double amount = entry.value;
-            Color color = Colors.primaries[amountByPerson.keys.toList().indexOf(person) % Colors.primaries.length];
+            Color color = Colors.primaries[
+                amountByPerson.keys.toList().indexOf(person) %
+                    Colors.primaries.length];
             return Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
@@ -459,10 +490,13 @@ class _TransactionsState extends State<Transactions> {
 
   Widget _buildExpenseLastWeek() {
     List<Map<String, dynamic>> filteredExpenses = getFilteredExpenses();
-    
+
     // Get the last 7 days
     final now = DateTime.now();
-    final lastSevenDays = List.generate(7, (index) => DateTime(now.year, now.month, now.day).subtract(Duration(days: 6 - index)));
+    final lastSevenDays = List.generate(
+        7,
+        (index) => DateTime(now.year, now.month, now.day)
+            .subtract(Duration(days: 6 - index)));
 
     // Group expenses by day and category
     Map<DateTime, Map<String, double>> expensesByDayAndCategory = {};
@@ -475,13 +509,15 @@ class _TransactionsState extends State<Transactions> {
     double maxDailyTotal = 0;
 
     for (var expense in filteredExpenses) {
-      DateTime date = DateTime(expense['dateTime'].year, expense['dateTime'].month, expense['dateTime'].day);
+      DateTime date = DateTime(expense['dateTime'].year,
+          expense['dateTime'].month, expense['dateTime'].day);
       String category = expense['category'];
       double amount = expense['amount'];
 
       if (lastSevenDays.contains(date)) {
         expensesByDayAndCategory[date]!.putIfAbsent(category, () => 0);
-        expensesByDayAndCategory[date]![category] = (expensesByDayAndCategory[date]![category] ?? 0) + amount;
+        expensesByDayAndCategory[date]![category] =
+            (expensesByDayAndCategory[date]![category] ?? 0) + amount;
         categories.add(category);
 
         double dailyTotal =
@@ -548,7 +584,8 @@ class _TransactionsState extends State<Transactions> {
     for (var day in lastSevenDays) {
       for (var category in sortedCategories) {
         double amount = expensesByDayAndCategory[day]![category] ?? 0;
-        weeklyTotalByCategory[category] = (weeklyTotalByCategory[category] ?? 0) + amount;
+        weeklyTotalByCategory[category] =
+            (weeklyTotalByCategory[category] ?? 0) + amount;
       }
     }
 
@@ -557,7 +594,8 @@ class _TransactionsState extends State<Transactions> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Expense Last Week', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text('Expense Last Week',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
           Container(
             height: 200,
@@ -576,13 +614,16 @@ class _TransactionsState extends State<Transactions> {
                             getTitlesWidget: (value, meta) {
                               return Text(
                                 '\$${value.toInt()}',
-                                style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.grey[600]),
                               );
                             },
                           ),
                         ),
-                        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                        rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
                         bottomTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
@@ -592,8 +633,10 @@ class _TransactionsState extends State<Transactions> {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
-                                    DateFormat('E d').format(lastSevenDays[index]),
-                                    style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                                    DateFormat('E d')
+                                        .format(lastSevenDays[index]),
+                                    style: TextStyle(
+                                        fontSize: 10, color: Colors.grey[600]),
                                   ),
                                 );
                               }
@@ -609,13 +652,18 @@ class _TransactionsState extends State<Transactions> {
                           tooltipBgColor: Colors.blueGrey,
                           getTooltipItem: (group, groupIndex, rod, rodIndex) {
                             DateTime date = lastSevenDays[groupIndex];
-                            Map<String, double> dayExpenses = expensesByDayAndCategory[date]!;
-                            
-                            double totalAmount = dayExpenses.values.fold(0, (sum, amount) => sum + amount);
-                            
+                            Map<String, double> dayExpenses =
+                                expensesByDayAndCategory[date]!;
+
+                            double totalAmount = dayExpenses.values
+                                .fold(0, (sum, amount) => sum + amount);
+
                             return BarTooltipItem(
                               '\$${totalAmount.toStringAsFixed(2)}',
-                              TextStyle(color: Colors.yellow, fontSize: 16, fontWeight: FontWeight.w500),
+                              TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
                             );
                           },
                         ),
@@ -641,7 +689,8 @@ class _TransactionsState extends State<Transactions> {
                 children: sortedCategories.asMap().entries.map((entry) {
                   int index = entry.key;
                   String category = entry.value;
-                  Color color = Colors.primaries[index % Colors.primaries.length];
+                  Color color =
+                      Colors.primaries[index % Colors.primaries.length];
                   double totalAmount = weeklyTotalByCategory[category] ?? 0;
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
@@ -672,5 +721,3 @@ class _TransactionsState extends State<Transactions> {
     );
   }
 }
-
-

@@ -40,20 +40,20 @@ class Expense extends StatelessWidget {
             SizedBox(width: 16),
             // Shop name, date, and location
             Expanded(
-              flex: 7,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     shopName,
                     style: Theme.of(context).textTheme.titleMedium,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 2),
                   Text(
                     DateFormat('h:mm a').format(dateTime),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 2),
                   Text(
                     "Paid by $paidBy",
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
@@ -62,23 +62,26 @@ class Expense extends StatelessWidget {
               ),
             ),
             // Category
-            Expanded(
-              flex: 2,
+            Container(
+              width: 100,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.local_dining, size: 16, color: Colors.grey[600]),
                   SizedBox(width: 4),
-                  Text(
-                    category,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  Flexible(
+                    child: Text(
+                      category,
+                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
             ),
             // Price
-            Expanded(
-              flex: 1,
+            Container(
+              width: 80,
               child: Text(
                 "-\$${amount.toStringAsFixed(2)}",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(

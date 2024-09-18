@@ -57,7 +57,7 @@ class Transactions extends StatelessWidget {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 450,
+                              height: 300,
                               child: SpendingByPerson(
                                 filteredExpenses: filteredExpenses,
                               ),
@@ -104,7 +104,7 @@ class Transactions extends StatelessWidget {
                               ),
                               Container(
                                 constraints: BoxConstraints(minWidth: 400),
-                                width: 450,
+                                width: 300,
                                 height: 450,
                                 child: ExpenseLastWeek(
                                   filteredExpenses: filteredExpenses,

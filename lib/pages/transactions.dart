@@ -194,7 +194,22 @@ class Transactions extends StatelessWidget {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Start Date',
-                            suffixIcon: Icon(Icons.calendar_today),
+                            suffixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (expenseProvider.startDate != null)
+                                  IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {
+                                      setState(() {
+                                        expenseProvider.setDateRange(
+                                            null, expenseProvider.endDate);
+                                      });
+                                    },
+                                  ),
+                                Icon(Icons.calendar_today),
+                              ],
+                            ),
                           ),
                           readOnly: true,
                           controller: TextEditingController(
@@ -212,8 +227,10 @@ class Transactions extends StatelessWidget {
                               lastDate: DateTime.now(),
                             );
                             if (pickedDate != null) {
-                              expenseProvider.setDateRange(
-                                  pickedDate, expenseProvider.endDate);
+                              setState(() {
+                                expenseProvider.setDateRange(
+                                    pickedDate, expenseProvider.endDate);
+                              });
                             }
                           },
                         ),
@@ -223,7 +240,22 @@ class Transactions extends StatelessWidget {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'End Date',
-                            suffixIcon: Icon(Icons.calendar_today),
+                            suffixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (expenseProvider.endDate != null)
+                                  IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {
+                                      setState(() {
+                                        expenseProvider.setDateRange(
+                                            expenseProvider.startDate, null);
+                                      });
+                                    },
+                                  ),
+                                Icon(Icons.calendar_today),
+                              ],
+                            ),
                           ),
                           readOnly: true,
                           controller: TextEditingController(
@@ -241,8 +273,10 @@ class Transactions extends StatelessWidget {
                               lastDate: DateTime.now(),
                             );
                             if (pickedDate != null) {
-                              expenseProvider.setDateRange(
-                                  expenseProvider.startDate, pickedDate);
+                              setState(() {
+                                expenseProvider.setDateRange(
+                                    expenseProvider.startDate, pickedDate);
+                              });
                             }
                           },
                         ),

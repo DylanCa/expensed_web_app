@@ -48,6 +48,12 @@ class Transactions extends StatelessWidget {
                           onSearch: expenseProvider.setSearchQuery,
                           showFilterBottomSheet: () =>
                               _showFilterBottomSheet(context, expenseProvider),
+                          selectedCategories:
+                              expenseProvider.selectedCategories,
+                          selectedPersons: expenseProvider.selectedPersons,
+                          startDate: expenseProvider.startDate,
+                          endDate: expenseProvider.endDate,
+                          searchQuery: expenseProvider.searchQuery,
                         ),
                       ),
                     ),
@@ -126,6 +132,12 @@ class Transactions extends StatelessWidget {
                           onSearch: expenseProvider.setSearchQuery,
                           showFilterBottomSheet: () =>
                               _showFilterBottomSheet(context, expenseProvider),
+                          selectedCategories:
+                              expenseProvider.selectedCategories,
+                          selectedPersons: expenseProvider.selectedPersons,
+                          startDate: expenseProvider.startDate,
+                          endDate: expenseProvider.endDate,
+                          searchQuery: expenseProvider.searchQuery,
                         ),
                       ),
                     ],

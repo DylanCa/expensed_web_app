@@ -7,12 +7,22 @@ class TransactionList extends StatelessWidget {
   final List<Expense> expenses;
   final Function(String) onSearch;
   final Function showFilterBottomSheet;
+  final Set<String> selectedCategories;
+  final Set<String> selectedPersons;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final String searchQuery;
 
   const TransactionList({
     Key? key,
     required this.expenses,
     required this.onSearch,
     required this.showFilterBottomSheet,
+    required this.selectedCategories,
+    required this.selectedPersons,
+    required this.startDate,
+    required this.endDate,
+    required this.searchQuery,
   }) : super(key: key);
 
   @override
@@ -54,7 +64,7 @@ class TransactionList extends StatelessWidget {
               SizedBox(width: 16),
               Container(
                 height: 36,
-                width: 120,
+                width: 150,
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Search...',
@@ -69,22 +79,19 @@ class TransactionList extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 16),
-              ElevatedButton(
+              ElevatedButton.icon(
                 onPressed: () => showFilterBottomSheet(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: _isFilterActive()
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).primaryColor.withAlpha(25),
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                  minimumSize: Size(120, 36),
+                  minimumSize: Size(100, 42),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Filter'),
-                    SizedBox(width: 8),
-                    Icon(Icons.filter_list, size: 20),
-                  ],
-                ),
+                icon: Icon(Icons.filter_list_outlined,
+                    size: 20, color: Colors.white),
+                label: Text(_getFilterButtonText()),
               ),
             ],
           ),
@@ -124,5 +131,17 @@ class TransactionList extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _getFilterButtonText() {
+    return _isFilterActive() ? 'Filters applied' : 'Filter';
+  }
+
+  bool _isFilterActive() {
+    return startDate != null ||
+        endDate != null ||
+        selectedCategories.isNotEmpty ||
+        selectedPersons.isNotEmpty ||
+        searchQuery.isNotEmpty;
   }
 }

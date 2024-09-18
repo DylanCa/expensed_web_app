@@ -68,7 +68,17 @@ class _TransactionsState extends State<Transactions> {
     },
   ];
   Map<String, double> expensesByCategory = {};
-  String selectedFilter = 'All';
+  Set<String> selectedCategories = Set<String>();
+
+  List<Map<String, dynamic>> getFilteredExpenses() {
+    if (selectedCategories.isEmpty) {
+      return testData;
+    } else {
+      return testData
+          .where((expense) => selectedCategories.contains(expense['category']))
+          .toList();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +105,11 @@ class _TransactionsState extends State<Transactions> {
       expensesByCategory[category] = (expensesByCategory[category] ?? 0) + amount;
     }
 
+    // Get unique categories
+    Set<String> categories =
+        testData.map((e) => e['category'] as String).toSet();
+    categories.add('All Categories');
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Row(
@@ -111,7 +126,7 @@ class _TransactionsState extends State<Transactions> {
             ),
           ),
           Container(
-            width: 400, // Fixed width for the right column
+            width: 400,
             child: SingleChildScrollView(
               child: _buildRightColumn(),
             ),
@@ -122,29 +137,66 @@ class _TransactionsState extends State<Transactions> {
   }
 
   Widget _buildTransactionList(Map<String, List<Map<String, dynamic>>> groupedExpenses, List<String> sortedDates) {
-    int expenseIndex = 0;
+    Set<String> categories =
+        testData.map((e) => e['category'] as String).toSet();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        Container(
           padding: EdgeInsets.all(20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('All Transactions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              DropdownButton<String>(
-                value: selectedFilter,
-                items: ['All', 'Income', 'Expense'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedFilter = newValue!;
-                  });
+              Text('All Transactions',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              PopupMenuButton<String>(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        selectedCategories.isEmpty
+                            ? 'Filter'
+                            : selectedCategories.join(', '),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Icon(Icons.arrow_drop_down, color: Colors.white),
+                    ],
+                  ),
+                ),
+                itemBuilder: (BuildContext context) {
+                  return categories.map((String category) {
+                    return PopupMenuItem<String>(
+                      value: category,
+                      child: StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) {
+                          return CheckboxListTile(
+                            title: Text(category),
+                            value: selectedCategories.contains(category),
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (value == true) {
+                                  selectedCategories.add(category);
+                                } else {
+                                  selectedCategories.remove(category);
+                                }
+                              });
+                              this.setState(() {}); // Update the main state
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }).toList();
                 },
+                onSelected:
+                    (_) {}, // This is needed but we don't use the selection directly
               ),
             ],
           ),
@@ -155,21 +207,33 @@ class _TransactionsState extends State<Transactions> {
             itemBuilder: (context, index) {
               String date = sortedDates[index];
               List<Map<String, dynamic>> expenses = groupedExpenses[date]!;
+              
+              // Filter expenses based on selected categories
+              if (selectedCategories.isNotEmpty) {
+                expenses = expenses
+                    .where((e) => selectedCategories.contains(e['category']))
+                    .toList();
+              }
+
+              if (expenses.isEmpty) {
+                return SizedBox.shrink();
+              }
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     child: Text(
                       DateFormat('MMMM d, yyyy').format(DateTime.parse(date)),
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                   ...expenses.map((expense) {
-                    Color backgroundColor = expenseIndex % 2 == 0 ? Colors.white : Color(0xFFF7F9FC);
-                    expenseIndex++;
                     return Expense(
-                      backgroundColor: backgroundColor,
+                      backgroundColor: Colors.white,
                       dateTime: expense['dateTime'],
                       shopName: expense['shopName'],
                       category: expense['category'],
@@ -191,7 +255,7 @@ class _TransactionsState extends State<Transactions> {
     return Column(
       children: [
         Container(
-          height: 400, // Fixed height for Spending by Person
+          height: 400,
           child: _buildSpendingLimits(),
         ),
         Container(
@@ -199,7 +263,7 @@ class _TransactionsState extends State<Transactions> {
           color: Colors.grey[300],
         ),
         Container(
-          height: 450, // Increased height for Expense Last Week
+          height: 450,
           child: _buildExpenseLastWeek(),
         ),
       ],
@@ -207,9 +271,11 @@ class _TransactionsState extends State<Transactions> {
   }
 
   Widget _buildSpendingLimits() {
+    List<Map<String, dynamic>> filteredExpenses = getFilteredExpenses();
+    
     // Calculate total amount paid by each person
     Map<String, double> amountByPerson = {};
-    for (var expense in testData) {
+    for (var expense in filteredExpenses) {
       String paidBy = expense['paidBy'];
       double amount = expense['amount'];
       amountByPerson[paidBy] = (amountByPerson[paidBy] ?? 0) + amount;
@@ -266,7 +332,10 @@ class _TransactionsState extends State<Transactions> {
                   Container(
                     width: 12,
                     height: 12,
-                    color: color,
+                    decoration: BoxDecoration(
+                      color: color,
+                      shape: BoxShape.circle,
+                    ),
                   ),
                   SizedBox(width: 8),
                   Text(person),
@@ -282,6 +351,8 @@ class _TransactionsState extends State<Transactions> {
   }
 
   Widget _buildExpenseLastWeek() {
+    List<Map<String, dynamic>> filteredExpenses = getFilteredExpenses();
+    
     // Get the last 7 days
     final now = DateTime.now();
     final lastSevenDays = List.generate(7, (index) => DateTime(now.year, now.month, now.day).subtract(Duration(days: 6 - index)));
@@ -294,9 +365,9 @@ class _TransactionsState extends State<Transactions> {
       expensesByDayAndCategory[day] = {};
     }
 
-    double maxDailyTotal = 0;  // Track the maximum daily total
+    double maxDailyTotal = 0;
 
-    for (var expense in testData) {
+    for (var expense in filteredExpenses) {
       DateTime date = DateTime(expense['dateTime'].year, expense['dateTime'].month, expense['dateTime'].day);
       String category = expense['category'];
       double amount = expense['amount'];
@@ -306,7 +377,6 @@ class _TransactionsState extends State<Transactions> {
         expensesByDayAndCategory[date]![category] = (expensesByDayAndCategory[date]![category] ?? 0) + amount;
         categories.add(category);
 
-        // Update maxDailyTotal if necessary
         double dailyTotal = expensesByDayAndCategory[date]!.values.reduce((a, b) => a + b);
         if (dailyTotal > maxDailyTotal) {
           maxDailyTotal = dailyTotal;
@@ -382,7 +452,7 @@ class _TransactionsState extends State<Transactions> {
           Text('Expense Last Week', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
           Container(
-            height: 200, // Set the graph height to 200px
+            height: 200,
             child: barGroups.isEmpty
                 ? Center(child: Text('No data available for the last 7 days'))
                 : BarChart(
@@ -424,8 +494,8 @@ class _TransactionsState extends State<Transactions> {
                           ),
                         ),
                       ),
-                      gridData: FlGridData(show: false), // Hide grid lines
-                      borderData: FlBorderData(show: false), // Hide border
+                      gridData: FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
                       barTouchData: BarTouchData(
                         touchTooltipData: BarTouchTooltipData(
                           tooltipBgColor: Colors.blueGrey,
@@ -494,3 +564,5 @@ class _TransactionsState extends State<Transactions> {
     );
   }
 }
+
+

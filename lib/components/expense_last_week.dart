@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:expensed_web_app/models/expense.dart';
 
 class ExpenseLastWeek extends StatelessWidget {
-  final List<Map<String, dynamic>> filteredExpenses;
+  final List<Expense> filteredExpenses;
 
   const ExpenseLastWeek({Key? key, required this.filteredExpenses})
       : super(key: key);
@@ -28,10 +29,10 @@ class ExpenseLastWeek extends StatelessWidget {
     double maxDailyTotal = 0;
 
     for (var expense in filteredExpenses) {
-      DateTime date = DateTime(expense['dateTime'].year,
-          expense['dateTime'].month, expense['dateTime'].day);
-      String category = expense['category'];
-      double amount = expense['amount'];
+      DateTime date = DateTime(
+          expense.dateTime.year, expense.dateTime.month, expense.dateTime.day);
+      String category = expense.category;
+      double amount = expense.amount;
 
       if (lastSevenDays.contains(date)) {
         expensesByDayAndCategory[date]!.putIfAbsent(category, () => 0);

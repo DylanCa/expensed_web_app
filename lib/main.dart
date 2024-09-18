@@ -1,51 +1,39 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'pages/homepage.dart';
+import 'package:expensed_web_app/providers/expense_provider.dart';
+import 'package:expensed_web_app/pages/homepage.dart';
+import 'package:expensed_web_app/pages/transactions.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ExpenseProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-          scaffoldBackgroundColor: Colors.white, // Set default scaffold background color to white
+    return MaterialApp(
+      title: 'Expense Tracker',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: TextTheme(
+          displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(fontSize: 16),
+          bodyMedium: TextStyle(fontSize: 14),
         ),
-        home: Homepage(),
       ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Homepage(),
+        '/transactions': (context) => Transactions(),
+      },
     );
-  }
-}
-
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-
-    notifyListeners();
   }
 }
 

@@ -1,5 +1,4 @@
 import 'package:expensed_web_app/pages/transactions.dart';
-import 'package:expensed_web_app/pages/wordpair.dart';
 import 'package:flutter/material.dart';
 
 import 'dashboard.dart';
@@ -38,9 +37,6 @@ class _HomepageState extends State<Homepage> {
       case 0:
         page = Transactions();
         currentPageName = 'Transactions';
-      case 2:
-        page = MyHomePage();
-        currentPageName = 'My Household';
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }

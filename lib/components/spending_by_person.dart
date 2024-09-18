@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:expensed_web_app/models/expense.dart';
 
 class SpendingByPerson extends StatelessWidget {
-  final List<Map<String, dynamic>> filteredExpenses;
+  final List<Expense> filteredExpenses;
 
   const SpendingByPerson({Key? key, required this.filteredExpenses})
       : super(key: key);
@@ -12,8 +13,8 @@ class SpendingByPerson extends StatelessWidget {
     // Calculate total amount paid by each person
     Map<String, double> amountByPerson = {};
     for (var expense in filteredExpenses) {
-      String paidBy = expense['paidBy'];
-      double amount = expense['amount'];
+      String paidBy = expense.paidBy;
+      double amount = expense.amount;
       amountByPerson[paidBy] = (amountByPerson[paidBy] ?? 0) + amount;
     }
 

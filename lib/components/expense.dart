@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:expensed_web_app/models/expense.dart';
 
-class Expense extends StatelessWidget {
+class ExpenseWidget extends StatelessWidget {
   final Color backgroundColor;
-  final DateTime dateTime;
-  final String shopName;
-  final String category;
-  final double amount;
-  final String paidBy;
+  final Expense expense;
 
-  const Expense({
+  const ExpenseWidget({
     Key? key,
     required this.backgroundColor,
-    required this.dateTime,
-    required this.shopName,
-    required this.category,
-    required this.amount,
-    required this.paidBy,
+    required this.expense,
   }) : super(key: key);
 
   @override
@@ -44,18 +37,18 @@ class Expense extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    shopName,
+                    expense.shopName,
                     style: Theme.of(context).textTheme.titleMedium,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 2),
                   Text(
-                    DateFormat('h:mm a').format(dateTime),
+                    DateFormat('h:mm a').format(expense.dateTime),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 2),
                   Text(
-                    "Paid by $paidBy",
+                    "Paid by ${expense.paidBy}",
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ],
@@ -71,7 +64,7 @@ class Expense extends StatelessWidget {
                   SizedBox(width: 4),
                   Flexible(
                     child: Text(
-                      category,
+                      expense.category,
                       style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -83,7 +76,7 @@ class Expense extends StatelessWidget {
             Container(
               width: 80,
               child: Text(
-                "-\$${amount.toStringAsFixed(2)}",
+                expense.formattedAmount,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.red,

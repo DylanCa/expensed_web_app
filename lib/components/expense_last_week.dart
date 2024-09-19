@@ -80,12 +80,14 @@ class ExpenseLastWeek extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Expense Last Week',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 20),
           SizedBox(
             height: 200,
             child: barGroups.isEmpty
-                ? Center(child: Text('No data available for the last 7 days'))
+                ? Center(
+                    child: Text('No data available for the last 7 days',
+                        style: Theme.of(context).textTheme.bodyMedium))
                 : BarChart(
                     BarChartData(
                       alignment: BarChartAlignment.spaceAround,
@@ -169,6 +171,7 @@ class ExpenseLastWeek extends StatelessWidget {
                   children: [
                     Expanded(
                       child: _buildLegendItem(
+                        context,
                         sortedCategories[i],
                         expensesByCategory[sortedCategories[i]] ?? 0,
                       ),
@@ -177,6 +180,7 @@ class ExpenseLastWeek extends StatelessWidget {
                     Expanded(
                       child: i + 1 < sortedCategories.length
                           ? _buildLegendItem(
+                              context,
                               sortedCategories[i + 1],
                               expensesByCategory[sortedCategories[i + 1]] ?? 0,
                             )
@@ -191,7 +195,8 @@ class ExpenseLastWeek extends StatelessWidget {
     );
   }
 
-  Widget _buildLegendItem(Category category, double totalAmount) {
+Widget _buildLegendItem(
+      BuildContext context, Category category, double totalAmount) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -207,14 +212,16 @@ class ExpenseLastWeek extends StatelessWidget {
         Expanded(
           child: Text(
             category.name,
-            style: TextStyle(fontSize: 12),
+            style: Theme.of(context).textTheme.bodySmall,
             overflow: TextOverflow.ellipsis,
           ),
         ),
         SizedBox(width: 4),
         Text(
           '\$${totalAmount.toStringAsFixed(2)}',
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
         ),
       ],
     );

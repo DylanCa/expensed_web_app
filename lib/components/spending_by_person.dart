@@ -58,7 +58,7 @@ class _SpendingByPersonState extends State<SpendingByPerson> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Spending by Person',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 20),
           SizedBox(
             height: 200,
@@ -84,7 +84,9 @@ class _SpendingByPersonState extends State<SpendingByPerson> {
                       ),
                     ),
                   )
-                : Center(child: Text('No data available')),
+                : Center(
+                    child: Text('No data available',
+                        style: Theme.of(context).textTheme.bodyMedium)),
           ),
         ],
       ),

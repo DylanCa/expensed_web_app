@@ -80,12 +80,14 @@ class SpendingPerCategory extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Spending per Category',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 20),
           SizedBox(
             height: 200,
             child: barGroups.isEmpty
-                ? Center(child: Text('No data available for the last 7 days'))
+                ? Center(
+                    child: Text('No data available for the last 7 days',
+                        style: Theme.of(context).textTheme.bodyMedium))
                 : BarChart(
                     BarChartData(
                       alignment: BarChartAlignment.spaceAround,

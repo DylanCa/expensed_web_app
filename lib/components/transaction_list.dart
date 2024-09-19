@@ -6,6 +6,7 @@ import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:expensed_web_app/components/filter_bottom_sheet.dart';
 
 class TransactionList extends StatefulWidget {
   final List<Expense> expenses;
@@ -16,6 +17,7 @@ class TransactionList extends StatefulWidget {
   final DateTime? startDate;
   final DateTime? endDate;
   final String searchQuery;
+  final ExpenseProvider expenseProvider;
 
   const TransactionList({
     Key? key,
@@ -27,6 +29,7 @@ class TransactionList extends StatefulWidget {
     this.startDate,
     this.endDate,
     required this.searchQuery,
+    required this.expenseProvider,
   }) : super(key: key);
 
   @override
@@ -177,7 +180,7 @@ class _TransactionListState extends State<TransactionList> {
 
   Widget _buildFilterButton(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () => widget.showFilterBottomSheet(),
+      onPressed: () => showFilterBottomSheet(context, widget.expenseProvider),
       style: ElevatedButton.styleFrom(
         backgroundColor: _isFilterActive()
             ? Colors.blue : Colors.blue.withOpacity(0.5),

@@ -8,27 +8,10 @@ import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
+import 'package:expensed_web_app/utils/ui_utils.dart';
+import 'package:expensed_web_app/components/filter_bottom_sheet.dart';
 
 class Transactions extends StatelessWidget {
-  Widget _buildElevatedContainer(Widget child) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: child,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseProvider>(
@@ -59,19 +42,19 @@ class Transactions extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: _buildElevatedContainer(
+                      child: buildElevatedContainer(
                         TransactionList(
                           expenses: filteredExpenses,
                           onSearch: expenseProvider.setSearchQuery,
                           showFilterBottomSheet: () =>
-                              _showFilterBottomSheet(context, expenseProvider),
+                              showFilterBottomSheet(context, expenseProvider),
                           selectedCategories:
                               expenseProvider.selectedCategories,
                           selectedPersons: expenseProvider.selectedPersons,
                           startDate: expenseProvider.startDate,
                           endDate: expenseProvider.endDate,
                           searchQuery: expenseProvider.searchQuery,
-                          // Remove this line: sectionSpacing: 16,
+                          expenseProvider: expenseProvider, // Add this line
                         ),
                       ),
                     ),
@@ -80,16 +63,15 @@ class Transactions extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            _buildElevatedContainer(
+                            buildElevatedContainer(
                               SizedBox(
-                                height:
-                                    400, // Reduced height for Spending By Person
+                                height: 400,
                                 child: SpendingByPerson(
                                   filteredExpenses: filteredExpenses,
                                 ),
                               ),
                             ),
-                            _buildElevatedContainer(
+                            buildElevatedContainer(
                               SizedBox(
                                 height: 450,
                                 child: ExpenseLastWeek(
@@ -114,7 +96,7 @@ class Transactions extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              _buildElevatedContainer(
+                              buildElevatedContainer(
                                 Container(
                                   constraints: BoxConstraints(minWidth: 400),
                                   width: 450,
@@ -124,7 +106,7 @@ class Transactions extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              _buildElevatedContainer(
+                              buildElevatedContainer(
                                 Container(
                                   constraints: BoxConstraints(minWidth: 400),
                                   width: 450,
@@ -138,21 +120,21 @@ class Transactions extends StatelessWidget {
                           ),
                         ),
                       ),
-                      _buildElevatedContainer(
+                      buildElevatedContainer(
                         SizedBox(
                           height: MediaQuery.of(context).size.height,
                           child: TransactionList(
                             expenses: filteredExpenses,
                             onSearch: expenseProvider.setSearchQuery,
-                            showFilterBottomSheet: () => _showFilterBottomSheet(
-                                context, expenseProvider),
+                            showFilterBottomSheet: () =>
+                                showFilterBottomSheet(context, expenseProvider),
                             selectedCategories:
                                 expenseProvider.selectedCategories,
                             selectedPersons: expenseProvider.selectedPersons,
                             startDate: expenseProvider.startDate,
                             endDate: expenseProvider.endDate,
                             searchQuery: expenseProvider.searchQuery,
-                            // Remove this line: sectionSpacing: 16,
+                            expenseProvider: expenseProvider, // Add this line
                           ),
                         ),
                       ),
@@ -162,205 +144,6 @@ class Transactions extends StatelessWidget {
               }
             },
           ),
-        );
-      },
-    );
-  }
-
-  void _showFilterBottomSheet(
-      BuildContext context, ExpenseProvider expenseProvider) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              padding: EdgeInsets.all(20),
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Filters',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          expenseProvider.clearFilters();
-                          Navigator.pop(context);
-                        },
-                        child: Text('Clear All Filters'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Filter by Date',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Start Date',
-                            suffixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (expenseProvider.startDate != null)
-                                  IconButton(
-                                    icon: Icon(Icons.clear),
-                                    onPressed: () {
-                                      setState(() {
-                                        expenseProvider.setDateRange(
-                                            null, expenseProvider.endDate);
-                                      });
-                                    },
-                                  ),
-                                Icon(Icons.calendar_today),
-                              ],
-                            ),
-                          ),
-                          readOnly: true,
-                          controller: TextEditingController(
-                            text: expenseProvider.startDate != null
-                                ? DateFormat('MM/dd/yyyy')
-                                    .format(expenseProvider.startDate!)
-                                : '',
-                          ),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate:
-                                  expenseProvider.startDate ?? DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime.now(),
-                            );
-                            if (pickedDate != null) {
-                              setState(() {
-                                expenseProvider.setDateRange(
-                                    pickedDate, expenseProvider.endDate);
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'End Date',
-                            suffixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (expenseProvider.endDate != null)
-                                  IconButton(
-                                    icon: Icon(Icons.clear),
-                                    onPressed: () {
-                                      setState(() {
-                                        expenseProvider.setDateRange(
-                                            expenseProvider.startDate, null);
-                                      });
-                                    },
-                                  ),
-                                Icon(Icons.calendar_today),
-                              ],
-                            ),
-                          ),
-                          readOnly: true,
-                          controller: TextEditingController(
-                            text: expenseProvider.endDate != null
-                                ? DateFormat('MM/dd/yyyy')
-                                    .format(expenseProvider.endDate!)
-                                : '',
-                          ),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate:
-                                  expenseProvider.endDate ?? DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime.now(),
-                            );
-                            if (pickedDate != null) {
-                              setState(() {
-                                expenseProvider.setDateRange(
-                                    expenseProvider.startDate, pickedDate);
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Filter by Category',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children:
-                        expenseProvider.categories.map((Category category) {
-                      return FilterChip(
-                        label: Text(category.name),
-                        selected: expenseProvider.selectedCategories
-                            .contains(category),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            if (selected) {
-                              expenseProvider.selectedCategories.add(category);
-                            } else {
-                              expenseProvider.selectedCategories
-                                  .remove(category);
-                            }
-                            expenseProvider.setSelectedCategories(
-                                expenseProvider.selectedCategories);
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Filter by Person',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: expenseProvider.persons.map((Person person) {
-                      return FilterChip(
-                        label: Text(person.name),
-                        selected:
-                            expenseProvider.selectedPersons.contains(person),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            if (selected) {
-                              expenseProvider.selectedPersons.add(person);
-                            } else {
-                              expenseProvider.selectedPersons.remove(person);
-                            }
-                            expenseProvider.setSelectedPersons(
-                                expenseProvider.selectedPersons);
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            );
-          },
         );
       },
     );

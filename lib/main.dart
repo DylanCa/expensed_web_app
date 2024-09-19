@@ -5,6 +5,7 @@ import 'package:expensed_web_app/pages/homepage.dart';
 import 'package:expensed_web_app/pages/transactions.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // Add this line
   runApp(
     MultiProvider(
       providers: [
@@ -34,9 +35,8 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 14),
         ),
       ),
-      initialRoute: '/',
+      home: Homepage(), // Change this line
       routes: {
-        '/': (context) => Homepage(),
         '/transactions': (context) => Transactions(),
       },
     );

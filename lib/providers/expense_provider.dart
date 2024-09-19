@@ -125,7 +125,18 @@ class ExpenseProvider with ChangeNotifier {
   Future<void> addExpense(Expense expense) async {
     try {
       await _repository.addExpense(expense);
-      _expenses.add(expense);
+      
+      // Find the correct position to insert the new expense
+      int insertIndex =
+          _expenses.indexWhere((e) => e.dateTime.isBefore(expense.dateTime));
+      if (insertIndex == -1) {
+        // If no earlier date is found, add to the end of the list
+        _expenses.add(expense);
+      } else {
+        // Insert the new expense at the correct position
+        _expenses.insert(insertIndex, expense);
+      }
+      
       notifyListeners();
     } catch (e) {
       _error = "Failed to add expense: $e";

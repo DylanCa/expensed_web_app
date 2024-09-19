@@ -88,7 +88,7 @@ class SpendingByPerson extends StatelessWidget {
                               SizedBox(width: 8),
                               Expanded(
                                 child: Text(
-                                  '$person (\$${amount.toStringAsFixed(2)})',
+                                  '${person.name} (\$${amount.toStringAsFixed(2)})',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

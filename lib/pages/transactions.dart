@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:expensed_web_app/components/transaction_list.dart';
 import 'package:expensed_web_app/components/spending_by_person.dart';
-import 'package:expensed_web_app/components/expense_last_week.dart';
+import 'package:expensed_web_app/components/spending_per_category.dart';
 import 'package:expensed_web_app/components/expense_summary.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/models/expense.dart';
@@ -105,7 +105,7 @@ class Transactions extends StatelessWidget {
                                   Container(
                                     constraints: BoxConstraints(minWidth: 400),
                                     width: 450,
-                                    height: 450,
+                                    height: 300, // Reduced height
                                     child: SpendingByPerson(
                                       filteredExpenses: filteredExpenses,
                                     ),
@@ -115,8 +115,8 @@ class Transactions extends StatelessWidget {
                                   Container(
                                     constraints: BoxConstraints(minWidth: 400),
                                     width: 450,
-                                    height: 450,
-                                    child: ExpenseLastWeek(
+                                    height: 300, // Reduced height
+                                    child: SpendingPerCategory(
                                       filteredExpenses: filteredExpenses,
                                     ),
                                   ),
@@ -172,7 +172,7 @@ class Transactions extends StatelessWidget {
                                       constraints:
                                           BoxConstraints(minWidth: 400),
                                       width: 450,
-                                      height: 450,
+                                      height: 300, // Reduced height
                                       child: SpendingByPerson(
                                         filteredExpenses: filteredExpenses,
                                       ),
@@ -183,8 +183,8 @@ class Transactions extends StatelessWidget {
                                       constraints:
                                           BoxConstraints(minWidth: 400),
                                       width: 450,
-                                      height: 450,
-                                      child: ExpenseLastWeek(
+                                      height: 300, // Reduced height
+                                      child: SpendingPerCategory(
                                         filteredExpenses: filteredExpenses,
                                       ),
                                     ),

@@ -3,16 +3,23 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/person.dart';
 
-class SpendingByPerson extends StatelessWidget {
+class SpendingByPerson extends StatefulWidget {
   final List<Expense> filteredExpenses;
 
   const SpendingByPerson({super.key, required this.filteredExpenses});
 
   @override
+  _SpendingByPersonState createState() => _SpendingByPersonState();
+}
+
+class _SpendingByPersonState extends State<SpendingByPerson> {
+  int? touchedIndex;
+
+  @override
   Widget build(BuildContext context) {
     // Calculate total amount paid by each person
     Map<Person, double> amountByPerson = {};
-    for (var expense in filteredExpenses) {
+    for (var expense in widget.filteredExpenses) {
       Person person = expense.paidBy;
       double amount = expense.amount;
       amountByPerson[person] = (amountByPerson[person] ?? 0) + amount;
@@ -31,8 +38,12 @@ class SpendingByPerson extends StatelessWidget {
       return PieChartSectionData(
         color: color,
         value: amount,
-        title: '${percentage.toStringAsFixed(1)}%',
-        radius: 50,
+        title: touchedIndex == amountByPerson.keys.toList().indexOf(person)
+            ? '${person.name}\n\$${amount.toStringAsFixed(2)}'
+            : '${percentage.toStringAsFixed(1)}%',
+        radius: touchedIndex == amountByPerson.keys.toList().indexOf(person)
+            ? 60
+            : 50,
         titleStyle: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
@@ -49,58 +60,31 @@ class SpendingByPerson extends StatelessWidget {
           Text('Spending by Person',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: totalAmount > 0
-                      ? PieChart(
-                          PieChartData(
-                            sections: sections,
-                            centerSpaceRadius: 40,
-                            sectionsSpace: 0,
-                          ),
-                        )
-                      : Center(child: Text('No data available')),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: amountByPerson.entries.map((entry) {
-                        Person person = entry.key;
-                        double amount = entry.value;
-                        Color color = person.color;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 12,
-                                height: 12,
-                                decoration: BoxDecoration(
-                                  color: color,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  '${person.name} (\$${amount.toStringAsFixed(2)})',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+          SizedBox(
+            height: 200,
+            child: totalAmount > 0
+                ? PieChart(
+                    PieChartData(
+                      sections: sections,
+                      centerSpaceRadius: 40,
+                      sectionsSpace: 0,
+                      pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                pieTouchResponse == null ||
+                                pieTouchResponse.touchedSection == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
+                  )
+                : Center(child: Text('No data available')),
           ),
         ],
       ),

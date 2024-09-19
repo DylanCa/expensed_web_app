@@ -4,10 +4,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/category.dart';
 
-class ExpenseLastWeek extends StatelessWidget {
+class SpendingPerCategory extends StatelessWidget {
   final List<Expense> filteredExpenses;
 
-  const ExpenseLastWeek({super.key, required this.filteredExpenses});
+  const SpendingPerCategory({super.key, required this.filteredExpenses});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class ExpenseLastWeek extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Expense Last Week',
+          Text('Spending per Category',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
           SizedBox(
@@ -159,64 +159,8 @@ class ExpenseLastWeek extends StatelessWidget {
                     ),
                   ),
           ),
-          SizedBox(height: 20),
-          Wrap(
-            spacing: 16,
-            runSpacing: 8,
-            children: [
-              for (int i = 0; i < sortedCategories.length; i += 2)
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildLegendItem(
-                        sortedCategories[i],
-                        expensesByCategory[sortedCategories[i]] ?? 0,
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: i + 1 < sortedCategories.length
-                          ? _buildLegendItem(
-                              sortedCategories[i + 1],
-                              expensesByCategory[sortedCategories[i + 1]] ?? 0,
-                            )
-                          : SizedBox(),
-                    ),
-                  ],
-                ),
-            ],
-          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildLegendItem(Category category, double totalAmount) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: category.color,
-            shape: BoxShape.circle,
-          ),
-        ),
-        SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            category.name,
-            style: TextStyle(fontSize: 12),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        SizedBox(width: 4),
-        Text(
-          '\$${totalAmount.toStringAsFixed(2)}',
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-        ),
-      ],
     );
   }
 }

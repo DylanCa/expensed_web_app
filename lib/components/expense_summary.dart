@@ -100,7 +100,7 @@ class ExpenseSummary extends StatelessWidget {
     String percentageText =
         '${percentageDifference >= 0 ? '+' : '-'}${percentageDifference.abs().toStringAsFixed(1)}%';
     Color percentageColor =
-        percentageDifference >= 0 ? Colors.green : Colors.red;
+        percentageDifference >= 0 ? Colors.red : Colors.green;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

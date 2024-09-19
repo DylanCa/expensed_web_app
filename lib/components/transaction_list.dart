@@ -35,37 +35,40 @@ class TransactionList extends StatelessWidget {
       children: [
         _buildHeader(),
         Expanded(
-          child: ListView.builder(
-            itemCount: expenses.length,
-            itemBuilder: (context, index) {
-              final expense = expenses[index];
-              bool isNewDate = index == 0 ||
-                  DateFormat('yyyy-MM-dd')
-                          .format(expenses[index - 1].dateTime) !=
-                      DateFormat('yyyy-MM-dd').format(expense.dateTime);
+          child: expenses.isEmpty
+              ? Center(child: Text('No expenses available'))
+              : ListView.builder(
+                  itemCount: expenses.length,
+                  itemBuilder: (context, index) {
+                    final expense = expenses[index];
+                    bool isNewDate = index == 0 ||
+                        DateFormat('yyyy-MM-dd')
+                                .format(expenses[index - 1].dateTime) !=
+                            DateFormat('yyyy-MM-dd').format(expense.dateTime);
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (isNewDate)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 8),
-                      child: Text(
-                        DateFormat('MMMM d, yyyy').format(expense.dateTime),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ExpenseWidget(
-                    backgroundColor:
-                        index % 2 == 0 ? Colors.white : Colors.grey[100]!,
-                    expense: expense,
-                  ),
-                ],
-              );
-            },
-          ),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (isNewDate)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 8),
+                            child: Text(
+                              DateFormat('MMMM d, yyyy')
+                                  .format(expense.dateTime),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ExpenseWidget(
+                          backgroundColor:
+                              index % 2 == 0 ? Colors.white : Colors.grey[100]!,
+                          expense: expense,
+                        ),
+                      ],
+                    );
+                  },
+                ),
         ),
       ],
     );
@@ -137,15 +140,21 @@ class TransactionList extends StatelessWidget {
   }
 
   String _getHeaderText() {
-    if (!_isFilterActive()) {
-      return 'All expenses';
-    }
     List<String> headerParts = [];
-    if (selectedCategories.isNotEmpty) {
-      headerParts.add(selectedCategories.map((c) => c.name).join(', '));
+  
+    if (searchQuery.isNotEmpty) {
+      headerParts.add('"${searchQuery}"');
     }
+  
+    if (selectedCategories.isNotEmpty) {
+      headerParts
+          .add(selectedCategories.map((c) => c.name.toLowerCase()).join(', '));
+    }
+  
     headerParts.add('expenses');
-    return headerParts.join(' ');
+  
+    String header = headerParts.join(' ');
+    return header.substring(0, 1).toUpperCase() + header.substring(1);
   }
 
   String _getSubHeaderText() {

@@ -24,10 +24,6 @@ class Transactions extends StatelessWidget {
 
         List<Expense> filteredExpenses = expenseProvider.getFilteredExpenses();
 
-        if (filteredExpenses.isEmpty) {
-          return Center(child: Text('No expenses available'));
-        }
-
         return Scaffold(
           backgroundColor: Colors.white,
           body: LayoutBuilder(

@@ -85,11 +85,27 @@ class _HomepageState extends State<Homepage> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Icon(
-                            Icons.account_balance_wallet,
-                            size: 50,
-                            color: Colors.blue,
+                          padding:
+                              const EdgeInsets.all(12.0), // Reduced padding
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.account_balance_wallet,
+                                size: 40, // Reduced icon size
+                                color: Colors.blue,
+                              ),
+                              if (isWideLayout) SizedBox(width: 8),
+                              if (isWideLayout)
+                                Text(
+                                  'Expensed',
+                                  style: TextStyle(
+                                    fontSize: 18, // Reduced font size
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
                         Expanded(
@@ -133,7 +149,6 @@ class _HomepageState extends State<Homepage> {
                       ],
                     ),
                   ),
-                  VerticalDivider(thickness: 2, width: 2),
                   Expanded(
                     child: _pages[selectedIndex],
                   ),

@@ -34,11 +34,15 @@ class Transactions extends StatelessWidget {
         double currentMonthTotal =
             _calculateCurrentMonthTotal(filteredExpenses);
 
-        // Calculate average weekly and monthly totals using allFilteredExpenses
+        // Calculate average weekly and monthly totals
         double averageWeeklyTotal =
             _calculateAverageWeeklyTotal(allFilteredExpenses);
         double averageMonthlyTotal =
             _calculateAverageMonthlyTotal(allFilteredExpenses);
+
+        // Calculate selected date range total
+        double selectedDateRangeTotal =
+            _calculateSelectedDateRangeTotal(filteredExpenses);
 
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -81,23 +85,36 @@ class Transactions extends StatelessWidget {
                             child: Column(
                               children: [
                                 buildElevatedContainer(
-                                  ExpenseSummary(
-                                    currentWeekTotal: currentWeekTotal,
-                                    currentMonthTotal: currentMonthTotal,
-                                    averageWeeklyTotal: averageWeeklyTotal,
-                                    averageMonthlyTotal: averageMonthlyTotal,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height:
+                                        180, // Increased height to accommodate the taller ExpenseSummary
+                                    child: ExpenseSummary(
+                                      currentWeekTotal: currentWeekTotal,
+                                      currentMonthTotal: currentMonthTotal,
+                                      selectedDateRangeTotal:
+                                          selectedDateRangeTotal,
+                                      startDate: expenseProvider.startDate,
+                                      endDate: expenseProvider.endDate,
+                                      averageWeeklyTotal: averageWeeklyTotal,
+                                      averageMonthlyTotal: averageMonthlyTotal,
+                                    ),
                                   ),
                                 ),
                                 buildElevatedContainer(
-                                  SizedBox(
-                                    height: 400,
+                                  Container(
+                                    constraints: BoxConstraints(minWidth: 400),
+                                    width: 450,
+                                    height: 450,
                                     child: SpendingByPerson(
                                       filteredExpenses: filteredExpenses,
                                     ),
                                   ),
                                 ),
                                 buildElevatedContainer(
-                                  SizedBox(
+                                  Container(
+                                    constraints: BoxConstraints(minWidth: 400),
+                                    width: 450,
                                     height: 450,
                                     child: ExpenseLastWeek(
                                       filteredExpenses: filteredExpenses,
@@ -129,11 +146,19 @@ class Transactions extends StatelessWidget {
                       child: Column(
                         children: [
                           buildElevatedContainer(
-                            ExpenseSummary(
-                              currentWeekTotal: currentWeekTotal,
-                              currentMonthTotal: currentMonthTotal,
-                              averageWeeklyTotal: averageWeeklyTotal,
-                              averageMonthlyTotal: averageMonthlyTotal,
+                            SizedBox(
+                              width: double.infinity,
+                              height:
+                                  180, // Increased height to accommodate the taller ExpenseSummary
+                              child: ExpenseSummary(
+                                currentWeekTotal: currentWeekTotal,
+                                currentMonthTotal: currentMonthTotal,
+                                selectedDateRangeTotal: selectedDateRangeTotal,
+                                startDate: expenseProvider.startDate,
+                                endDate: expenseProvider.endDate,
+                                averageWeeklyTotal: averageWeeklyTotal,
+                                averageMonthlyTotal: averageMonthlyTotal,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -226,6 +251,10 @@ class Transactions extends StatelessWidget {
         .fold(0.0, (sum, expense) => sum + expense.amount);
   }
 
+  double _calculateSelectedDateRangeTotal(List<Expense> expenses) {
+    return expenses.fold(0.0, (sum, expense) => sum + expense.amount);
+  }
+
   double _calculateAverageWeeklyTotal(List<Expense> expenses) {
     if (expenses.isEmpty) return 0.0;
     final oldestExpense =
@@ -244,7 +273,7 @@ class Transactions extends StatelessWidget {
     final totalMonths =
         (DateTime.now().year - oldestExpense.dateTime.year) * 12 +
             (DateTime.now().month - oldestExpense.dateTime.month) +
-            1; // Add 1 to include the current month
+            1;
     final totalAmount =
         expenses.fold(0.0, (sum, expense) => sum + expense.amount);
     return totalAmount / totalMonths;

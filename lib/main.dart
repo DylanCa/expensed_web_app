@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/pages/homepage.dart';
+import 'package:expensed_web_app/pages/dashboard.dart';
+import 'package:expensed_web_app/pages/transactions.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,13 +39,20 @@ class MyApp extends StatelessWidget {
         path: '/transactions',
         builder: (context, state) => Homepage(initialIndex: 1),
       ),
+      GoRoute(
+        path: '/goals',
+        builder: (context, state) => Homepage(initialIndex: 2),
+      ),
+      GoRoute(
+        path: '/household',
+        builder: (context, state) => Homepage(initialIndex: 3),
+      ),
     ],
   );
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,

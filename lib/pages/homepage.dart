@@ -18,6 +18,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   late int selectedIndex;
+  int? hoveredIndex;
 
   @override
   void initState() {
@@ -28,11 +29,16 @@ class _HomepageState extends State<Homepage> {
   final List<Widget> _pages = [
     Dashboard(),
     Transactions(),
+    // Add your other pages here
+    Placeholder(), // Placeholder for Goals page
+    Placeholder(), // Placeholder for Household page
   ];
 
   final List<String> _titles = [
     'Dashboard',
     'Transactions',
+    'Goals',
+    'Household',
   ];
 
   @override
@@ -52,161 +58,225 @@ class _HomepageState extends State<Homepage> {
         }
 
         return Scaffold(
-          body: Row(
-            children: [
-              NavigationRail(
-                labelType: NavigationRailLabelType.selected,
-                groupAlignment: 0.0,
-                minWidth: 100,
-                minExtendedWidth: 200,
-                destinations: [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.dashboard),
-                    label: Text('Dashboard'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.trending_up),
-                    label: Text('Transactions'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                  if (value == 0) {
-                    context.go('/dashboard');
-                  } else if (value == 1) {
-                    context.go('/transactions');
-                  }
-                },
-              ),
-              VerticalDivider(thickness: 2, width: 2),
-              Expanded(
-                child: Column(
-                  children: [
-                    AppBar(
-                      title: Text(
-                        _titles[selectedIndex],
-                        style: TextStyle(fontSize: 22), // Increased font size
-                      ),
-                      toolbarHeight: 64, // Increased AppBar height
-                      actions: [
-                        StatefulBuilder(
-                          builder:
-                              (BuildContext context, StateSetter setState) {
-                            return PopupMenuButton<Alert>(
-                              icon: Icon(Icons.notifications,
-                                  size: 28), // Increased icon size
-                              itemBuilder: (BuildContext context) {
-                                return [
-                                  ...expenseProvider.alerts.map((Alert alert) {
-                                    return PopupMenuItem<Alert>(
-                                      value: alert,
-                                      child: ListTile(
-                                        title: Text(alert.formattedAlert),
-                                        subtitle: Text(
-                                            DateFormat('MMM d, y HH:mm')
-                                                .format(alert.dateTime)),
-                                        trailing: IconButton(
-                                          icon: Icon(Icons.close, size: 16),
-                                          onPressed: () {
-                                            expenseProvider
-                                                .deleteAlert(alert.id);
-                                            setState(
-                                                () {}); // Rebuild the popup menu
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  if (expenseProvider.alerts.isEmpty)
-                                    PopupMenuItem<Alert>(
-                                      child: ListTile(
-                                        title: Text('No alerts'),
-                                      ),
-                                    ),
-                                ];
-                              },
-                              onSelected: (Alert alert) {
-                                print('Alert clicked: ${alert.formattedAlert}');
-                              },
-                            );
-                          },
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              final isWideLayout = constraints.maxWidth > 1400;
+              final menuWidth = isWideLayout ? 175.0 : 75.0;
+
+              return Row(
+                children: [
+                  Container(
+                    width: menuWidth,
+                    color: Colors.blue[50],
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Icon(
+                            Icons.account_balance_wallet,
+                            size: 50,
+                            color: Colors.blue,
+                          ),
                         ),
-                        PopupMenuButton<String>(
-                          icon: Icon(Icons.account_circle,
-                              size: 28), // Increased icon size
-                          offset: Offset(
-                              0, 64), // Adjusted offset for larger AppBar
-                          onSelected: (String value) {
-                            switch (value) {
-                              case 'profile':
-                                print('Profile selected');
-                                break;
-                              case 'logout':
-                                print('Logout selected');
-                                break;
-                            }
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            PopupMenuItem<String>(
-                              enabled: false,
-                              child: ListTile(
-                                leading: Icon(Icons.account_circle,
-                                    size: 48), // Increased icon size
-                                title: Text(
-                                  'John Doe',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16, // Increased font size
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  'john.doe@example.com',
-                                  style: TextStyle(
-                                      fontSize: 14), // Increased font size
-                                ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildNavItem(
+                                icon: Icons.dashboard,
+                                label: 'Dashboard',
+                                index: 0,
+                                isWideLayout: isWideLayout,
                               ),
+                              _buildNavItem(
+                                icon: Icons.trending_up,
+                                label: 'Transactions',
+                                index: 1,
+                                isWideLayout: isWideLayout,
+                              ),
+                              _buildNavItem(
+                                icon: Icons.flag,
+                                label: 'Goals',
+                                index: 2,
+                                isWideLayout: isWideLayout,
+                              ),
+                              _buildNavItem(
+                                icon: Icons.home,
+                                label: 'Household',
+                                index: 3,
+                                isWideLayout: isWideLayout,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            Divider(thickness: 1, height: 1),
+                            _buildBottomNavItem(
+                              icon: Icons.settings,
+                              label: 'Settings',
+                              onPressed: () {
+                                // Handle settings button press
+                              },
+                              isWideLayout: isWideLayout,
                             ),
-                            PopupMenuDivider(),
-                            PopupMenuItem<String>(
-                              value: 'profile',
-                              child: ListTile(
-                                leading: Icon(Icons.person,
-                                    size: 24), // Increased icon size
-                                title: Text('Profile',
-                                    style: TextStyle(
-                                        fontSize: 16)), // Increased font size
-                                contentPadding: EdgeInsets.zero,
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'logout',
-                              child: ListTile(
-                                leading: Icon(Icons.exit_to_app,
-                                    size: 24), // Increased icon size
-                                title: Text('Logout',
-                                    style: TextStyle(
-                                        fontSize: 16)), // Increased font size
-                                contentPadding: EdgeInsets.zero,
-                              ),
+                            _buildBottomNavItem(
+                              icon: Icons.account_circle,
+                              label: 'Account',
+                              onPressed: () {
+                                // Handle account button press
+                              },
+                              isWideLayout: isWideLayout,
                             ),
                           ],
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: _pages[selectedIndex],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                  VerticalDivider(thickness: 2, width: 2),
+                  Expanded(
+                    child: _pages[selectedIndex],
+                  ),
+                ],
+              );
+            },
           ),
         );
       },
+    );
+  }
+
+  Widget _buildNavItem({
+    required IconData icon,
+    required String label,
+    required int index,
+    required bool isWideLayout,
+  }) {
+    return MouseRegion(
+      onEnter: (_) => setState(() {
+        hoveredIndex = index;
+      }),
+      onExit: (_) => setState(() {
+        hoveredIndex = null;
+      }),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        decoration: BoxDecoration(
+          color: selectedIndex == index
+              ? Colors.blue[100]
+              : hoveredIndex == index
+                  ? Colors.blue[50]
+                  : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            minimumSize:
+                Size(double.infinity, 60), // Full width button, reduced height
+          ),
+          onPressed: () {
+            setState(() {
+              selectedIndex = index;
+            });
+            switch (index) {
+              case 0:
+                context.go('/dashboard');
+                break;
+              case 1:
+                context.go('/transactions');
+                break;
+              case 2:
+                context.go('/goals');
+                break;
+              case 3:
+                context.go('/household');
+                break;
+            }
+          },
+          child: Row(
+            mainAxisAlignment: isWideLayout
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: isWideLayout
+                    ? const EdgeInsets.only(left: 16.0)
+                    : EdgeInsets.zero,
+                child: Icon(icon,
+                    color: Colors.blue, size: 28), // Increased icon size
+              ),
+              if (isWideLayout) SizedBox(width: 8),
+              if (isWideLayout)
+                Text(
+                  label,
+                  style: TextStyle(
+                      fontSize: 16, color: Colors.blue), // Increased font size
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavItem({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+    required bool isWideLayout,
+  }) {
+    return MouseRegion(
+      onEnter: (_) => setState(() {
+        hoveredIndex = label.hashCode;
+      }),
+      onExit: (_) => setState(() {
+        hoveredIndex = null;
+      }),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        decoration: BoxDecoration(
+          color: hoveredIndex == label.hashCode
+              ? Colors.blue[50]
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            minimumSize:
+                Size(double.infinity, 60), // Full width button, reduced height
+          ),
+          onPressed: onPressed,
+          child: Row(
+            mainAxisAlignment: isWideLayout
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: isWideLayout
+                    ? const EdgeInsets.only(left: 16.0)
+                    : EdgeInsets.zero,
+                child: Icon(icon,
+                    color: Colors.blue, size: 28), // Increased icon size
+              ),
+              if (isWideLayout) SizedBox(width: 8),
+              if (isWideLayout)
+                Text(
+                  label,
+                  style: TextStyle(
+                      fontSize: 16, color: Colors.blue), // Increased font size
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -127,22 +127,19 @@ class ExpenseProvider with ChangeNotifier {
   }
 
   List<Expense> getFilteredExpenses() {
-    if (_expenses.isEmpty) {
-      return []; // Return an empty list if there are no expenses
-    }
-    return _expenses.where((expense) {
+    List<Expense> filtered = _expenses.where((expense) {
       bool dateInRange = true;
       if (_startDate != null && _endDate != null) {
         dateInRange = expense.dateTime.isAtSameMomentAs(_startDate!) ||
             expense.dateTime.isAtSameMomentAs(_endDate!) ||
             (expense.dateTime.isAfter(_startDate!) &&
-                expense.dateTime.isBefore(_endDate!));
+                expense.dateTime.isBefore(_endDate!.add(Duration(days: 1))));
       } else if (_startDate != null) {
         dateInRange = expense.dateTime.isAtSameMomentAs(_startDate!) ||
             expense.dateTime.isAfter(_startDate!);
       } else if (_endDate != null) {
         dateInRange = expense.dateTime.isAtSameMomentAs(_endDate!) ||
-            expense.dateTime.isBefore(_endDate!);
+            expense.dateTime.isBefore(_endDate!.add(Duration(days: 1)));
       }
 
       bool matchesSearch = _searchQuery.isEmpty ||
@@ -161,6 +158,11 @@ class ExpenseProvider with ChangeNotifier {
           (_selectedPersons.isEmpty ||
               _selectedPersons.contains(expense.paidBy));
     }).toList();
+
+    // Sort the filtered expenses by date (most recent first)
+    filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+
+    return filtered;
   }
 
   List<Expense> getAllFilteredExpenses() {
@@ -169,7 +171,20 @@ class ExpenseProvider with ChangeNotifier {
           _selectedCategories.contains(expense.category);
       bool matchesPersons =
           _selectedPersons.isEmpty || _selectedPersons.contains(expense.paidBy);
-      return matchesCategories && matchesPersons;
+      bool dateInRange = true;
+      if (_startDate != null && _endDate != null) {
+        dateInRange = expense.dateTime.isAtSameMomentAs(_startDate!) ||
+            expense.dateTime.isAtSameMomentAs(_endDate!) ||
+            (expense.dateTime.isAfter(_startDate!) &&
+                expense.dateTime.isBefore(_endDate!));
+      } else if (_startDate != null) {
+        dateInRange = expense.dateTime.isAtSameMomentAs(_startDate!) ||
+            expense.dateTime.isAfter(_startDate!);
+      } else if (_endDate != null) {
+        dateInRange = expense.dateTime.isAtSameMomentAs(_endDate!) ||
+            expense.dateTime.isBefore(_endDate!);
+      }
+      return matchesCategories && matchesPersons && dateInRange;
     }).toList();
   }
 

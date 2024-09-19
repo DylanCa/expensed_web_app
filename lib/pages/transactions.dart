@@ -239,7 +239,8 @@ class Transactions extends StatelessWidget {
     final now = DateTime.now();
     final weekStart = now.subtract(Duration(days: now.weekday - 1));
     return expenses
-        .where((expense) => expense.dateTime.isAfter(weekStart))
+        .where((expense) =>
+            expense.dateTime.isAfter(weekStart.subtract(Duration(days: 1))))
         .fold(0.0, (sum, expense) => sum + expense.amount);
   }
 
@@ -247,7 +248,8 @@ class Transactions extends StatelessWidget {
     final now = DateTime.now();
     final monthStart = DateTime(now.year, now.month, 1);
     return expenses
-        .where((expense) => expense.dateTime.isAfter(monthStart))
+        .where((expense) =>
+            expense.dateTime.isAfter(monthStart.subtract(Duration(days: 1))))
         .fold(0.0, (sum, expense) => sum + expense.amount);
   }
 

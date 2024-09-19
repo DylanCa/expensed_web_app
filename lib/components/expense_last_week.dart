@@ -31,10 +31,10 @@ class ExpenseLastWeek extends StatelessWidget {
     for (var expense in filteredExpenses) {
       DateTime date = DateTime(
           expense.dateTime.year, expense.dateTime.month, expense.dateTime.day);
-      Category category = expense.category;
-      double amount = expense.amount;
-
       if (lastSevenDays.contains(date)) {
+        Category category = expense.category;
+        double amount = expense.amount;
+
         expensesByDayAndCategory[date]!.putIfAbsent(category, () => 0);
         expensesByDayAndCategory[date]![category] =
             (expensesByDayAndCategory[date]![category] ?? 0) + amount;

@@ -74,6 +74,7 @@ class _HomepageState extends State<Homepage> {
         }
 
         return Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: LayoutBuilder(
             builder: (context, constraints) {
               final isWideLayout = constraints.maxWidth > 1400;
@@ -83,7 +84,7 @@ class _HomepageState extends State<Homepage> {
                 children: [
                   Container(
                     width: menuWidth,
-                    color: Theme.of(context).scaffoldBackgroundColor,
+                    color: Theme.of(context).primaryColor.withOpacity(0.1),
                     child: Column(
                       children: [
                         Padding(
@@ -100,14 +101,8 @@ class _HomepageState extends State<Homepage> {
                               if (isWideLayout)
                                 Text(
                                   'Expensed',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.color,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
                                 ),
                             ],
                           ),
@@ -178,79 +173,60 @@ class _HomepageState extends State<Homepage> {
     required bool isWideLayout,
   }) {
     final isSelected = selectedIndex == index;
-    return MouseRegion(
-      onEnter: (_) => setState(() {
-        hoveredIndex = index;
-      }),
-      onExit: (_) => setState(() {
-        hoveredIndex = null;
-      }),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).primaryColor.withOpacity(0.1)
-              : hoveredIndex == index
-                  ? Theme.of(context).primaryColor.withOpacity(0.05)
-                  : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: isSelected
+            ? Theme.of(context).primaryColor.withOpacity(0.2)
+            : Colors.transparent,
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0),
         ),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+      ),
+      onPressed: () {
+        setState(() {
+          selectedIndex = index;
+        });
+        switch (index) {
+          case 0:
+            context.go('/dashboard');
+            break;
+          case 1:
+            context.go('/transactions');
+            break;
+          case 2:
+            context.go('/goals');
+            break;
+          case 3:
+            context.go('/household');
+            break;
+        }
+      },
+      child: Row(
+        mainAxisAlignment:
+            isWideLayout ? MainAxisAlignment.start : MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: isWideLayout
+                ? const EdgeInsets.only(left: 16.0)
+                : EdgeInsets.zero,
+            child: Icon(
+              isSelected ? icon : outlinedIcon,
+              color: Theme.of(context).primaryColor,
+              size: 28,
             ),
-            minimumSize: Size(double.infinity, 60),
           ),
-          onPressed: () {
-            setState(() {
-              selectedIndex = index;
-            });
-            switch (index) {
-              case 0:
-                context.go('/dashboard');
-                break;
-              case 1:
-                context.go('/transactions');
-                break;
-              case 2:
-                context.go('/goals');
-                break;
-              case 3:
-                context.go('/household');
-                break;
-            }
-          },
-          child: Row(
-            mainAxisAlignment: isWideLayout
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: isWideLayout
-                    ? const EdgeInsets.only(left: 16.0)
-                    : EdgeInsets.zero,
-                child: Icon(
-                  isSelected ? icon : outlinedIcon,
-                  color: Theme.of(context).primaryColor,
-                  size: 28,
-                ),
+          if (isWideLayout) SizedBox(width: 8),
+          if (isWideLayout)
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                color: Theme.of(context).primaryColor,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
-              if (isWideLayout) SizedBox(width: 8),
-              if (isWideLayout)
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                    fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
-                  ),
-                ),
-            ],
-          ),
-        ),
+            ),
+        ],
       ),
     );
   }

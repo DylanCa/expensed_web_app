@@ -103,6 +103,17 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
         ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Color(0xFF3F51B5),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Color(0xFF3F51B5),
+            side: BorderSide(color: Color(0xFF7986CB)),
+          ),
+        ),
       ),
       routerConfig: _router,
     );

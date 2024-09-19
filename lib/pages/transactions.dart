@@ -10,6 +10,25 @@ import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
 
 class Transactions extends StatelessWidget {
+  Widget _buildElevatedContainer(Widget child) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseProvider>(
@@ -25,7 +44,7 @@ class Transactions extends StatelessWidget {
         List<Expense> filteredExpenses = expenseProvider.getFilteredExpenses();
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.grey[100],
           body: LayoutBuilder(
             builder: (context, constraints) {
               final totalWidth = constraints.maxWidth;
@@ -38,14 +57,8 @@ class Transactions extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            right:
-                                BorderSide(color: Colors.grey[300]!, width: 1),
-                          ),
-                        ),
-                        child: TransactionList(
+                      child: _buildElevatedContainer(
+                        TransactionList(
                           expenses: filteredExpenses,
                           onSearch: expenseProvider.setSearchQuery,
                           showFilterBottomSheet: () =>
@@ -64,20 +77,20 @@ class Transactions extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 450,
-                              child: SpendingByPerson(
-                                filteredExpenses: filteredExpenses,
+                            _buildElevatedContainer(
+                              SizedBox(
+                                height: 450,
+                                child: SpendingByPerson(
+                                  filteredExpenses: filteredExpenses,
+                                ),
                               ),
                             ),
-                            Container(
-                              height: 1,
-                              color: Colors.grey[300],
-                            ),
-                            SizedBox(
-                              height: 450,
-                              child: ExpenseLastWeek(
-                                filteredExpenses: filteredExpenses,
+                            _buildElevatedContainer(
+                              SizedBox(
+                                height: 450,
+                                child: ExpenseLastWeek(
+                                  filteredExpenses: filteredExpenses,
+                                ),
                               ),
                             ),
                           ],
@@ -97,49 +110,45 @@ class Transactions extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              Container(
-                                constraints: BoxConstraints(minWidth: 400),
-                                width: 450,
-                                height: 450,
-                                child: SpendingByPerson(
-                                  filteredExpenses: filteredExpenses,
+                              _buildElevatedContainer(
+                                Container(
+                                  constraints: BoxConstraints(minWidth: 400),
+                                  width: 450,
+                                  height: 450,
+                                  child: SpendingByPerson(
+                                    filteredExpenses: filteredExpenses,
+                                  ),
                                 ),
                               ),
-                              Container(
-                                width: 1,
-                                height: 450,
-                                color: Colors.grey[300],
-                              ),
-                              Container(
-                                constraints: BoxConstraints(minWidth: 400),
-                                width: 450,
-                                height: 450,
-                                child: ExpenseLastWeek(
-                                  filteredExpenses: filteredExpenses,
+                              _buildElevatedContainer(
+                                Container(
+                                  constraints: BoxConstraints(minWidth: 400),
+                                  width: 450,
+                                  height: 450,
+                                  child: ExpenseLastWeek(
+                                    filteredExpenses: filteredExpenses,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Colors.grey[300]!, width: 1),
+                      _buildElevatedContainer(
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: TransactionList(
+                            expenses: filteredExpenses,
+                            onSearch: expenseProvider.setSearchQuery,
+                            showFilterBottomSheet: () => _showFilterBottomSheet(
+                                context, expenseProvider),
+                            selectedCategories:
+                                expenseProvider.selectedCategories,
+                            selectedPersons: expenseProvider.selectedPersons,
+                            startDate: expenseProvider.startDate,
+                            endDate: expenseProvider.endDate,
+                            searchQuery: expenseProvider.searchQuery,
                           ),
-                        ),
-                        child: TransactionList(
-                          expenses: filteredExpenses,
-                          onSearch: expenseProvider.setSearchQuery,
-                          showFilterBottomSheet: () =>
-                              _showFilterBottomSheet(context, expenseProvider),
-                          selectedCategories:
-                              expenseProvider.selectedCategories,
-                          selectedPersons: expenseProvider.selectedPersons,
-                          startDate: expenseProvider.startDate,
-                          endDate: expenseProvider.endDate,
-                          searchQuery: expenseProvider.searchQuery,
                         ),
                       ),
                     ],

@@ -211,7 +211,7 @@ class ExpenseLastWeek extends StatelessWidget {
                               weeklyTotalByCategory[sortedCategories[i + 1]] ??
                                   0,
                             )
-                          : SizedBox(), // Empty SizedBox for odd number of categories
+                          : SizedBox(),
                     ),
                   ],
                 ),

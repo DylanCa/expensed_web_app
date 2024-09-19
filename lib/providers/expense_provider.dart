@@ -163,6 +163,16 @@ class ExpenseProvider with ChangeNotifier {
     }).toList();
   }
 
+  List<Expense> getAllFilteredExpenses() {
+    return _expenses.where((expense) {
+      bool matchesCategories = _selectedCategories.isEmpty ||
+          _selectedCategories.contains(expense.category);
+      bool matchesPersons =
+          _selectedPersons.isEmpty || _selectedPersons.contains(expense.paidBy);
+      return matchesCategories && matchesPersons;
+    }).toList();
+  }
+
   Future<void> addExpense(Expense expense) async {
     try {
       await _repository.addExpense(expense);

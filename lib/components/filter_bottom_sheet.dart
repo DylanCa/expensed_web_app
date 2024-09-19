@@ -36,9 +36,54 @@ void showFilterBottomSheet(
                   ],
                 ),
                 SizedBox(height: 20),
-                Text(
-                  'Filter by Date',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Text(
+                      'Filter by Date',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        ChoiceChip(
+                          label: Text('Current Week'),
+                          selected: false,
+                          onSelected: (bool selected) {
+                            if (selected) {
+                              final now = DateTime.now();
+                              final startOfWeek =
+                                  now.subtract(Duration(days: now.weekday - 1));
+                              final endOfWeek =
+                                  startOfWeek.add(Duration(days: 6));
+                              setState(() {
+                                expenseProvider.setDateRange(
+                                    startOfWeek, endOfWeek);
+                              });
+                            }
+                          },
+                        ),
+                        ChoiceChip(
+                          label: Text('Current Month'),
+                          selected: false,
+                          onSelected: (bool selected) {
+                            if (selected) {
+                              final now = DateTime.now();
+                              final startOfMonth =
+                                  DateTime(now.year, now.month, 1);
+                              final endOfMonth =
+                                  DateTime(now.year, now.month + 1, 0);
+                              setState(() {
+                                expenseProvider.setDateRange(
+                                    startOfMonth, endOfMonth);
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(height: 10),
                 Row(

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:expensed_web_app/components/transaction_list.dart';
 import 'package:expensed_web_app/components/spending_by_person.dart';
 import 'package:expensed_web_app/components/expense_last_week.dart';
+import 'package:expensed_web_app/components/expense_summary.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/category.dart';
@@ -25,6 +26,19 @@ class Transactions extends StatelessWidget {
         }
 
         List<Expense> filteredExpenses = expenseProvider.getFilteredExpenses();
+        List<Expense> allFilteredExpenses =
+            expenseProvider.getAllFilteredExpenses();
+
+        // Calculate current week and month totals
+        double currentWeekTotal = _calculateCurrentWeekTotal(filteredExpenses);
+        double currentMonthTotal =
+            _calculateCurrentMonthTotal(filteredExpenses);
+
+        // Calculate average weekly and monthly totals using allFilteredExpenses
+        double averageWeeklyTotal =
+            _calculateAverageWeeklyTotal(allFilteredExpenses);
+        double averageMonthlyTotal =
+            _calculateAverageMonthlyTotal(allFilteredExpenses);
 
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -67,6 +81,14 @@ class Transactions extends StatelessWidget {
                             child: Column(
                               children: [
                                 buildElevatedContainer(
+                                  ExpenseSummary(
+                                    currentWeekTotal: currentWeekTotal,
+                                    currentMonthTotal: currentMonthTotal,
+                                    averageWeeklyTotal: averageWeeklyTotal,
+                                    averageMonthlyTotal: averageMonthlyTotal,
+                                  ),
+                                ),
+                                buildElevatedContainer(
                                   SizedBox(
                                     height: 400,
                                     child: SpendingByPerson(
@@ -106,6 +128,14 @@ class Transactions extends StatelessWidget {
                     SingleChildScrollView(
                       child: Column(
                         children: [
+                          buildElevatedContainer(
+                            ExpenseSummary(
+                              currentWeekTotal: currentWeekTotal,
+                              currentMonthTotal: currentMonthTotal,
+                              averageWeeklyTotal: averageWeeklyTotal,
+                              averageMonthlyTotal: averageMonthlyTotal,
+                            ),
+                          ),
                           SizedBox(
                             width: double.infinity,
                             child: SingleChildScrollView(
@@ -178,6 +208,46 @@ class Transactions extends StatelessWidget {
         );
       },
     );
+  }
+
+  double _calculateCurrentWeekTotal(List<Expense> expenses) {
+    final now = DateTime.now();
+    final weekStart = now.subtract(Duration(days: now.weekday - 1));
+    return expenses
+        .where((expense) => expense.dateTime.isAfter(weekStart))
+        .fold(0.0, (sum, expense) => sum + expense.amount);
+  }
+
+  double _calculateCurrentMonthTotal(List<Expense> expenses) {
+    final now = DateTime.now();
+    final monthStart = DateTime(now.year, now.month, 1);
+    return expenses
+        .where((expense) => expense.dateTime.isAfter(monthStart))
+        .fold(0.0, (sum, expense) => sum + expense.amount);
+  }
+
+  double _calculateAverageWeeklyTotal(List<Expense> expenses) {
+    if (expenses.isEmpty) return 0.0;
+    final oldestExpense =
+        expenses.reduce((a, b) => a.dateTime.isBefore(b.dateTime) ? a : b);
+    final totalWeeks =
+        DateTime.now().difference(oldestExpense.dateTime).inDays / 7;
+    final totalAmount =
+        expenses.fold(0.0, (sum, expense) => sum + expense.amount);
+    return totalAmount / totalWeeks;
+  }
+
+  double _calculateAverageMonthlyTotal(List<Expense> expenses) {
+    if (expenses.isEmpty) return 0.0;
+    final oldestExpense =
+        expenses.reduce((a, b) => a.dateTime.isBefore(b.dateTime) ? a : b);
+    final totalMonths =
+        (DateTime.now().year - oldestExpense.dateTime.year) * 12 +
+            (DateTime.now().month - oldestExpense.dateTime.month) +
+            1; // Add 1 to include the current month
+    final totalAmount =
+        expenses.fold(0.0, (sum, expense) => sum + expense.amount);
+    return totalAmount / totalMonths;
   }
 
   void _showAddExpenseBottomSheet(

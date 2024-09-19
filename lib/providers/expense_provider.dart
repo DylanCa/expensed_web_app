@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/category.dart' as app_category;
 import 'package:expensed_web_app/models/person.dart';
+import 'package:expensed_web_app/models/alert.dart';
 import 'package:expensed_web_app/repositories/expense_repository.dart';
 import 'package:expensed_web_app/data/test_data.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:uuid/uuid.dart';
 
 class ExpenseProvider with ChangeNotifier {
   final ExpenseRepository _repository = ExpenseRepository();
@@ -18,8 +20,10 @@ class ExpenseProvider with ChangeNotifier {
   DateTime? _startDate;
   DateTime? _endDate;
   String _searchQuery = '';
+  List<Alert> _alerts = [];
 
   List<Expense> get expenses => _expenses;
+  List<Alert> get alerts => _alerts;
 
   final _searchSubject = BehaviorSubject<String>();
 
@@ -30,6 +34,43 @@ class ExpenseProvider with ChangeNotifier {
 
     loadExpenses();
     loadCategoriesAndPersons();
+    _createTestAlerts();
+  }
+
+  void _createTestAlerts() {
+    Person testUser = TestData.persons[0];
+    Expense testExpense = Expense(
+      id: '1',
+      shopName: 'Test Shop',
+      amount: 50.0,
+      category: TestData.categories[0],
+      paidBy: testUser,
+      dateTime: DateTime.now().subtract(Duration(hours: 2)),
+    );
+
+    _alerts = [
+      Alert(
+        id: Uuid().v4(),
+        user: testUser,
+        action: AlertAction.added,
+        expense: testExpense,
+        dateTime: DateTime.now().subtract(Duration(hours: 2)),
+      ),
+      Alert(
+        id: Uuid().v4(),
+        user: testUser,
+        action: AlertAction.updated,
+        expense: testExpense,
+        dateTime: DateTime.now().subtract(Duration(days: 1)),
+      ),
+      Alert(
+        id: Uuid().v4(),
+        user: testUser,
+        action: AlertAction.deleted,
+        expense: testExpense,
+        dateTime: DateTime.now().subtract(Duration(days: 2)),
+      ),
+    ];
   }
 
   void loadCategoriesAndPersons() {
@@ -167,6 +208,16 @@ class ExpenseProvider with ChangeNotifier {
       _error = "Failed to delete expense: $e";
       notifyListeners();
     }
+  }
+
+  void deleteAlert(String id) {
+    _alerts.removeWhere((alert) => alert.id == id);
+    notifyListeners();
+  }
+
+  void addAlert(Alert alert) {
+    _alerts.insert(0, alert);
+    notifyListeners();
   }
 
   @override

@@ -48,8 +48,8 @@ class ExpenseLastWeek extends StatelessWidget {
       }
     }
 
-    List<String> sortedCategories = categories.map((c) => c.name).toList()
-      ..sort();
+    List<Category> sortedCategories = categories.toList()
+      ..sort((a, b) => a.name.compareTo(b.name));
 
     // Calculate maxY (maximum amount rounded to the nearest 50 above)
     double maxY = maxDailyTotal == 0 ? 100 : (maxDailyTotal / 50).ceil() * 50.0;
@@ -62,7 +62,7 @@ class ExpenseLastWeek extends StatelessWidget {
       List<BarChartRodStackItem> stackItems = [];
       double totalHeight = 0;
 
-      for (Category category in categories) {
+      for (Category category in sortedCategories) {
         double amount = expensesByDayAndCategory[date]![category] ?? 0;
         if (amount > 0) {
           stackItems.add(
@@ -100,13 +100,10 @@ class ExpenseLastWeek extends StatelessWidget {
     }
 
     // Calculate total weekly amount for each category
-    Map<String, double> weeklyTotalByCategory = {};
-    for (var day in lastSevenDays) {
-      for (var category in sortedCategories) {
-        double amount = expensesByDayAndCategory[day]![category] ?? 0;
-        weeklyTotalByCategory[category] =
-            (weeklyTotalByCategory[category] ?? 0) + amount;
-      }
+    Map<Category, double> weeklyTotalByCategory = {};
+    for (var expense in filteredExpenses) {
+      weeklyTotalByCategory[expense.category] =
+          (weeklyTotalByCategory[expense.category] ?? 0) + expense.amount;
     }
 
     return Container(
@@ -204,7 +201,6 @@ class ExpenseLastWeek extends StatelessWidget {
                       child: _buildLegendItem(
                         sortedCategories[i],
                         weeklyTotalByCategory[sortedCategories[i]] ?? 0,
-                        i,
                       ),
                     ),
                     SizedBox(width: 16),
@@ -214,7 +210,6 @@ class ExpenseLastWeek extends StatelessWidget {
                               sortedCategories[i + 1],
                               weeklyTotalByCategory[sortedCategories[i + 1]] ??
                                   0,
-                              i + 1,
                             )
                           : SizedBox(), // Empty SizedBox for odd number of categories
                     ),
@@ -227,7 +222,7 @@ class ExpenseLastWeek extends StatelessWidget {
     );
   }
 
-  Widget _buildLegendItem(String category, double totalAmount, int index) {
+  Widget _buildLegendItem(Category category, double totalAmount) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -235,14 +230,14 @@ class ExpenseLastWeek extends StatelessWidget {
           width: 12,
           height: 12,
           decoration: BoxDecoration(
-            color: Colors.primaries[index % Colors.primaries.length],
+            color: category.color,
             shape: BoxShape.circle,
           ),
         ),
         SizedBox(width: 8),
         Expanded(
           child: Text(
-            category,
+            category.name,
             style: TextStyle(fontSize: 12),
             overflow: TextOverflow.ellipsis,
           ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
+import 'package:expensed_web_app/models/alert.dart';
+import 'package:intl/intl.dart';
 import 'dashboard.dart';
 
 class Homepage extends StatefulWidget {
@@ -84,25 +86,65 @@ class _HomepageState extends State<Homepage> {
                 child: Column(
                   children: [
                     AppBar(
-                      title: Text(_titles[selectedIndex]),
+                      title: Text(
+                        _titles[selectedIndex],
+                        style: TextStyle(fontSize: 22), // Increased font size
+                      ),
+                      toolbarHeight: 64, // Increased AppBar height
                       actions: [
-                        IconButton(
-                          icon: Icon(Icons.notifications),
-                          onPressed: () {
-                            // Add notification functionality here
+                        StatefulBuilder(
+                          builder:
+                              (BuildContext context, StateSetter setState) {
+                            return PopupMenuButton<Alert>(
+                              icon: Icon(Icons.notifications,
+                                  size: 28), // Increased icon size
+                              itemBuilder: (BuildContext context) {
+                                return [
+                                  ...expenseProvider.alerts.map((Alert alert) {
+                                    return PopupMenuItem<Alert>(
+                                      value: alert,
+                                      child: ListTile(
+                                        title: Text(alert.formattedAlert),
+                                        subtitle: Text(
+                                            DateFormat('MMM d, y HH:mm')
+                                                .format(alert.dateTime)),
+                                        trailing: IconButton(
+                                          icon: Icon(Icons.close, size: 16),
+                                          onPressed: () {
+                                            expenseProvider
+                                                .deleteAlert(alert.id);
+                                            setState(
+                                                () {}); // Rebuild the popup menu
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  if (expenseProvider.alerts.isEmpty)
+                                    PopupMenuItem<Alert>(
+                                      child: ListTile(
+                                        title: Text('No alerts'),
+                                      ),
+                                    ),
+                                ];
+                              },
+                              onSelected: (Alert alert) {
+                                print('Alert clicked: ${alert.formattedAlert}');
+                              },
+                            );
                           },
                         ),
                         PopupMenuButton<String>(
-                          icon: Icon(Icons.account_circle),
-                          offset: Offset(0, 56),
+                          icon: Icon(Icons.account_circle,
+                              size: 28), // Increased icon size
+                          offset: Offset(
+                              0, 64), // Adjusted offset for larger AppBar
                           onSelected: (String value) {
                             switch (value) {
                               case 'profile':
-                                // Handle profile action
                                 print('Profile selected');
                                 break;
                               case 'logout':
-                                // Handle logout action
                                 print('Logout selected');
                                 break;
                             }
@@ -111,31 +153,43 @@ class _HomepageState extends State<Homepage> {
                               <PopupMenuEntry<String>>[
                             PopupMenuItem<String>(
                               enabled: false,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('John Doe',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text('john.doe@example.com',
-                                      style: TextStyle(fontSize: 12)),
-                                ],
+                              child: ListTile(
+                                leading: Icon(Icons.account_circle,
+                                    size: 48), // Increased icon size
+                                title: Text(
+                                  'John Doe',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16, // Increased font size
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  'john.doe@example.com',
+                                  style: TextStyle(
+                                      fontSize: 14), // Increased font size
+                                ),
                               ),
                             ),
                             PopupMenuDivider(),
                             PopupMenuItem<String>(
                               value: 'profile',
                               child: ListTile(
-                                leading: Icon(Icons.person),
-                                title: Text('Profile'),
+                                leading: Icon(Icons.person,
+                                    size: 24), // Increased icon size
+                                title: Text('Profile',
+                                    style: TextStyle(
+                                        fontSize: 16)), // Increased font size
                                 contentPadding: EdgeInsets.zero,
                               ),
                             ),
                             PopupMenuItem<String>(
                               value: 'logout',
                               child: ListTile(
-                                leading: Icon(Icons.exit_to_app),
-                                title: Text('Logout'),
+                                leading: Icon(Icons.exit_to_app,
+                                    size: 24), // Increased icon size
+                                title: Text('Logout',
+                                    style: TextStyle(
+                                        fontSize: 16)), // Increased font size
                                 contentPadding: EdgeInsets.zero,
                               ),
                             ),

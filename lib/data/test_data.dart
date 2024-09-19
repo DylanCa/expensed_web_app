@@ -14,7 +14,7 @@ class TestData {
   ];
 
   static final List<Person> persons = [
-    Person(id: '1', name: 'Alice', color: Colors.black),
+    Person(id: '1', name: 'Alice', color: Colors.blue),
     Person(id: '2', name: 'Bob', color: Colors.orange),
     Person(id: '3', name: 'Charlie', color: Colors.pink),
   ];

@@ -25,40 +25,33 @@ class ExpenseSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
-      height:
-          170, // Slightly increased height to accommodate additional spacing
+      height: 170,
       child: startDate != null || endDate != null
-          ? _buildSelectedDateRangeSummary()
-          : _buildDefaultSummary(),
+          ? _buildSelectedDateRangeSummary(context)
+          : _buildDefaultSummary(context),
     );
   }
 
-  Widget _buildSelectedDateRangeSummary() {
+  Widget _buildSelectedDateRangeSummary(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           'Selected Date Range Total',
-          style: TextStyle(
-            fontSize: 18, // Increased font size
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.displayMedium,
         ),
         SizedBox(height: 8),
         Text(
           NumberFormat.currency(symbol: '\$')
               .format(selectedDateRangeTotal ?? 0),
-          style: TextStyle(
-            fontSize: 28, // Increased font size
-            fontWeight: FontWeight.bold,
-            color: Colors.blue,
+          style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                color: Theme.of(context).primaryColor,
           ),
         ),
         SizedBox(height: 8),
         Text(
           _getDateRangeText(),
-          style: TextStyle(
-            fontSize: 16, // Increased font size
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Colors.grey[600],
           ),
         ),
@@ -66,11 +59,12 @@ class ExpenseSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildDefaultSummary() {
+  Widget _buildDefaultSummary(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: _buildSummaryItem(
+            context,
             'Current Week Total',
             currentWeekTotal,
             averageWeeklyTotal,
@@ -79,11 +73,12 @@ class ExpenseSummary extends StatelessWidget {
         ),
         Container(
           width: 1,
-          height: 140, // Increased divider height
+          height: 140,
           color: Colors.grey[300],
         ),
         Expanded(
           child: _buildSummaryItem(
+            context,
             'Current Month Total',
             currentMonthTotal,
             averageMonthlyTotal,
@@ -95,7 +90,8 @@ class ExpenseSummary extends StatelessWidget {
   }
 
   Widget _buildSummaryItem(
-      String label, double amount, double average, String averageLabel) {
+      BuildContext context, String label, double amount,
+      double average, String averageLabel) {
     double percentageDifference = ((amount - average) / average) * 100;
     String percentageText =
         '${percentageDifference >= 0 ? '+' : '-'}${percentageDifference.abs().toStringAsFixed(1)}%';
@@ -107,8 +103,7 @@ class ExpenseSummary extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 16, // Increased font size
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.center,
@@ -116,34 +111,29 @@ class ExpenseSummary extends StatelessWidget {
         SizedBox(height: 4),
         Text(
           NumberFormat.currency(symbol: '\$').format(amount),
-          style: TextStyle(
-            fontSize: 24, // Increased font size
-            fontWeight: FontWeight.bold,
-            color: Colors.blue,
+          style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                color: Theme.of(context).primaryColor,
           ),
         ),
         SizedBox(height: 2),
         Text(
           percentageText,
-          style: TextStyle(
-            fontSize: 14, // Increased font size
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: percentageColor,
           ),
         ),
-        SizedBox(height: 8), // Increased spacing here
+        SizedBox(height: 8),
         Text(
           averageLabel,
-          style: TextStyle(
-            fontSize: 12, // Increased font size
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Colors.grey[600],
           ),
         ),
-        SizedBox(height: 2), // Added a small space between label and value
+        SizedBox(height: 2),
         Text(
           NumberFormat.currency(symbol: '\$').format(average),
-          style: TextStyle(
-            fontSize: 12, // Increased font size
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.bold,
             color: Colors.grey[700],
           ),

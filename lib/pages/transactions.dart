@@ -19,11 +19,14 @@ class Transactions extends StatelessWidget {
       builder: (context, expenseProvider, child) {
         if (expenseProvider.isLoading) {
           return Center(
-              child: CircularProgressIndicator(color: Color(0xFFB39DDB)));
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor));
         }
 
         if (expenseProvider.error != null) {
-          return Center(child: Text(expenseProvider.error!));
+          return Center(
+              child: Text(expenseProvider.error!,
+                  style: Theme.of(context).textTheme.bodyLarge));
         }
 
         List<Expense> filteredExpenses = expenseProvider.getFilteredExpenses();
@@ -46,7 +49,7 @@ class Transactions extends StatelessWidget {
             _calculateSelectedDateRangeTotal(filteredExpenses);
 
         return Scaffold(
-          backgroundColor: Colors.grey[100],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: LayoutBuilder(
             builder: (context, constraints) {
               final totalWidth = constraints.maxWidth;
@@ -310,8 +313,7 @@ class Transactions extends StatelessWidget {
                   children: [
                     Text(
                       'Add New Expense',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                     SizedBox(height: 20),
                     TextFormField(

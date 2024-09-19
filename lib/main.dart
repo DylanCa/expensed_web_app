@@ -6,8 +6,12 @@ import 'package:expensed_web_app/pages/homepage.dart';
 import 'package:expensed_web_app/pages/dashboard.dart';
 import 'package:expensed_web_app/pages/transactions.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Add a small delay
+  await Future.delayed(Duration(milliseconds: 100));
+
   runApp(
     MultiProvider(
       providers: [

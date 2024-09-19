@@ -69,7 +69,9 @@ class _HomepageState extends State<Homepage> {
 
         if (expenseProvider.error != null) {
           return Scaffold(
-            body: Center(child: Text(expenseProvider.error!)),
+            body: Center(
+                child: Text(expenseProvider.error!,
+                    style: Theme.of(context).textTheme.bodyLarge)),
           );
         }
 

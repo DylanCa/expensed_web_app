@@ -67,7 +67,9 @@ class _TransactionListState extends State<TransactionList> {
         _buildHeader(context),
         Expanded(
           child: widget.expenses.isEmpty
-              ? Center(child: Text('No expenses available'))
+              ? Center(
+                  child: Text('No expenses available',
+                      style: Theme.of(context).textTheme.bodyLarge))
               : ListView.builder(
                   itemCount: widget.expenses.length,
                   itemBuilder: (context, index) {
@@ -128,7 +130,7 @@ class _TransactionListState extends State<TransactionList> {
               Expanded(
                 child: Text(
                   _getHeaderText(),
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.displayMedium,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -141,7 +143,10 @@ class _TransactionListState extends State<TransactionList> {
           SizedBox(height: 8),
           Text(
             _getSubHeaderText(),
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Colors.grey[600]),
           ),
         ],
       ),
@@ -155,10 +160,12 @@ class _TransactionListState extends State<TransactionList> {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search...',
-          prefixIcon: Icon(Icons.search, size: 20),
+          prefixIcon: Icon(Icons.search,
+              size: 20, color: Theme.of(context).iconTheme.color),
           suffixIcon: _searchController.text.isNotEmpty
               ? IconButton(
-                  icon: Icon(Icons.clear, size: 20),
+                  icon: Icon(Icons.clear,
+                      size: 20, color: Theme.of(context).iconTheme.color),
                   onPressed: () {
                     _searchController.clear();
                     widget.onSearch('');
@@ -183,7 +190,8 @@ class _TransactionListState extends State<TransactionList> {
       onPressed: () => showFilterBottomSheet(context, widget.expenseProvider),
       style: ElevatedButton.styleFrom(
         backgroundColor: _isFilterActive()
-            ? Colors.blue : Colors.blue.withOpacity(0.5),
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).primaryColor.withOpacity(0.5),
         foregroundColor: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         minimumSize: Size(100, 36),
@@ -276,8 +284,7 @@ class _TransactionListState extends State<TransactionList> {
                   children: [
                     Text(
                       'Edit Expense',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                     SizedBox(height: 20),
                     TextFormField(

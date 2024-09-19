@@ -151,6 +151,15 @@ class _TransactionListState extends State<TransactionList> {
         decoration: InputDecoration(
           hintText: 'Search...',
           prefixIcon: Icon(Icons.search, size: 20),
+          suffixIcon: _searchController.text.isNotEmpty
+              ? IconButton(
+                  icon: Icon(Icons.clear, size: 20),
+                  onPressed: () {
+                    _searchController.clear();
+                    widget.onSearch('');
+                  },
+                )
+              : null,
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(18),
@@ -180,6 +189,10 @@ class _TransactionListState extends State<TransactionList> {
   }
 
   String _getHeaderText() {
+    if (!_isFilterActive()) {
+      return 'All Expenses';
+    }
+
     List<String> headerParts = [];
   
     if (widget.searchQuery.isNotEmpty) {

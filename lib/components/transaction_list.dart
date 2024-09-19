@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/components/expense.dart';
+import 'package:expensed_web_app/models/category.dart';
+import 'package:expensed_web_app/models/person.dart';
+import 'package:expensed_web_app/providers/expense_provider.dart';
+import 'package:provider/provider.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Expense> expenses;
   final Function(String) onSearch;
   final Function showFilterBottomSheet;
-  final Set<String> selectedCategories;
-  final Set<String> selectedPersons;
+  final Set<Category> selectedCategories;
+  final Set<Person> selectedPersons;
   final DateTime? startDate;
   final DateTime? endDate;
   final String searchQuery;
@@ -27,95 +31,80 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isNarrowLayout =
-            constraints.maxWidth < 600; // Adjust this threshold as needed
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _getHeaderText(),
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            if (_getSubHeaderText().isNotEmpty)
-                              Text(
-                                _getSubHeaderText(),
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.grey[600]),
-                              ),
-                          ],
-                        ),
-                      ),
-                      if (!isNarrowLayout) ...[
-                        SizedBox(width: 16),
-                        _buildSearchBar(),
-                      ],
-                      SizedBox(width: 16),
-                      _buildFilterButton(context),
-                    ],
-                  ),
-                  if (isNarrowLayout) ...[
-                    SizedBox(height: 16),
-                    _buildSearchBar(),
-                  ],
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: expenses.length,
-                itemBuilder: (context, index) {
-                  final expense = expenses[index];
-                  bool isNewDate = index == 0 ||
-                      DateFormat('yyyy-MM-dd')
-                              .format(expenses[index - 1].dateTime) !=
+    return Column(
+      children: [
+        _buildHeader(),
+        Expanded(
+          child: ListView.builder(
+            itemCount: expenses.length,
+            itemBuilder: (context, index) {
+              final expense = expenses[index];
+              bool isNewDate = index == 0 ||
+                  DateFormat('yyyy-MM-dd')
+                          .format(expenses[index - 1].dateTime) !=
                       DateFormat('yyyy-MM-dd').format(expense.dateTime);
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (isNewDate)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 8),
-                          child: Text(
-                            DateFormat('MMMM d, yyyy').format(expense.dateTime),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ExpenseWidget(
-                        backgroundColor:
-                            index % 2 == 0 ? Colors.white : Colors.grey[100]!,
-                        expense: expense,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isNewDate)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
+                      child: Text(
+                        DateFormat('MMMM d, yyyy').format(expense.dateTime),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                    ],
-                  );
-                },
+                    ),
+                  ExpenseWidget(
+                    backgroundColor:
+                        index % 2 == 0 ? Colors.white : Colors.grey[100]!,
+                    expense: expense,
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  _getHeaderText(),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ],
-        );
-      },
+              SizedBox(width: 16),
+              _buildSearchBar(),
+              SizedBox(width: 16),
+              _buildFilterButton(),
+            ],
+          ),
+          SizedBox(height: 8),
+          Text(
+            _getSubHeaderText(),
+            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildSearchBar() {
-    return Container(
+    return SizedBox(
       width: 200,
       height: 36,
       child: TextField(
@@ -132,13 +121,12 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterButton(BuildContext context) {
+  Widget _buildFilterButton() {
     return ElevatedButton.icon(
       onPressed: () => showFilterBottomSheet(),
       style: ElevatedButton.styleFrom(
         backgroundColor: _isFilterActive()
-            ? Theme.of(context).primaryColor
-            : Theme.of(context).primaryColor.withOpacity(0.5),
+            ? Colors.blue : Colors.blue.withOpacity(0.5),
         foregroundColor: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         minimumSize: Size(100, 36),
@@ -154,7 +142,7 @@ class TransactionList extends StatelessWidget {
     }
     List<String> headerParts = [];
     if (selectedCategories.isNotEmpty) {
-      headerParts.add(selectedCategories.join(', '));
+      headerParts.add(selectedCategories.map((c) => c.name).join(', '));
     }
     headerParts.add('expenses');
     return headerParts.join(' ');
@@ -163,7 +151,8 @@ class TransactionList extends StatelessWidget {
   String _getSubHeaderText() {
     List<String> subHeaderParts = [];
     if (selectedPersons.isNotEmpty) {
-      subHeaderParts.add('paid by ${selectedPersons.join(', ')}');
+      subHeaderParts
+          .add('paid by ${selectedPersons.map((p) => p.name).join(', ')}');
     }
     if (startDate != null && endDate != null) {
       subHeaderParts.add(

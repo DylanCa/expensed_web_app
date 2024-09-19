@@ -8,8 +8,7 @@ import '../models/category.dart';
 class ExpenseLastWeek extends StatelessWidget {
   final List<Expense> filteredExpenses;
 
-  const ExpenseLastWeek({Key? key, required this.filteredExpenses})
-      : super(key: key);
+  const ExpenseLastWeek({super.key, required this.filteredExpenses});
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +118,7 @@ class ExpenseLastWeek extends StatelessWidget {
           Text('Expense Last Week',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 20),
-          Container(
+          SizedBox(
             height: 200,
             child: barGroups.isEmpty
                 ? Center(child: Text('No data available for the last 7 days'))

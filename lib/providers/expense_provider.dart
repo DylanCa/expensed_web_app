@@ -1,29 +1,25 @@
-import 'package:flutter/foundation.dart' hide Category;
+import 'package:flutter/foundation.dart';
 import 'package:expensed_web_app/models/expense.dart';
-import 'package:expensed_web_app/models/category.dart';
+import 'package:expensed_web_app/models/category.dart' as app_category;
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/repositories/expense_repository.dart';
+import 'package:expensed_web_app/data/test_data.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ExpenseProvider with ChangeNotifier {
   final ExpenseRepository _repository = ExpenseRepository();
-  List<Expense> _expenses = [];
+  List<Expense> _expenses = []; // Initialize with an empty list
+  List<app_category.Category> _categories = [];
+  List<Person> _persons = [];
   bool _isLoading = false;
   String? _error;
-  Set<Category> _selectedCategories = {};
+  Set<app_category.Category> _selectedCategories = {};
   Set<Person> _selectedPersons = {};
   DateTime? _startDate;
   DateTime? _endDate;
   String _searchQuery = '';
 
   List<Expense> get expenses => _expenses;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
-  Set<Category> get selectedCategories => _selectedCategories;
-  Set<Person> get selectedPersons => _selectedPersons;
-  DateTime? get startDate => _startDate;
-  DateTime? get endDate => _endDate;
-  String get searchQuery => _searchQuery;
 
   final _searchSubject = BehaviorSubject<String>();
 
@@ -33,6 +29,13 @@ class ExpenseProvider with ChangeNotifier {
         .listen((query) => setSearchQuery(query));
 
     loadExpenses();
+    loadCategoriesAndPersons();
+  }
+
+  void loadCategoriesAndPersons() {
+    _categories = TestData.categories;
+    _persons = TestData.persons;
+    notifyListeners();
   }
 
   Future<void> loadExpenses() async {
@@ -44,12 +47,12 @@ class ExpenseProvider with ChangeNotifier {
       await _repository.loadExpenses();
       _expenses = await _repository.getExpenses();
       _isLoading = false;
-      notifyListeners();
     } catch (e) {
       _error = "Failed to load expenses: $e";
+      _expenses = []; // Set expenses to an empty list on error
       _isLoading = false;
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   void setSearchQuery(String query) {
@@ -57,7 +60,7 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedCategories(Set<Category> categories) {
+  void setSelectedCategories(Set<app_category.Category> categories) {
     _selectedCategories = categories;
     notifyListeners();
   }
@@ -83,6 +86,9 @@ class ExpenseProvider with ChangeNotifier {
   }
 
   List<Expense> getFilteredExpenses() {
+    if (_expenses.isEmpty) {
+      return []; // Return an empty list if there are no expenses
+    }
     return _expenses.where((expense) {
       bool dateInRange = true;
       if (_startDate != null && _endDate != null) {
@@ -157,4 +163,14 @@ class ExpenseProvider with ChangeNotifier {
     _searchSubject.close();
     super.dispose();
   }
+
+  bool get isLoading => _isLoading;
+  String? get error => _error;
+  List<app_category.Category> get categories => _categories;
+  List<Person> get persons => _persons;
+  Set<app_category.Category> get selectedCategories => _selectedCategories;
+  Set<Person> get selectedPersons => _selectedPersons;
+  DateTime? get startDate => _startDate;
+  DateTime? get endDate => _endDate;
+  String get searchQuery => _searchQuery;
 }

@@ -76,7 +76,7 @@ class Expense {
     RecurrenceInterval? recurrenceInterval,
   }) {
     return Expense(
-      id: this.id,
+      id: id,
       dateTime: dateTime ?? this.dateTime,
       shopName: shopName ?? this.shopName,
       category: category ?? this.category,

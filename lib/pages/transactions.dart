@@ -24,6 +24,10 @@ class Transactions extends StatelessWidget {
 
         List<Expense> filteredExpenses = expenseProvider.getFilteredExpenses();
 
+        if (filteredExpenses.isEmpty) {
+          return Center(child: Text('No expenses available'));
+        }
+
         return Scaffold(
           backgroundColor: Colors.white,
           body: LayoutBuilder(
@@ -51,25 +55,21 @@ class Transactions extends StatelessWidget {
                           showFilterBottomSheet: () =>
                               _showFilterBottomSheet(context, expenseProvider),
                           selectedCategories:
-                              expenseProvider.selectedCategories
-                              .map((c) => c.name)
-                              .toSet(),
-                          selectedPersons: expenseProvider.selectedPersons
-                              .map((p) => p.name)
-                              .toSet(),
+                              expenseProvider.selectedCategories,
+                          selectedPersons: expenseProvider.selectedPersons,
                           startDate: expenseProvider.startDate,
                           endDate: expenseProvider.endDate,
                           searchQuery: expenseProvider.searchQuery,
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: rightColumnWidth,
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 300,
+                              height: 450,
                               child: SpendingByPerson(
                                 filteredExpenses: filteredExpenses,
                               ),
@@ -95,7 +95,7 @@ class Transactions extends StatelessWidget {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -116,7 +116,7 @@ class Transactions extends StatelessWidget {
                               ),
                               Container(
                                 constraints: BoxConstraints(minWidth: 400),
-                                width: 300,
+                                width: 450,
                                 height: 450,
                                 child: ExpenseLastWeek(
                                   filteredExpenses: filteredExpenses,
@@ -139,12 +139,8 @@ class Transactions extends StatelessWidget {
                           showFilterBottomSheet: () =>
                               _showFilterBottomSheet(context, expenseProvider),
                           selectedCategories:
-                              expenseProvider.selectedCategories
-                              .map((c) => c.name)
-                              .toSet(),
-                          selectedPersons: expenseProvider.selectedPersons
-                              .map((p) => p.name)
-                              .toSet(),
+                              expenseProvider.selectedCategories,
+                          selectedPersons: expenseProvider.selectedPersons,
                           startDate: expenseProvider.startDate,
                           endDate: expenseProvider.endDate,
                           searchQuery: expenseProvider.searchQuery,
@@ -302,10 +298,8 @@ class Transactions extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: expenseProvider.expenses
-                        .map((e) => e.category)
-                        .toSet()
-                        .map((Category category) {
+                    children:
+                        expenseProvider.categories.map((Category category) {
                       return FilterChip(
                         label: Text(category.name),
                         selected: expenseProvider.selectedCategories
@@ -334,10 +328,7 @@ class Transactions extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: expenseProvider.expenses
-                        .map((e) => e.paidBy)
-                        .toSet()
-                        .map((Person person) {
+                    children: expenseProvider.persons.map((Person person) {
                       return FilterChip(
                         label: Text(person.name),
                         selected:

@@ -7,10 +7,10 @@ class ExpenseWidget extends StatelessWidget {
   final Expense expense;
 
   const ExpenseWidget({
-    Key? key,
+    super.key,
     required this.backgroundColor,
     required this.expense,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class ExpenseWidget extends StatelessWidget {
               ),
             ),
             // Category
-            Container(
+            SizedBox(
               width: 100,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +73,7 @@ class ExpenseWidget extends StatelessWidget {
               ),
             ),
             // Price
-            Container(
+            SizedBox(
               width: 80,
               child: Text(
                 expense.formattedAmount,

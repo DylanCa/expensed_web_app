@@ -6,8 +6,14 @@ import 'package:expensed_web_app/pages/transactions.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ExpenseProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) {
+          final provider = ExpenseProvider();
+          provider.loadExpenses(); // Load expenses when the app starts
+          return provider;
+        }),
+      ],
       child: MyApp(),
     ),
   );

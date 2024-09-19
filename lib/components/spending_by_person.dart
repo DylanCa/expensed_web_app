@@ -7,8 +7,7 @@ import '../models/person.dart';
 class SpendingByPerson extends StatelessWidget {
   final List<Expense> filteredExpenses;
 
-  const SpendingByPerson({Key? key, required this.filteredExpenses})
-      : super(key: key);
+  const SpendingByPerson({super.key, required this.filteredExpenses});
 
   @override
   Widget build(BuildContext context) {

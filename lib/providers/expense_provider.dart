@@ -1,5 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' hide Category;
 import 'package:expensed_web_app/models/expense.dart';
+import 'package:expensed_web_app/models/category.dart';
+import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/repositories/expense_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -8,8 +10,8 @@ class ExpenseProvider with ChangeNotifier {
   List<Expense> _expenses = [];
   bool _isLoading = false;
   String? _error;
-  Set<String> _selectedCategories = {};
-  Set<String> _selectedPersons = {};
+  Set<Category> _selectedCategories = {};
+  Set<Person> _selectedPersons = {};
   DateTime? _startDate;
   DateTime? _endDate;
   String _searchQuery = '';
@@ -17,8 +19,8 @@ class ExpenseProvider with ChangeNotifier {
   List<Expense> get expenses => _expenses;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  Set<String> get selectedCategories => _selectedCategories;
-  Set<String> get selectedPersons => _selectedPersons;
+  Set<Category> get selectedCategories => _selectedCategories;
+  Set<Person> get selectedPersons => _selectedPersons;
   DateTime? get startDate => _startDate;
   DateTime? get endDate => _endDate;
   String get searchQuery => _searchQuery;
@@ -55,12 +57,12 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedCategories(Set<String> categories) {
+  void setSelectedCategories(Set<Category> categories) {
     _selectedCategories = categories;
     notifyListeners();
   }
 
-  void setSelectedPersons(Set<String> persons) {
+  void setSelectedPersons(Set<Person> persons) {
     _selectedPersons = persons;
     notifyListeners();
   }
@@ -98,8 +100,12 @@ class ExpenseProvider with ChangeNotifier {
 
       bool matchesSearch = _searchQuery.isEmpty ||
           expense.shopName.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-          expense.category.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-          expense.paidBy.toLowerCase().contains(_searchQuery.toLowerCase());
+          expense.category.name
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase()) ||
+          expense.paidBy.name
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase());
 
       return dateInRange &&
           matchesSearch &&

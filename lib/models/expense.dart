@@ -1,13 +1,15 @@
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:expensed_web_app/models/category.dart';
+import 'package:expensed_web_app/models/person.dart';
 
 class Expense {
   final String id;
   final DateTime dateTime;
   final String shopName;
-  final String category;
+  final Category category;
   final double amount;
-  final String paidBy;
+  final Person paidBy;
   final String? notes;
   final List<String> tags;
   final bool isRecurring;
@@ -32,9 +34,9 @@ class Expense {
       id: map['id'],
       dateTime: DateTime.parse(map['dateTime']),
       shopName: map['shopName'],
-      category: map['category'],
+      category: Category.fromMap(map['category']),
       amount: map['amount'].toDouble(),
-      paidBy: map['paidBy'],
+      paidBy: Person.fromMap(map['paidBy']),
       notes: map['notes'],
       tags: List<String>.from(map['tags'] ?? []),
       isRecurring: map['isRecurring'] ?? false,
@@ -49,9 +51,9 @@ class Expense {
       'id': id,
       'dateTime': dateTime.toIso8601String(),
       'shopName': shopName,
-      'category': category,
+      'category': category.toMap(),
       'amount': amount,
-      'paidBy': paidBy,
+      'paidBy': paidBy.toMap(),
       'notes': notes,
       'tags': tags,
       'isRecurring': isRecurring,
@@ -65,9 +67,9 @@ class Expense {
   Expense copyWith({
     DateTime? dateTime,
     String? shopName,
-    String? category,
+    Category? category,
     double? amount,
-    String? paidBy,
+    Person? paidBy,
     String? notes,
     List<String>? tags,
     bool? isRecurring,

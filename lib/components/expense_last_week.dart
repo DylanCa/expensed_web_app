@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:expensed_web_app/models/expense.dart';
 
+import '../models/category.dart';
+
 class ExpenseLastWeek extends StatelessWidget {
   final List<Expense> filteredExpenses;
 
@@ -31,14 +33,14 @@ class ExpenseLastWeek extends StatelessWidget {
     for (var expense in filteredExpenses) {
       DateTime date = DateTime(
           expense.dateTime.year, expense.dateTime.month, expense.dateTime.day);
-      String category = expense.category;
+      Category category = expense.category;
       double amount = expense.amount;
 
       if (lastSevenDays.contains(date)) {
-        expensesByDayAndCategory[date]!.putIfAbsent(category, () => 0);
-        expensesByDayAndCategory[date]![category] =
-            (expensesByDayAndCategory[date]![category] ?? 0) + amount;
-        categories.add(category);
+        expensesByDayAndCategory[date]!.putIfAbsent(category.name, () => 0);
+        expensesByDayAndCategory[date]![category.name] =
+            (expensesByDayAndCategory[date]![category.name] ?? 0) + amount;
+        categories.add(category.name);
 
         double dailyTotal =
             expensesByDayAndCategory[date]!.values.fold(0, (a, b) => a + b);

@@ -48,7 +48,7 @@ class ExpenseWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 2),
                   Text(
-                    "Paid by ${expense.paidBy}",
+                    "Paid by ${expense.paidBy.name}",
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ],
@@ -64,7 +64,7 @@ class ExpenseWidget extends StatelessWidget {
                   SizedBox(width: 4),
                   Flexible(
                     child: Text(
-                      expense.category,
+                      expense.category.name,
                       style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                     ),

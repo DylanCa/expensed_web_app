@@ -6,6 +6,8 @@ import 'package:expensed_web_app/components/spending_by_person.dart';
 import 'package:expensed_web_app/components/expense_last_week.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/models/expense.dart';
+import 'package:expensed_web_app/models/category.dart';
+import 'package:expensed_web_app/models/person.dart';
 
 class Transactions extends StatelessWidget {
   @override
@@ -49,8 +51,12 @@ class Transactions extends StatelessWidget {
                           showFilterBottomSheet: () =>
                               _showFilterBottomSheet(context, expenseProvider),
                           selectedCategories:
-                              expenseProvider.selectedCategories,
-                          selectedPersons: expenseProvider.selectedPersons,
+                              expenseProvider.selectedCategories
+                              .map((c) => c.name)
+                              .toSet(),
+                          selectedPersons: expenseProvider.selectedPersons
+                              .map((p) => p.name)
+                              .toSet(),
                           startDate: expenseProvider.startDate,
                           endDate: expenseProvider.endDate,
                           searchQuery: expenseProvider.searchQuery,
@@ -133,8 +139,12 @@ class Transactions extends StatelessWidget {
                           showFilterBottomSheet: () =>
                               _showFilterBottomSheet(context, expenseProvider),
                           selectedCategories:
-                              expenseProvider.selectedCategories,
-                          selectedPersons: expenseProvider.selectedPersons,
+                              expenseProvider.selectedCategories
+                              .map((c) => c.name)
+                              .toSet(),
+                          selectedPersons: expenseProvider.selectedPersons
+                              .map((p) => p.name)
+                              .toSet(),
                           startDate: expenseProvider.startDate,
                           endDate: expenseProvider.endDate,
                           searchQuery: expenseProvider.searchQuery,
@@ -295,9 +305,9 @@ class Transactions extends StatelessWidget {
                     children: expenseProvider.expenses
                         .map((e) => e.category)
                         .toSet()
-                        .map((String category) {
+                        .map((Category category) {
                       return FilterChip(
-                        label: Text(category),
+                        label: Text(category.name),
                         selected: expenseProvider.selectedCategories
                             .contains(category),
                         onSelected: (bool selected) {
@@ -327,9 +337,9 @@ class Transactions extends StatelessWidget {
                     children: expenseProvider.expenses
                         .map((e) => e.paidBy)
                         .toSet()
-                        .map((String person) {
+                        .map((Person person) {
                       return FilterChip(
-                        label: Text(person),
+                        label: Text(person.name),
                         selected:
                             expenseProvider.selectedPersons.contains(person),
                         onSelected: (bool selected) {

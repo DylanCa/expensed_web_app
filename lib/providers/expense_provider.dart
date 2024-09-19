@@ -81,7 +81,7 @@ class ExpenseProvider with ChangeNotifier {
     _selectedPersons.clear();
     _startDate = null;
     _endDate = null;
-    _searchQuery = '';
+    _searchQuery = ''; // This line ensures the search query is cleared
     notifyListeners();
   }
 

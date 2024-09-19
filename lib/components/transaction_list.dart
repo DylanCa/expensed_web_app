@@ -33,7 +33,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildHeader(),
+        _buildHeader(context),
         Expanded(
           child: expenses.isEmpty
               ? Center(child: Text('No expenses available'))
@@ -74,7 +74,7 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -91,9 +91,9 @@ class TransactionList extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 16),
-              _buildSearchBar(),
+              _buildSearchBar(context),
               SizedBox(width: 16),
-              _buildFilterButton(),
+              _buildFilterButton(context),
             ],
           ),
           SizedBox(height: 8),
@@ -106,7 +106,9 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
+    final expenseProvider =
+        Provider.of<ExpenseProvider>(context, listen: false);
     return SizedBox(
       width: 200,
       height: 36,
@@ -119,12 +121,13 @@ class TransactionList extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
           ),
         ),
+        controller: TextEditingController(text: searchQuery),
         onChanged: onSearch,
       ),
     );
   }
 
-  Widget _buildFilterButton() {
+  Widget _buildFilterButton(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () => showFilterBottomSheet(),
       style: ElevatedButton.styleFrom(

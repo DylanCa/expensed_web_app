@@ -70,13 +70,38 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Expense Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: MaterialColor(0xFF9FA8DA, {
+          50: Color(0xFFEEF0F9),
+          100: Color(0xFFD4DAF0),
+          200: Color(0xFFB8C1E6),
+          300: Color(0xFF9BA8DC),
+          400: Color(0xFF8695D5),
+          500: Color(0xFF7182CE),
+          600: Color(0xFF697AC9),
+          700: Color(0xFF5E6FC2),
+          800: Color(0xFF5465BC),
+          900: Color(0xFF4252B0),
+        }),
+        scaffoldBackgroundColor: Color(0xFFF3F4FB),
+        cardColor: Colors.white,
         textTheme: TextTheme(
-          displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          bodyLarge: TextStyle(fontSize: 16),
-          bodyMedium: TextStyle(fontSize: 14),
+          displayLarge: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF3F51B5)),
+          displayMedium: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF3F51B5)),
+          bodyLarge: TextStyle(fontSize: 16, color: Color(0xFF3F51B5)),
+          bodyMedium: TextStyle(fontSize: 14, color: Color(0xFF3F51B5)),
+        ),
+        iconTheme: IconThemeData(color: Color(0xFF7986CB)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFF7986CB),
+            foregroundColor: Colors.white,
+          ),
         ),
       ),
       routerConfig: _router,

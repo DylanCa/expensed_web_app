@@ -61,7 +61,9 @@ class _HomepageState extends State<Homepage> {
       builder: (context, expenseProvider, child) {
         if (expenseProvider.isLoading) {
           return Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor)),
           );
         }
 
@@ -81,28 +83,30 @@ class _HomepageState extends State<Homepage> {
                 children: [
                   Container(
                     width: menuWidth,
-                    color: Colors.blue[50],
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     child: Column(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.all(12.0), // Reduced padding
+                          padding: const EdgeInsets.all(12.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.account_balance_wallet,
-                                size: 40, // Reduced icon size
-                                color: Colors.blue,
+                                size: 40,
+                                color: Theme.of(context).primaryColor,
                               ),
                               if (isWideLayout) SizedBox(width: 8),
                               if (isWideLayout)
                                 Text(
                                   'Expensed',
                                   style: TextStyle(
-                                    fontSize: 18, // Reduced font size
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.color,
                                   ),
                                 ),
                             ],
@@ -125,7 +129,12 @@ class _HomepageState extends State<Homepage> {
                         ),
                         Column(
                           children: [
-                            Divider(thickness: 1, height: 1),
+                            Divider(
+                                thickness: 1,
+                                height: 1,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.1)),
                             _buildBottomNavItem(
                               icon: Icons.settings,
                               outlinedIcon: Icons.settings_outlined,
@@ -180,9 +189,9 @@ class _HomepageState extends State<Homepage> {
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           color: isSelected
-              ? Colors.blue[100]
+              ? Theme.of(context).primaryColor.withOpacity(0.1)
               : hoveredIndex == index
-                  ? Colors.blue[50]
+                  ? Theme.of(context).primaryColor.withOpacity(0.05)
                   : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
@@ -224,7 +233,7 @@ class _HomepageState extends State<Homepage> {
                     : EdgeInsets.zero,
                 child: Icon(
                   isSelected ? icon : outlinedIcon,
-                  color: Colors.blue,
+                  color: Theme.of(context).primaryColor,
                   size: 28,
                 ),
               ),
@@ -234,7 +243,7 @@ class _HomepageState extends State<Homepage> {
                   label,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontWeight:
                         isSelected ? FontWeight.w600 : FontWeight.normal,
                   ),
@@ -264,7 +273,9 @@ class _HomepageState extends State<Homepage> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue[50] : Colors.transparent,
+          color: isSelected
+              ? Theme.of(context).primaryColor.withOpacity(0.05)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextButton(
@@ -287,7 +298,7 @@ class _HomepageState extends State<Homepage> {
                     : EdgeInsets.zero,
                 child: Icon(
                   isSelected ? icon : outlinedIcon,
-                  color: Colors.blue,
+                  color: Theme.of(context).primaryColor,
                   size: 28,
                 ),
               ),
@@ -297,7 +308,7 @@ class _HomepageState extends State<Homepage> {
                   label,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontWeight:
                         isSelected ? FontWeight.w600 : FontWeight.normal,
                   ),

@@ -18,7 +18,8 @@ class Transactions extends StatelessWidget {
     return Consumer<ExpenseProvider>(
       builder: (context, expenseProvider, child) {
         if (expenseProvider.isLoading) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(color: Color(0xFFB39DDB)));
         }
 
         if (expenseProvider.error != null) {

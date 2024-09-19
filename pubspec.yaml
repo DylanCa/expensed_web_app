@@ -40,6 +40,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   rxdart: ^0.27.7  # Add this line
   uuid: ^3.0.7  # Add this line
+  go_router: ^7.0.0  # Add this line for routing
 
 dev_dependencies:
   flutter_test:

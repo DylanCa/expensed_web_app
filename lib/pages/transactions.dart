@@ -89,8 +89,8 @@ class Transactions extends StatelessWidget {
                       ],
                     ),
                     Positioned(
-                      right: rightColumnWidth + 32, // Increased from 16
-                      bottom: 32, // Increased from 16
+                      right: rightColumnWidth + 32,
+                      bottom: 32,
                       child: FloatingActionButton(
                         onPressed: () => _showAddExpenseBottomSheet(
                             context, expenseProvider),
@@ -162,8 +162,8 @@ class Transactions extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      right: 32, // Increased from 16
-                      bottom: 32, // Increased from 16
+                      right: 32,
+                      bottom: 32,
                       child: FloatingActionButton(
                         onPressed: () => _showAddExpenseBottomSheet(
                             context, expenseProvider),

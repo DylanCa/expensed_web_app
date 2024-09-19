@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/pages/homepage.dart';
-import 'package:expensed_web_app/pages/transactions.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // Add this line
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) {
           final provider = ExpenseProvider();
-          provider.loadExpenses(); // Load expenses when the app starts
+          provider.loadExpenses();
           return provider;
         }),
       ],
@@ -21,9 +21,28 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  final GoRouter _router = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => Homepage(initialIndex: 0),
+      ),
+      GoRoute(
+        path: '/dashboard',
+        builder: (context, state) => Homepage(initialIndex: 0),
+      ),
+      GoRoute(
+        path: '/transactions',
+        builder: (context, state) => Homepage(initialIndex: 1),
+      ),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -35,10 +54,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 14),
         ),
       ),
-      home: Homepage(), // Change this line
-      routes: {
-        '/transactions': (context) => Transactions(),
-      },
+      routerConfig: _router,
     );
   }
 }

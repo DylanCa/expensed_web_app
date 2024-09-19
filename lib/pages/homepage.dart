@@ -41,6 +41,20 @@ class _HomepageState extends State<Homepage> {
     'Household',
   ];
 
+  final List<IconData> _icons = [
+    Icons.dashboard,
+    Icons.trending_up,
+    Icons.flag,
+    Icons.home,
+  ];
+
+  final List<IconData> _outlinedIcons = [
+    Icons.dashboard_outlined,
+    Icons.trending_up_outlined,
+    Icons.flag_outlined,
+    Icons.home_outlined,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseProvider>(
@@ -82,30 +96,14 @@ class _HomepageState extends State<Homepage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              _buildNavItem(
-                                icon: Icons.dashboard,
-                                label: 'Dashboard',
-                                index: 0,
-                                isWideLayout: isWideLayout,
-                              ),
-                              _buildNavItem(
-                                icon: Icons.trending_up,
-                                label: 'Transactions',
-                                index: 1,
-                                isWideLayout: isWideLayout,
-                              ),
-                              _buildNavItem(
-                                icon: Icons.flag,
-                                label: 'Goals',
-                                index: 2,
-                                isWideLayout: isWideLayout,
-                              ),
-                              _buildNavItem(
-                                icon: Icons.home,
-                                label: 'Household',
-                                index: 3,
-                                isWideLayout: isWideLayout,
-                              ),
+                              for (int i = 0; i < _titles.length; i++)
+                                _buildNavItem(
+                                  icon: _icons[i],
+                                  outlinedIcon: _outlinedIcons[i],
+                                  label: _titles[i],
+                                  index: i,
+                                  isWideLayout: isWideLayout,
+                                ),
                             ],
                           ),
                         ),
@@ -114,6 +112,7 @@ class _HomepageState extends State<Homepage> {
                             Divider(thickness: 1, height: 1),
                             _buildBottomNavItem(
                               icon: Icons.settings,
+                              outlinedIcon: Icons.settings_outlined,
                               label: 'Settings',
                               onPressed: () {
                                 // Handle settings button press
@@ -122,6 +121,7 @@ class _HomepageState extends State<Homepage> {
                             ),
                             _buildBottomNavItem(
                               icon: Icons.account_circle,
+                              outlinedIcon: Icons.account_circle_outlined,
                               label: 'Account',
                               onPressed: () {
                                 // Handle account button press
@@ -148,10 +148,12 @@ class _HomepageState extends State<Homepage> {
 
   Widget _buildNavItem({
     required IconData icon,
+    required IconData outlinedIcon,
     required String label,
     required int index,
     required bool isWideLayout,
   }) {
+    final isSelected = selectedIndex == index;
     return MouseRegion(
       onEnter: (_) => setState(() {
         hoveredIndex = index;
@@ -162,7 +164,7 @@ class _HomepageState extends State<Homepage> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
-          color: selectedIndex == index
+          color: isSelected
               ? Colors.blue[100]
               : hoveredIndex == index
                   ? Colors.blue[50]
@@ -175,8 +177,7 @@ class _HomepageState extends State<Homepage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            minimumSize:
-                Size(double.infinity, 60), // Full width button, reduced height
+            minimumSize: Size(double.infinity, 60),
           ),
           onPressed: () {
             setState(() {
@@ -206,15 +207,22 @@ class _HomepageState extends State<Homepage> {
                 padding: isWideLayout
                     ? const EdgeInsets.only(left: 16.0)
                     : EdgeInsets.zero,
-                child: Icon(icon,
-                    color: Colors.blue, size: 28), // Increased icon size
+                child: Icon(
+                  isSelected ? icon : outlinedIcon,
+                  color: Colors.blue,
+                  size: 28,
+                ),
               ),
               if (isWideLayout) SizedBox(width: 8),
               if (isWideLayout)
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: 16, color: Colors.blue), // Increased font size
+                    fontSize: 16,
+                    color: Colors.blue,
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                  ),
                 ),
             ],
           ),
@@ -225,10 +233,12 @@ class _HomepageState extends State<Homepage> {
 
   Widget _buildBottomNavItem({
     required IconData icon,
+    required IconData outlinedIcon,
     required String label,
     required VoidCallback onPressed,
     required bool isWideLayout,
   }) {
+    final isSelected = hoveredIndex == label.hashCode;
     return MouseRegion(
       onEnter: (_) => setState(() {
         hoveredIndex = label.hashCode;
@@ -239,9 +249,7 @@ class _HomepageState extends State<Homepage> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
-          color: hoveredIndex == label.hashCode
-              ? Colors.blue[50]
-              : Colors.transparent,
+          color: isSelected ? Colors.blue[50] : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextButton(
@@ -250,8 +258,7 @@ class _HomepageState extends State<Homepage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            minimumSize:
-                Size(double.infinity, 60), // Full width button, reduced height
+            minimumSize: Size(double.infinity, 60),
           ),
           onPressed: onPressed,
           child: Row(
@@ -263,15 +270,22 @@ class _HomepageState extends State<Homepage> {
                 padding: isWideLayout
                     ? const EdgeInsets.only(left: 16.0)
                     : EdgeInsets.zero,
-                child: Icon(icon,
-                    color: Colors.blue, size: 28), // Increased icon size
+                child: Icon(
+                  isSelected ? icon : outlinedIcon,
+                  color: Colors.blue,
+                  size: 28,
+                ),
               ),
               if (isWideLayout) SizedBox(width: 8),
               if (isWideLayout)
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: 16, color: Colors.blue), // Increased font size
+                    fontSize: 16,
+                    color: Colors.blue,
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                  ),
                 ),
             ],
           ),

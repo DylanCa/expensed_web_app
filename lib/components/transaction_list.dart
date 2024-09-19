@@ -7,7 +7,7 @@ import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:provider/provider.dart';
 
-class TransactionList extends StatelessWidget {
+class TransactionList extends StatefulWidget {
   final List<Expense> expenses;
   final Function(String) onSearch;
   final Function showFilterBottomSheet;
@@ -16,7 +16,6 @@ class TransactionList extends StatelessWidget {
   final DateTime? startDate;
   final DateTime? endDate;
   final String searchQuery;
-  final double sectionSpacing;
 
   const TransactionList({
     Key? key,
@@ -28,8 +27,35 @@ class TransactionList extends StatelessWidget {
     this.startDate,
     this.endDate,
     required this.searchQuery,
-    this.sectionSpacing = 8, // Default value
   }) : super(key: key);
+
+  @override
+  _TransactionListState createState() => _TransactionListState();
+}
+
+class _TransactionListState extends State<TransactionList> {
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(text: widget.searchQuery);
+  }
+
+  @override
+  void didUpdateWidget(TransactionList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.searchQuery != oldWidget.searchQuery &&
+        widget.searchQuery != _searchController.text) {
+      _searchController.text = widget.searchQuery;
+    }
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +63,15 @@ class TransactionList extends StatelessWidget {
       children: [
         _buildHeader(context),
         Expanded(
-          child: expenses.isEmpty
+          child: widget.expenses.isEmpty
               ? Center(child: Text('No expenses available'))
               : ListView.builder(
-                  itemCount: expenses.length,
+                  itemCount: widget.expenses.length,
                   itemBuilder: (context, index) {
-                    final expense = expenses[index];
+                    final expense = widget.expenses[index];
                     bool isNewDate = index == 0 ||
                         DateFormat('yyyy-MM-dd')
-                                .format(expenses[index - 1].dateTime) !=
+                                .format(widget.expenses[index - 1].dateTime) !=
                             DateFormat('yyyy-MM-dd').format(expense.dateTime);
 
                     return Column(
@@ -118,8 +144,6 @@ class TransactionList extends StatelessWidget {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    final expenseProvider =
-        Provider.of<ExpenseProvider>(context, listen: false);
     return SizedBox(
       width: 200,
       height: 36,
@@ -132,15 +156,17 @@ class TransactionList extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
           ),
         ),
-        controller: TextEditingController(text: searchQuery),
-        onChanged: onSearch,
+        controller: _searchController,
+        onChanged: (value) {
+          widget.onSearch(value);
+        },
       ),
     );
   }
 
   Widget _buildFilterButton(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () => showFilterBottomSheet(),
+      onPressed: () => widget.showFilterBottomSheet(),
       style: ElevatedButton.styleFrom(
         backgroundColor: _isFilterActive()
             ? Colors.blue : Colors.blue.withOpacity(0.5),
@@ -156,13 +182,15 @@ class TransactionList extends StatelessWidget {
   String _getHeaderText() {
     List<String> headerParts = [];
   
-    if (searchQuery.isNotEmpty) {
-      headerParts.add('"${searchQuery}"');
+    if (widget.searchQuery.isNotEmpty) {
+      headerParts.add('"${widget.searchQuery}"');
     }
   
-    if (selectedCategories.isNotEmpty) {
+    if (widget.selectedCategories.isNotEmpty) {
       headerParts
-          .add(selectedCategories.map((c) => c.name.toLowerCase()).join(', '));
+          .add(widget.selectedCategories
+          .map((c) => c.name.toLowerCase())
+          .join(', '));
     }
   
     headerParts.add('expenses');
@@ -173,17 +201,20 @@ class TransactionList extends StatelessWidget {
 
   String _getSubHeaderText() {
     List<String> subHeaderParts = [];
-    if (selectedPersons.isNotEmpty) {
+    if (widget.selectedPersons.isNotEmpty) {
       subHeaderParts
-          .add('paid by ${selectedPersons.map((p) => p.name).join(', ')}');
+          .add(
+          'paid by ${widget.selectedPersons.map((p) => p.name).join(', ')}');
     }
-    if (startDate != null && endDate != null) {
+    if (widget.startDate != null && widget.endDate != null) {
       subHeaderParts.add(
-          'from ${DateFormat('MMM d, y').format(startDate!)} to ${DateFormat('MMM d, y').format(endDate!)}');
-    } else if (startDate != null) {
-      subHeaderParts.add('from ${DateFormat('MMM d, y').format(startDate!)}');
-    } else if (endDate != null) {
-      subHeaderParts.add('until ${DateFormat('MMM d, y').format(endDate!)}');
+          'from ${DateFormat('MMM d, y').format(widget.startDate!)} to ${DateFormat('MMM d, y').format(widget.endDate!)}');
+    } else if (widget.startDate != null) {
+      subHeaderParts
+          .add('from ${DateFormat('MMM d, y').format(widget.startDate!)}');
+    } else if (widget.endDate != null) {
+      subHeaderParts
+          .add('until ${DateFormat('MMM d, y').format(widget.endDate!)}');
     }
     return subHeaderParts.join(' ');
   }
@@ -193,10 +224,10 @@ class TransactionList extends StatelessWidget {
   }
 
   bool _isFilterActive() {
-    return startDate != null ||
-        endDate != null ||
-        selectedCategories.isNotEmpty ||
-        selectedPersons.isNotEmpty ||
-        searchQuery.isNotEmpty;
+    return widget.startDate != null ||
+        widget.endDate != null ||
+        widget.selectedCategories.isNotEmpty ||
+        widget.selectedPersons.isNotEmpty ||
+        widget.searchQuery.isNotEmpty;
   }
 }

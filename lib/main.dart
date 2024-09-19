@@ -29,23 +29,38 @@ class MyApp extends StatelessWidget {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => Homepage(initialIndex: 0),
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: Homepage(initialIndex: 0),
+        ),
       ),
       GoRoute(
         path: '/dashboard',
-        builder: (context, state) => Homepage(initialIndex: 0),
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: Homepage(initialIndex: 0),
+        ),
       ),
       GoRoute(
         path: '/transactions',
-        builder: (context, state) => Homepage(initialIndex: 1),
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: Homepage(initialIndex: 1),
+        ),
       ),
       GoRoute(
         path: '/goals',
-        builder: (context, state) => Homepage(initialIndex: 2),
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: Homepage(initialIndex: 2),
+        ),
       ),
       GoRoute(
         path: '/household',
-        builder: (context, state) => Homepage(initialIndex: 3),
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: Homepage(initialIndex: 3),
+        ),
       ),
     ],
   );

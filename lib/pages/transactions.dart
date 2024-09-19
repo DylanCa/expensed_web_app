@@ -88,7 +88,7 @@ class Transactions extends StatelessWidget {
                                   SizedBox(
                                     width: double.infinity,
                                     height:
-                                        180, // Increased height to accommodate the taller ExpenseSummary
+                                        170, // Increased height to accommodate the taller ExpenseSummary
                                     child: ExpenseSummary(
                                       currentWeekTotal: currentWeekTotal,
                                       currentMonthTotal: currentMonthTotal,
@@ -149,7 +149,7 @@ class Transactions extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               height:
-                                  180, // Increased height to accommodate the taller ExpenseSummary
+                                  170, // Increased height to accommodate the taller ExpenseSummary
                               child: ExpenseSummary(
                                 currentWeekTotal: currentWeekTotal,
                                 currentMonthTotal: currentMonthTotal,

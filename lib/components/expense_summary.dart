@@ -25,7 +25,8 @@ class ExpenseSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
-      height: 160, // Increased height to accommodate all data
+      height:
+          170, // Slightly increased height to accommodate additional spacing
       child: startDate != null || endDate != null
           ? _buildSelectedDateRangeSummary()
           : _buildDefaultSummary(),
@@ -39,25 +40,25 @@ class ExpenseSummary extends StatelessWidget {
         Text(
           'Selected Date Range Total',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 18, // Increased font size
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 12),
+        SizedBox(height: 8),
         Text(
           NumberFormat.currency(symbol: '\$')
               .format(selectedDateRangeTotal ?? 0),
           style: TextStyle(
-            fontSize: 28,
+            fontSize: 28, // Increased font size
             fontWeight: FontWeight.bold,
             color: Colors.blue,
           ),
         ),
-        SizedBox(height: 12),
+        SizedBox(height: 8),
         Text(
           _getDateRangeText(),
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16, // Increased font size
             color: Colors.grey[600],
           ),
         ),
@@ -73,12 +74,12 @@ class ExpenseSummary extends StatelessWidget {
             'Current Week Total',
             currentWeekTotal,
             averageWeeklyTotal,
-            'Average Weekly Total',
+            'Avg Weekly',
           ),
         ),
         Container(
           width: 1,
-          height: 130,
+          height: 140, // Increased divider height
           color: Colors.grey[300],
         ),
         Expanded(
@@ -86,7 +87,7 @@ class ExpenseSummary extends StatelessWidget {
             'Current Month Total',
             currentMonthTotal,
             averageMonthlyTotal,
-            'Average Monthly Total',
+            'Avg Monthly',
           ),
         ),
       ],
@@ -95,42 +96,56 @@ class ExpenseSummary extends StatelessWidget {
 
   Widget _buildSummaryItem(
       String label, double amount, double average, String averageLabel) {
+    double percentageDifference = ((amount - average) / average) * 100;
+    String percentageText =
+        '${percentageDifference >= 0 ? '+' : '-'}${percentageDifference.abs().toStringAsFixed(1)}%';
+    Color percentageColor =
+        percentageDifference >= 0 ? Colors.green : Colors.red;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           label,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16, // Increased font size
             fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 8),
-        Text(
-          NumberFormat.currency(symbol: '\$').format(amount),
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue,
-          ),
-        ),
-        SizedBox(height: 12),
-        Text(
-          averageLabel,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
           ),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 4),
         Text(
+          NumberFormat.currency(symbol: '\$').format(amount),
+          style: TextStyle(
+            fontSize: 24, // Increased font size
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+          ),
+        ),
+        SizedBox(height: 2),
+        Text(
+          percentageText,
+          style: TextStyle(
+            fontSize: 14, // Increased font size
+            fontWeight: FontWeight.bold,
+            color: percentageColor,
+          ),
+        ),
+        SizedBox(height: 8), // Increased spacing here
+        Text(
+          averageLabel,
+          style: TextStyle(
+            fontSize: 12, // Increased font size
+            color: Colors.grey[600],
+          ),
+        ),
+        SizedBox(height: 2), // Added a small space between label and value
+        Text(
           NumberFormat.currency(symbol: '\$').format(average),
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 12, // Increased font size
             fontWeight: FontWeight.bold,
-            color: Colors.grey[800],
+            color: Colors.grey[700],
           ),
         ),
       ],

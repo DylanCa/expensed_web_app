@@ -50,8 +50,10 @@ class Transactions extends StatelessWidget {
               final totalWidth = constraints.maxWidth;
               const rightColumnWidth = 400.0;
               const minLeftColumnWidth = 600.0;
+              final isWideLayout =
+                  totalWidth >= minLeftColumnWidth + rightColumnWidth;
 
-              if (totalWidth >= minLeftColumnWidth + rightColumnWidth) {
+              if (isWideLayout) {
                 // Wide layout
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +71,7 @@ class Transactions extends StatelessWidget {
                           startDate: expenseProvider.startDate,
                           endDate: expenseProvider.endDate,
                           searchQuery: expenseProvider.searchQuery,
+                          // Remove this line: sectionSpacing: 16,
                         ),
                       ),
                     ),
@@ -79,7 +82,8 @@ class Transactions extends StatelessWidget {
                           children: [
                             _buildElevatedContainer(
                               SizedBox(
-                                height: 450,
+                                height:
+                                    400, // Reduced height for Spending By Person
                                 child: SpendingByPerson(
                                   filteredExpenses: filteredExpenses,
                                 ),
@@ -148,6 +152,7 @@ class Transactions extends StatelessWidget {
                             startDate: expenseProvider.startDate,
                             endDate: expenseProvider.endDate,
                             searchQuery: expenseProvider.searchQuery,
+                            // Remove this line: sectionSpacing: 16,
                           ),
                         ),
                       ),

@@ -16,6 +16,7 @@ class TransactionList extends StatelessWidget {
   final DateTime? startDate;
   final DateTime? endDate;
   final String searchQuery;
+  final double sectionSpacing;
 
   const TransactionList({
     Key? key,
@@ -27,6 +28,7 @@ class TransactionList extends StatelessWidget {
     this.startDate,
     this.endDate,
     required this.searchQuery,
+    this.sectionSpacing = 8, // Default value
   }) : super(key: key);
 
   @override
@@ -49,17 +51,26 @@ class TransactionList extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (isNewDate)
+                        if (isNewDate) ...[
+                          SizedBox(
+                              height:
+                                  24), // Increased space before new date section
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 8),
                             child: Text(
                               DateFormat('MMMM d, yyyy')
                                   .format(expense.dateTime),
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 14, // Smaller font size
+                                fontWeight:
+                                    FontWeight.w500, // Slightly less bold
+                                color: Colors.grey[600], // Lighter color
+                              ),
                             ),
                           ),
+                          SizedBox(height: 8), // Space after date header
+                        ],
                         ExpenseWidget(
                           backgroundColor:
                               index % 2 == 0 ? Colors.white : Colors.grey[100]!,

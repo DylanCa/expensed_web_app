@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:expensed_web_app/models/expense.dart';
-
-import '../models/category.dart';
+import 'package:expensed_web_app/models/category.dart';
 
 class ExpenseLastWeek extends StatelessWidget {
   final List<Expense> filteredExpenses;
@@ -20,8 +19,8 @@ class ExpenseLastWeek extends StatelessWidget {
             .subtract(Duration(days: 6 - index)));
 
     // Group expenses by day and category
-    Map<DateTime, Map<String, double>> expensesByDayAndCategory = {};
-    Set<String> categories = {};
+    Map<DateTime, Map<Category, double>> expensesByDayAndCategory = {};
+    Set<Category> categories = {};
 
     for (var day in lastSevenDays) {
       expensesByDayAndCategory[day] = {};
@@ -36,10 +35,10 @@ class ExpenseLastWeek extends StatelessWidget {
       double amount = expense.amount;
 
       if (lastSevenDays.contains(date)) {
-        expensesByDayAndCategory[date]!.putIfAbsent(category.name, () => 0);
-        expensesByDayAndCategory[date]![category.name] =
-            (expensesByDayAndCategory[date]![category.name] ?? 0) + amount;
-        categories.add(category.name);
+        expensesByDayAndCategory[date]!.putIfAbsent(category, () => 0);
+        expensesByDayAndCategory[date]![category] =
+            (expensesByDayAndCategory[date]![category] ?? 0) + amount;
+        categories.add(category);
 
         double dailyTotal =
             expensesByDayAndCategory[date]!.values.fold(0, (a, b) => a + b);
@@ -49,7 +48,8 @@ class ExpenseLastWeek extends StatelessWidget {
       }
     }
 
-    List<String> sortedCategories = categories.toList()..sort();
+    List<String> sortedCategories = categories.map((c) => c.name).toList()
+      ..sort();
 
     // Calculate maxY (maximum amount rounded to the nearest 50 above)
     double maxY = maxDailyTotal == 0 ? 100 : (maxDailyTotal / 50).ceil() * 50.0;
@@ -62,15 +62,14 @@ class ExpenseLastWeek extends StatelessWidget {
       List<BarChartRodStackItem> stackItems = [];
       double totalHeight = 0;
 
-      for (int j = 0; j < sortedCategories.length; j++) {
-        String category = sortedCategories[j];
+      for (Category category in categories) {
         double amount = expensesByDayAndCategory[date]![category] ?? 0;
         if (amount > 0) {
           stackItems.add(
             BarChartRodStackItem(
               totalHeight,
               totalHeight + amount,
-              Colors.primaries[j % Colors.primaries.length],
+              category.color,
             ),
           );
           totalHeight += amount;
@@ -173,7 +172,7 @@ class ExpenseLastWeek extends StatelessWidget {
                           tooltipBgColor: Colors.blueGrey,
                           getTooltipItem: (group, groupIndex, rod, rodIndex) {
                             DateTime date = lastSevenDays[groupIndex];
-                            Map<String, double> dayExpenses =
+                            Map<Category, double> dayExpenses =
                                 expensesByDayAndCategory[date]!;
 
                             double totalAmount = dayExpenses.values

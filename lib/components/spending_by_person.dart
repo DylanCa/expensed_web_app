@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:expensed_web_app/models/expense.dart';
-
-import '../models/person.dart';
+import 'package:expensed_web_app/models/person.dart';
 
 class SpendingByPerson extends StatelessWidget {
   final List<Expense> filteredExpenses;
@@ -12,11 +11,11 @@ class SpendingByPerson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Calculate total amount paid by each person
-    Map<String, double> amountByPerson = {};
+    Map<Person, double> amountByPerson = {};
     for (var expense in filteredExpenses) {
       Person person = expense.paidBy;
       double amount = expense.amount;
-      amountByPerson[person.name] = (amountByPerson[person.name] ?? 0) + amount;
+      amountByPerson[person] = (amountByPerson[person] ?? 0) + amount;
     }
 
     // Calculate total amount
@@ -24,12 +23,10 @@ class SpendingByPerson extends StatelessWidget {
 
     // Prepare data for the pie chart
     List<PieChartSectionData> sections = amountByPerson.entries.map((entry) {
-      String person = entry.key;
+      Person person = entry.key;
       double amount = entry.value;
       double percentage = totalAmount > 0 ? (amount / totalAmount) * 100 : 0;
-      Color color = Colors.primaries[
-          amountByPerson.keys.toList().indexOf(person) %
-              Colors.primaries.length];
+      Color color = person.color;
 
       return PieChartSectionData(
         color: color,
@@ -73,11 +70,9 @@ class SpendingByPerson extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: amountByPerson.entries.map((entry) {
-                        String person = entry.key;
+                        Person person = entry.key;
                         double amount = entry.value;
-                        Color color = Colors.primaries[
-                            amountByPerson.keys.toList().indexOf(person) %
-                                Colors.primaries.length];
+                        Color color = person.color;
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Row(

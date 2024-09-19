@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 
 class ExpenseProvider with ChangeNotifier {
   final ExpenseRepository _repository = ExpenseRepository();
-  List<Expense> _expenses = []; // Initialize with an empty list
+  List<Expense> _expenses = [];
   List<app_category.Category> _categories = [];
   List<Person> _persons = [];
   bool _isLoading = false;
@@ -85,12 +85,11 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      await _repository.loadExpenses();
-      _expenses = await _repository.getExpenses();
+      _expenses = await TestData.getTestExpenses();
       _isLoading = false;
     } catch (e) {
       _error = "Failed to load expenses: $e";
-      _expenses = []; // Set expenses to an empty list on error
+      _expenses = [];
       _isLoading = false;
     }
     notifyListeners();
@@ -122,7 +121,7 @@ class ExpenseProvider with ChangeNotifier {
     _selectedPersons.clear();
     _startDate = null;
     _endDate = null;
-    _searchQuery = ''; // This line ensures the search query is cleared
+    _searchQuery = '';
     notifyListeners();
   }
 
@@ -159,7 +158,6 @@ class ExpenseProvider with ChangeNotifier {
               _selectedPersons.contains(expense.paidBy));
     }).toList();
 
-    // Sort the filtered expenses by date (most recent first)
     filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
     return filtered;
@@ -192,14 +190,11 @@ class ExpenseProvider with ChangeNotifier {
     try {
       await _repository.addExpense(expense);
       
-      // Find the correct position to insert the new expense
       int insertIndex =
           _expenses.indexWhere((e) => e.dateTime.isBefore(expense.dateTime));
       if (insertIndex == -1) {
-        // If no earlier date is found, add to the end of the list
         _expenses.add(expense);
       } else {
-        // Insert the new expense at the correct position
         _expenses.insert(insertIndex, expense);
       }
       

@@ -1,0 +1,2404 @@
+{
+    "expenses": [
+      {
+        "id": "16bfcfcc-5775-4bdd-9aaf-146d9f739075",
+        "shopName": "IMANT",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 188.91,
+        "dateTime": "2024-08-08T03:35:10Z"
+      },
+      {
+        "id": "842196d4-fca9-4c34-bb16-b8c07365376a",
+        "shopName": "STELAECOR",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 10.83,
+        "dateTime": "2024-09-13T02:22:23Z"
+      },
+      {
+        "id": "98d19dd8-d789-4ab0-89b9-22b0377a0e13",
+        "shopName": "DECRATEX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 64.49,
+        "dateTime": "2024-08-06T08:11:03Z"
+      },
+      {
+        "id": "3ac5606e-11a1-4a6d-9dba-6bbc9a8ab0d3",
+        "shopName": "KINETICUT",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 94.57,
+        "dateTime": "2024-08-20T06:52:12Z"
+      },
+      {
+        "id": "351a1ff0-8d6e-4234-afad-56633fe475d9",
+        "shopName": "ZILLIDIUM",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 78.62,
+        "dateTime": "2024-08-09T05:46:46Z"
+      },
+      {
+        "id": "83d2f51d-3e31-4057-ad4d-74bef12967a4",
+        "shopName": "MITROC",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 29.88,
+        "dateTime": "2024-09-11T02:50:49Z"
+      },
+      {
+        "id": "2ca99af0-3a1d-4816-83eb-beb0636ecf86",
+        "shopName": "GOLOGY",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 50.22,
+        "dateTime": "2024-08-20T07:00:31Z"
+      },
+      {
+        "id": "9dc5b21d-6de5-441b-b069-08cf459840b0",
+        "shopName": "COMTEXT",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 85.48,
+        "dateTime": "2024-08-21T01:12:53Z"
+      },
+      {
+        "id": "7de0f582-f040-4ebd-ba54-4faa45d208d7",
+        "shopName": "ORBALIX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 134.62,
+        "dateTime": "2024-08-28T03:00:31Z"
+      },
+      {
+        "id": "1fc02c90-365d-4f7e-9e39-48e403991e4d",
+        "shopName": "AQUAFIRE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 74.89,
+        "dateTime": "2024-08-14T08:36:00Z"
+      },
+      {
+        "id": "9b1e1080-1714-4bf1-befc-41d3d880b5eb",
+        "shopName": "EBIDCO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 147.05,
+        "dateTime": "2024-08-25T03:47:39Z"
+      },
+      {
+        "id": "0e9956b0-cce4-4d29-b04e-f967ef6ba52d",
+        "shopName": "NEWCUBE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 159.59,
+        "dateTime": "2024-08-01T04:08:52Z"
+      },
+      {
+        "id": "fab2d0e7-c0ad-4b35-87e9-332c0b4c0954",
+        "shopName": "ZERBINA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 45.11,
+        "dateTime": "2024-08-08T03:35:57Z"
+      },
+      {
+        "id": "f79be72a-299a-4d9d-ac96-fdcfd7f57eb4",
+        "shopName": "SONIQUE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 185.05,
+        "dateTime": "2024-08-30T05:59:47Z"
+      },
+      {
+        "id": "8b35beb4-c9bf-4075-b280-44da4bead6ae",
+        "shopName": "KONNECT",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 42.19,
+        "dateTime": "2024-08-02T07:12:35Z"
+      },
+      {
+        "id": "11f86b0d-676f-4012-863e-1a65182e46ff",
+        "shopName": "SOFTMICRO",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 45.64,
+        "dateTime": "2024-08-15T11:35:45Z"
+      },
+      {
+        "id": "f0332567-4db2-42ba-9464-63aa53c7df59",
+        "shopName": "VETRON",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 2.77,
+        "dateTime": "2024-09-08T02:29:47Z"
+      },
+      {
+        "id": "91f62389-f605-43e3-8c6f-fbfa44bbce07",
+        "shopName": "QUILITY",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 154.23,
+        "dateTime": "2024-08-11T08:23:13Z"
+      },
+      {
+        "id": "98b4d98c-8c36-40f5-90e1-d9216f674f66",
+        "shopName": "TUBESYS",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 75.58,
+        "dateTime": "2024-08-26T03:45:23Z"
+      },
+      {
+        "id": "c3bf60a7-45ae-4440-9c57-d65142e46b3a",
+        "shopName": "GEEKOLOGY",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 20.46,
+        "dateTime": "2024-08-30T08:46:05Z"
+      },
+      {
+        "id": "3f9d7c9e-87fe-4326-9145-b787eafe75ec",
+        "shopName": "CONCILITY",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 145.12,
+        "dateTime": "2024-08-26T08:04:13Z"
+      },
+      {
+        "id": "1a9b8074-b041-4e7b-8541-66b3c2795adc",
+        "shopName": "WRAPTURE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 121.74,
+        "dateTime": "2024-08-22T02:26:01Z"
+      },
+      {
+        "id": "9de67250-00d5-448f-bb47-be2a61212a57",
+        "shopName": "LOTRON",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 46.77,
+        "dateTime": "2024-08-03T07:36:40Z"
+      },
+      {
+        "id": "f796eea9-09eb-43f8-8266-cfcb7d56e7b4",
+        "shopName": "ORBOID",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 171.89,
+        "dateTime": "2024-09-11T02:03:36Z"
+      },
+      {
+        "id": "9ebe7e9e-0f74-4187-8df6-325540959474",
+        "shopName": "TERSANKI",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 194.92,
+        "dateTime": "2024-08-23T10:11:46Z"
+      },
+      {
+        "id": "4aebc10d-518f-4dc6-a1d7-d2124f0add7e",
+        "shopName": "TALAE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 19.8,
+        "dateTime": "2024-08-05T12:18:47Z"
+      },
+      {
+        "id": "54a65781-0704-4b59-92db-9c5c3c003a69",
+        "shopName": "FORTEAN",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 162.55,
+        "dateTime": "2024-09-09T01:25:53Z"
+      },
+      {
+        "id": "fee5aabb-a567-4ad4-bd19-3952bd147eea",
+        "shopName": "BUZZOPIA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 191.89,
+        "dateTime": "2024-09-10T07:33:14Z"
+      },
+      {
+        "id": "969dff8b-3766-442b-94a9-c254f9ddbb0b",
+        "shopName": "COMBOGENE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 175.07,
+        "dateTime": "2024-08-13T05:55:02Z"
+      },
+      {
+        "id": "b1a02bdd-0507-4aad-b1b4-39af62075d66",
+        "shopName": "SNACKTION",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 77.84,
+        "dateTime": "2024-09-03T01:11:51Z"
+      },
+      {
+        "id": "69a2c437-6d75-41a9-89ad-ee78b2bf59c7",
+        "shopName": "BIZMATIC",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 105.17,
+        "dateTime": "2024-09-13T10:47:33Z"
+      },
+      {
+        "id": "1ab698b3-aea0-4c5a-a566-fd7e6f0993e6",
+        "shopName": "BIOSPAN",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 77.16,
+        "dateTime": "2024-08-28T01:59:28Z"
+      },
+      {
+        "id": "c10f4f1a-41e4-42ab-b5c1-c4218fa9fb7f",
+        "shopName": "SPHERIX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 51.14,
+        "dateTime": "2024-08-02T11:29:05Z"
+      },
+      {
+        "id": "ec812f7d-2d25-4124-a857-73559864debc",
+        "shopName": "RADIANTIX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 143.07,
+        "dateTime": "2024-08-10T07:51:40Z"
+      },
+      {
+        "id": "2158a4fd-2912-41d2-9bdb-0cfad66247e7",
+        "shopName": "HAIRPORT",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 49.39,
+        "dateTime": "2024-09-02T11:21:33Z"
+      },
+      {
+        "id": "c5b5fb3a-1f2b-4a9d-83fc-72b508942fa1",
+        "shopName": "GENEKOM",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 7.67,
+        "dateTime": "2024-08-09T02:05:55Z"
+      },
+      {
+        "id": "872b0bb2-b8e4-4f50-ace9-c4eb00ca62c8",
+        "shopName": "HELIXO",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 18.18,
+        "dateTime": "2024-09-01T07:34:53Z"
+      },
+      {
+        "id": "04f3a75d-86cb-431e-99b1-cbd70d478f5c",
+        "shopName": "GEEKMOSIS",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 116.9,
+        "dateTime": "2024-08-08T06:47:36Z"
+      },
+      {
+        "id": "d2567e9d-a1f5-4834-8535-01a0a59ed2a9",
+        "shopName": "IDEALIS",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 57.4,
+        "dateTime": "2024-08-31T08:24:01Z"
+      },
+      {
+        "id": "6d31a996-ac73-496b-948d-1a393a128a5f",
+        "shopName": "PATHWAYS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 185.93,
+        "dateTime": "2024-08-02T02:46:28Z"
+      },
+      {
+        "id": "28841215-f8ab-4754-8bdb-77b3ca0e9af1",
+        "shopName": "KOG",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 12.85,
+        "dateTime": "2024-08-27T03:48:04Z"
+      },
+      {
+        "id": "73122003-df2f-48ca-b0c5-b37889caa678",
+        "shopName": "COLAIRE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 22.26,
+        "dateTime": "2024-08-10T06:57:14Z"
+      },
+      {
+        "id": "7978e78e-a839-461d-b2bb-f9f2cfce2ed4",
+        "shopName": "SURETECH",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 62.11,
+        "dateTime": "2024-09-10T04:00:48Z"
+      },
+      {
+        "id": "e34813e0-aa3a-485f-acb6-f316d13635bb",
+        "shopName": "VORTEXACO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 134.56,
+        "dateTime": "2024-09-09T07:37:42Z"
+      },
+      {
+        "id": "c4c02320-dcff-4568-8571-8488f12882f0",
+        "shopName": "AQUASSEUR",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 187.46,
+        "dateTime": "2024-08-12T10:55:16Z"
+      },
+      {
+        "id": "4b91a600-2887-44c3-9aa4-df3bfd732a00",
+        "shopName": "GENMEX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 120.05,
+        "dateTime": "2024-08-21T03:00:22Z"
+      },
+      {
+        "id": "75d52c94-d452-4695-8cba-33c8267500f0",
+        "shopName": "ECRAZE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 68.03,
+        "dateTime": "2024-08-28T05:58:29Z"
+      },
+      {
+        "id": "c1158491-c78f-409a-8e9f-14096469b393",
+        "shopName": "AEORA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 2.89,
+        "dateTime": "2024-08-14T09:37:25Z"
+      },
+      {
+        "id": "e9acabf3-6d31-4992-9ed1-3463095eb33b",
+        "shopName": "MIRACLIS",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 16.12,
+        "dateTime": "2024-09-04T07:39:11Z"
+      },
+      {
+        "id": "c7129836-55ea-40b7-a128-d03ed2142dad",
+        "shopName": "AQUAZURE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 30.13,
+        "dateTime": "2024-09-16T12:56:06Z"
+      },
+      {
+        "id": "a561cc8b-0c1b-4352-bad8-83f6accf6a08",
+        "shopName": "PUSHCART",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 33.63,
+        "dateTime": "2024-09-05T06:04:23Z"
+      },
+      {
+        "id": "5c22f47c-9fa7-4b4f-a7e6-c942005f2de0",
+        "shopName": "QABOOS",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 22.83,
+        "dateTime": "2024-08-01T03:30:26Z"
+      },
+      {
+        "id": "e7fd9154-9d4f-4b7d-b138-0156ab6b9149",
+        "shopName": "ECRATIC",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 72.77,
+        "dateTime": "2024-09-19T01:02:51Z"
+      },
+      {
+        "id": "b977550f-ff1e-432f-b4a7-b809a41453eb",
+        "shopName": "ISONUS",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 74.9,
+        "dateTime": "2024-08-13T07:03:12Z"
+      },
+      {
+        "id": "aa325b92-b826-4b06-b309-3474476f97e8",
+        "shopName": "MAINELAND",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 51.79,
+        "dateTime": "2024-09-07T09:41:52Z"
+      },
+      {
+        "id": "cfc49625-4005-4129-9f66-0bec0ecdb886",
+        "shopName": "COASH",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 185.37,
+        "dateTime": "2024-08-28T12:38:55Z"
+      },
+      {
+        "id": "e486ba36-dfaa-4ddb-a7f2-c2fba9276355",
+        "shopName": "ARCTIQ",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 183.84,
+        "dateTime": "2024-08-23T06:49:05Z"
+      },
+      {
+        "id": "8abfe4a5-dd15-4565-a2d4-a950d40a5d8e",
+        "shopName": "ENTROPIX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 112.29,
+        "dateTime": "2024-08-10T04:05:56Z"
+      },
+      {
+        "id": "2c07a748-999b-4abf-8b84-10b17ffc7cfa",
+        "shopName": "ENTOGROK",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 136.17,
+        "dateTime": "2024-08-11T08:10:02Z"
+      },
+      {
+        "id": "71764fb6-2259-4b82-ae72-57a3e689d7b8",
+        "shopName": "ISBOL",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 58.55,
+        "dateTime": "2024-08-30T07:56:47Z"
+      },
+      {
+        "id": "f0095316-5bcf-4985-9d7a-e3c8f7097e85",
+        "shopName": "UNCORP",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 181.65,
+        "dateTime": "2024-08-31T09:21:39Z"
+      },
+      {
+        "id": "83b04bbb-c9b9-4880-ada2-d85d2d37374c",
+        "shopName": "NORALI",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 148.96,
+        "dateTime": "2024-09-04T07:09:31Z"
+      },
+      {
+        "id": "74c21deb-96bf-49b1-aa67-ea537a46e995",
+        "shopName": "SCHOOLIO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 119.92,
+        "dateTime": "2024-08-19T06:56:15Z"
+      },
+      {
+        "id": "5bb51c1a-a38b-4dbe-ae77-ab253a045ec2",
+        "shopName": "SYBIXTEX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 153.28,
+        "dateTime": "2024-08-06T04:06:18Z"
+      },
+      {
+        "id": "c63f7df2-6097-41a6-8c26-c55db6c143ee",
+        "shopName": "MYOPIUM",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 175.45,
+        "dateTime": "2024-08-03T04:23:58Z"
+      },
+      {
+        "id": "bcb93293-1364-4f81-9130-699790c9fcbb",
+        "shopName": "QUILCH",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 158.29,
+        "dateTime": "2024-08-01T01:29:52Z"
+      },
+      {
+        "id": "91fa984b-9f40-4ce7-b10a-ba4a793aa3be",
+        "shopName": "EARTHPLEX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 163.2,
+        "dateTime": "2024-08-16T09:11:35Z"
+      },
+      {
+        "id": "baa2d17b-4f14-41ba-be01-ff87e80b0189",
+        "shopName": "ISOLOGIX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 32.26,
+        "dateTime": "2024-09-18T11:22:03Z"
+      },
+      {
+        "id": "59b6fede-f894-4648-9a79-40ed14546700",
+        "shopName": "OCTOCORE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 189.87,
+        "dateTime": "2024-09-13T06:36:11Z"
+      },
+      {
+        "id": "2141b5b2-1828-4f04-93b6-745d1f79cb38",
+        "shopName": "OZEAN",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 169.87,
+        "dateTime": "2024-08-23T11:48:53Z"
+      },
+      {
+        "id": "58ef75b8-e810-4081-970a-86c3301a899d",
+        "shopName": "ENJOLA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 156.93,
+        "dateTime": "2024-08-25T05:53:21Z"
+      },
+      {
+        "id": "90d72968-c9b6-43f3-af49-56494c33adad",
+        "shopName": "ZYPLE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 194.6,
+        "dateTime": "2024-09-17T01:19:55Z"
+      },
+      {
+        "id": "ea669ddd-9e6a-4fdb-a9e6-ac8c382c57b5",
+        "shopName": "MUSANPOLY",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 144.29,
+        "dateTime": "2024-09-08T05:30:24Z"
+      },
+      {
+        "id": "c64c529b-c38b-4142-a0e6-654787cea0c6",
+        "shopName": "MAGNEATO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 118.89,
+        "dateTime": "2024-08-10T12:29:49Z"
+      },
+      {
+        "id": "e8ead2eb-5168-4fe3-a325-e053ac6a0055",
+        "shopName": "QUARX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 90.39,
+        "dateTime": "2024-09-16T04:55:14Z"
+      },
+      {
+        "id": "c87b3293-f006-4062-8a1b-b4b2acabade6",
+        "shopName": "CENTREE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 10.84,
+        "dateTime": "2024-08-22T08:44:06Z"
+      },
+      {
+        "id": "f2dcf69d-a900-44a2-8d1d-e1b9196afe45",
+        "shopName": "VIRXO",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 191.29,
+        "dateTime": "2024-09-10T02:05:47Z"
+      },
+      {
+        "id": "06e92126-4a35-417c-af0a-712cd1b73022",
+        "shopName": "RAMEON",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 79.35,
+        "dateTime": "2024-09-03T11:02:58Z"
+      },
+      {
+        "id": "9c80d353-1f9a-4866-9f72-8e96eabff45c",
+        "shopName": "HYDROCOM",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 192.89,
+        "dateTime": "2024-08-22T06:05:51Z"
+      },
+      {
+        "id": "1c5207d7-085d-4c4c-84a7-5315d275203f",
+        "shopName": "KROG",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 167.34,
+        "dateTime": "2024-08-15T09:01:37Z"
+      },
+      {
+        "id": "26f34d60-85cd-4478-8679-9336d0ec7603",
+        "shopName": "ISODRIVE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 169.35,
+        "dateTime": "2024-08-09T12:42:09Z"
+      },
+      {
+        "id": "bc8c094d-eb5b-4f35-878e-5b1b82eab402",
+        "shopName": "CEPRENE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 14.46,
+        "dateTime": "2024-08-18T05:24:20Z"
+      },
+      {
+        "id": "27e020e1-581d-4b2a-b980-c291061382eb",
+        "shopName": "ZENOLUX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 50.91,
+        "dateTime": "2024-08-29T06:56:46Z"
+      },
+      {
+        "id": "9703d813-7282-4bdb-bd80-4bd5fd49da9f",
+        "shopName": "COMVEX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 172.62,
+        "dateTime": "2024-08-22T07:50:33Z"
+      },
+      {
+        "id": "d71d0049-3c01-4423-99d9-da58a676ce35",
+        "shopName": "INQUALA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 175.86,
+        "dateTime": "2024-08-03T07:56:38Z"
+      },
+      {
+        "id": "10884849-1cf5-4a9c-b028-ca2396b59308",
+        "shopName": "KEENGEN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 109.93,
+        "dateTime": "2024-09-03T05:38:44Z"
+      },
+      {
+        "id": "5aa26098-e32a-4dc0-b499-8466c20438c6",
+        "shopName": "BEDDER",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 145.01,
+        "dateTime": "2024-09-18T02:45:20Z"
+      },
+      {
+        "id": "dfbacc05-a4ec-46c4-b469-1181e6e0c23b",
+        "shopName": "ZILLA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 170.75,
+        "dateTime": "2024-08-02T06:47:03Z"
+      },
+      {
+        "id": "7b182b87-0646-4a3c-8b7e-9ce4e7eac68d",
+        "shopName": "PRISMATIC",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 109.83,
+        "dateTime": "2024-08-26T06:05:23Z"
+      },
+      {
+        "id": "883d9863-3768-4c9e-bd3e-ce4fcb8385c4",
+        "shopName": "BIOHAB",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 87.87,
+        "dateTime": "2024-09-15T07:03:20Z"
+      },
+      {
+        "id": "514c9eed-eadc-427b-979d-8ce596571ccd",
+        "shopName": "ROBOID",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 13.44,
+        "dateTime": "2024-08-20T03:32:01Z"
+      },
+      {
+        "id": "cfa3d604-05cd-46eb-a24d-663cc460fcc9",
+        "shopName": "FURNIGEER",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 190.45,
+        "dateTime": "2024-09-18T09:46:35Z"
+      },
+      {
+        "id": "b9103fb9-773c-4d9b-9765-7ce7a872aeb5",
+        "shopName": "ESCHOIR",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 199.65,
+        "dateTime": "2024-09-10T03:45:19Z"
+      },
+      {
+        "id": "98bbd7dc-97f3-4495-ad91-58f5e44d0931",
+        "shopName": "ATOMICA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 154.57,
+        "dateTime": "2024-09-14T08:38:52Z"
+      },
+      {
+        "id": "7d92608a-f02a-4e0b-9f03-9862907f3830",
+        "shopName": "TASMANIA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 55.95,
+        "dateTime": "2024-09-04T05:12:21Z"
+      },
+      {
+        "id": "9637e3d0-8bf8-488c-acab-de935a8400ae",
+        "shopName": "KOOGLE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 2.24,
+        "dateTime": "2024-08-28T03:36:21Z"
+      },
+      {
+        "id": "f2994877-1aee-43da-8989-72d61fbb745c",
+        "shopName": "BICOL",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 182.86,
+        "dateTime": "2024-08-24T06:05:06Z"
+      },
+      {
+        "id": "f5306dc9-b012-496b-a1e2-3f64601e3c8b",
+        "shopName": "VANTAGE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 115.51,
+        "dateTime": "2024-09-09T03:11:48Z"
+      },
+      {
+        "id": "d202d0d7-6f93-4a6e-93d4-23a3c075417b",
+        "shopName": "ENDICIL",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 122.77,
+        "dateTime": "2024-08-29T07:03:25Z"
+      },
+      {
+        "id": "18846779-e1df-466b-b6b1-d6edd76bb8b6",
+        "shopName": "PIGZART",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 43.99,
+        "dateTime": "2024-09-15T06:26:39Z"
+      },
+      {
+        "id": "ba6b6383-e0d9-4671-93b6-62d7e41bcc42",
+        "shopName": "ACUSAGE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 180.15,
+        "dateTime": "2024-09-13T05:03:59Z"
+      },
+      {
+        "id": "8efcf569-11bb-48b2-8bf9-3b5f55000dbe",
+        "shopName": "UNIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 25.88,
+        "dateTime": "2024-08-27T02:11:00Z"
+      },
+      {
+        "id": "c11b2ca1-b495-4ea4-8c19-b1de747625ad",
+        "shopName": "ZILLAN",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 19.11,
+        "dateTime": "2024-08-23T07:38:57Z"
+      },
+      {
+        "id": "68a77fcb-3dc6-47f0-b380-19f39545662a",
+        "shopName": "REALMO",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 141.88,
+        "dateTime": "2024-09-17T01:54:15Z"
+      },
+      {
+        "id": "03b00385-9d72-4d4b-82a3-3a97c8fecbbb",
+        "shopName": "LUDAK",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 110.26,
+        "dateTime": "2024-09-08T09:04:54Z"
+      },
+      {
+        "id": "2a82b35a-cde2-4a65-aeaf-56e244a4c5d8",
+        "shopName": "ECRATER",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 59.75,
+        "dateTime": "2024-08-11T05:47:50Z"
+      },
+      {
+        "id": "8d88d96e-80fd-41f9-a011-9f825d460aee",
+        "shopName": "ASSISTIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 29.71,
+        "dateTime": "2024-09-17T09:01:19Z"
+      },
+      {
+        "id": "cc97ea73-58f2-47b9-9349-df0b56430566",
+        "shopName": "KYAGORO",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 87.75,
+        "dateTime": "2024-08-22T07:59:03Z"
+      },
+      {
+        "id": "c48852f5-b8dc-40ea-be54-7ea0cf222c85",
+        "shopName": "ZENTIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 177.25,
+        "dateTime": "2024-08-02T12:56:06Z"
+      },
+      {
+        "id": "82f648ff-1ab2-4403-859b-f4a070f01d9a",
+        "shopName": "BUZZNESS",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 181.49,
+        "dateTime": "2024-08-08T09:18:03Z"
+      },
+      {
+        "id": "c407bfde-cfff-4915-8dc1-dc18de966949",
+        "shopName": "HALAP",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 1.91,
+        "dateTime": "2024-08-13T01:41:22Z"
+      },
+      {
+        "id": "ad31da4e-8a77-44b1-9f79-ffccb6ef7ad5",
+        "shopName": "RODEOCEAN",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 22.75,
+        "dateTime": "2024-08-07T04:29:17Z"
+      },
+      {
+        "id": "d4257e66-7bd1-4b94-a0b4-534632522f37",
+        "shopName": "COMTOURS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 27.65,
+        "dateTime": "2024-09-03T10:25:43Z"
+      },
+      {
+        "id": "25881217-2497-45ff-b4db-483fa0033708",
+        "shopName": "XPLOR",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 38.04,
+        "dateTime": "2024-08-03T05:06:44Z"
+      },
+      {
+        "id": "99ef02c5-b10a-4a92-8eaa-3a84660f0b83",
+        "shopName": "PETIGEMS",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 198.59,
+        "dateTime": "2024-09-12T08:43:35Z"
+      },
+      {
+        "id": "e3e6f3fa-a6b3-4915-b856-1a2be983a650",
+        "shopName": "MEDCOM",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 164.22,
+        "dateTime": "2024-08-17T05:57:13Z"
+      },
+      {
+        "id": "83ce1eb7-71d9-4903-9634-4a3bb567dfbf",
+        "shopName": "TINGLES",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 85.52,
+        "dateTime": "2024-08-07T08:53:26Z"
+      },
+      {
+        "id": "c2221da5-913b-4c43-88e1-300abbad5559",
+        "shopName": "PHORMULA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 93.39,
+        "dateTime": "2024-08-05T03:26:38Z"
+      },
+      {
+        "id": "c08ce927-ab1f-417e-b0b2-8f90dc4c3b53",
+        "shopName": "FURNITECH",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 124.7,
+        "dateTime": "2024-09-04T05:42:25Z"
+      },
+      {
+        "id": "3cb8c4b7-371e-479c-9891-3b70effd97f6",
+        "shopName": "ENTHAZE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 48.48,
+        "dateTime": "2024-09-16T08:08:40Z"
+      },
+      {
+        "id": "d8a82e9a-86e9-473f-93c8-2290be19b28c",
+        "shopName": "ZEDALIS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 134.31,
+        "dateTime": "2024-08-14T11:41:16Z"
+      },
+      {
+        "id": "dfb5f2c7-0bbb-4842-b054-e1a7c92aaa0a",
+        "shopName": "ANARCO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 54.27,
+        "dateTime": "2024-08-27T06:18:55Z"
+      },
+      {
+        "id": "688b0cf8-2fd9-42a7-8b2c-76c38d077d0b",
+        "shopName": "GREEKER",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 172.17,
+        "dateTime": "2024-09-04T12:22:46Z"
+      },
+      {
+        "id": "2152fb1d-745f-4a95-8824-dc123663b410",
+        "shopName": "MACRONAUT",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 72.94,
+        "dateTime": "2024-08-13T04:24:14Z"
+      },
+      {
+        "id": "f2ed532b-4bee-4f03-8bec-8422b7475216",
+        "shopName": "ZENTIX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 123.86,
+        "dateTime": "2024-08-07T05:59:37Z"
+      },
+      {
+        "id": "7c8e1d26-9386-49fc-9833-a09e654f6cbf",
+        "shopName": "POLARIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 8.33,
+        "dateTime": "2024-08-08T05:47:39Z"
+      },
+      {
+        "id": "9e889474-d0dd-4c61-99b5-4ffe363c3b46",
+        "shopName": "BLEENDOT",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 69.26,
+        "dateTime": "2024-08-22T06:40:12Z"
+      },
+      {
+        "id": "16442c11-c9e2-4576-aa8c-9e160492509e",
+        "shopName": "EZENTIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 66.57,
+        "dateTime": "2024-09-17T12:18:07Z"
+      },
+      {
+        "id": "c94c4a15-3e25-4a37-a7a6-57e4d586207c",
+        "shopName": "DIGIGEN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 146.46,
+        "dateTime": "2024-09-17T03:21:48Z"
+      },
+      {
+        "id": "3c6589cc-e88e-47a5-9eb7-7b373d1741b8",
+        "shopName": "THREDZ",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 129.6,
+        "dateTime": "2024-08-14T09:49:03Z"
+      },
+      {
+        "id": "5782f336-1621-4ee6-b0e8-e26a335d8de0",
+        "shopName": "GRAINSPOT",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 170.3,
+        "dateTime": "2024-09-19T05:20:18Z"
+      },
+      {
+        "id": "f3edd852-16b8-45c9-8673-f0929df4866b",
+        "shopName": "BESTO",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 94.88,
+        "dateTime": "2024-09-16T09:01:02Z"
+      },
+      {
+        "id": "61ca3b61-6793-47b1-8173-bd088151db16",
+        "shopName": "ESCENTA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 174.27,
+        "dateTime": "2024-09-08T08:54:38Z"
+      },
+      {
+        "id": "794f61da-6e24-49f4-bbea-c5a7d2cf8452",
+        "shopName": "NUTRALAB",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 180.47,
+        "dateTime": "2024-08-20T08:58:23Z"
+      },
+      {
+        "id": "7f3de934-75b6-439a-b70f-6048cddf13e9",
+        "shopName": "APEX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 117.22,
+        "dateTime": "2024-08-15T01:25:11Z"
+      },
+      {
+        "id": "536ac975-cee3-40d0-8a62-a8ed648465a2",
+        "shopName": "ASIMILINE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 133.39,
+        "dateTime": "2024-08-23T12:25:14Z"
+      },
+      {
+        "id": "95b625f5-05d0-4d1f-a28a-bab807a67bf3",
+        "shopName": "REALYSIS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 188.27,
+        "dateTime": "2024-09-03T10:20:57Z"
+      },
+      {
+        "id": "cad71a4f-8eb5-475d-bed2-a029d74180b9",
+        "shopName": "BUZZMAKER",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 64.69,
+        "dateTime": "2024-08-28T04:14:20Z"
+      },
+      {
+        "id": "61c5d2f0-ed2b-423c-9c94-80d545ae571d",
+        "shopName": "KIGGLE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 66.8,
+        "dateTime": "2024-09-17T03:35:53Z"
+      },
+      {
+        "id": "6a6ed5e9-8933-40de-80a6-49ffed5294dd",
+        "shopName": "XINWARE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 27.28,
+        "dateTime": "2024-09-11T01:47:18Z"
+      },
+      {
+        "id": "9908ce5a-d920-4400-b00e-28976659b0a9",
+        "shopName": "PHOTOBIN",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 40.67,
+        "dateTime": "2024-08-28T01:47:02Z"
+      },
+      {
+        "id": "f667df92-2532-4883-b300-b7cfbd2db1ae",
+        "shopName": "EZENT",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 58.47,
+        "dateTime": "2024-08-24T01:57:24Z"
+      },
+      {
+        "id": "0fdb46ff-7e03-429b-8d2d-8380642a4ffb",
+        "shopName": "FRANSCENE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 118.93,
+        "dateTime": "2024-08-05T10:05:08Z"
+      },
+      {
+        "id": "c0492dd7-ea49-429b-ac20-fe5906a531e4",
+        "shopName": "RECRISYS",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 190.96,
+        "dateTime": "2024-09-04T02:37:03Z"
+      },
+      {
+        "id": "6f94ff39-d3bd-4e7d-a00d-2e6838c0679e",
+        "shopName": "NORALEX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 196.41,
+        "dateTime": "2024-09-05T11:18:44Z"
+      },
+      {
+        "id": "fc7922ba-3cb7-4234-9b48-d1a133f16758",
+        "shopName": "SKYBOLD",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 57.91,
+        "dateTime": "2024-09-15T03:09:46Z"
+      },
+      {
+        "id": "99f80990-a5b6-4911-baff-1b02e509e0d6",
+        "shopName": "PROSELY",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 156.5,
+        "dateTime": "2024-08-30T02:18:23Z"
+      },
+      {
+        "id": "7bd23bb9-a6c5-47f8-8492-d4ba98739f5d",
+        "shopName": "PORTALIS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 41.65,
+        "dateTime": "2024-08-20T08:40:19Z"
+      },
+      {
+        "id": "9e551849-fb41-4002-994d-80c566517fac",
+        "shopName": "AUTOGRATE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 136.13,
+        "dateTime": "2024-08-07T03:49:18Z"
+      },
+      {
+        "id": "c14e770b-4633-482e-a892-2d254727d41d",
+        "shopName": "SINGAVERA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 132.23,
+        "dateTime": "2024-08-15T05:07:05Z"
+      },
+      {
+        "id": "0b9a1293-57d0-4d7d-9fb3-9a2743ae39af",
+        "shopName": "QIAO",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 58.41,
+        "dateTime": "2024-08-01T04:55:42Z"
+      },
+      {
+        "id": "703d23aa-69d2-46ac-8e99-abe653f4e8ec",
+        "shopName": "AUTOMON",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 197.51,
+        "dateTime": "2024-08-06T06:23:01Z"
+      },
+      {
+        "id": "041e3c07-e26e-46b4-93b3-6f9e78fe169b",
+        "shopName": "NIMON",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 30.56,
+        "dateTime": "2024-08-12T10:19:33Z"
+      },
+      {
+        "id": "e5583945-6afc-4558-b962-0a412cf1d797",
+        "shopName": "EXIAND",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 37.04,
+        "dateTime": "2024-09-19T02:24:57Z"
+      },
+      {
+        "id": "7cb96ef7-eb20-4802-be63-a0eb031d2569",
+        "shopName": "GRUPOLI",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 184.75,
+        "dateTime": "2024-08-26T06:23:21Z"
+      },
+      {
+        "id": "e84117fa-44bd-4099-9bdf-2a56c5ac71ec",
+        "shopName": "IRACK",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 16.7,
+        "dateTime": "2024-09-08T03:57:07Z"
+      },
+      {
+        "id": "b3323a4e-874e-44da-b850-6848637a17f0",
+        "shopName": "NIPAZ",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 29.11,
+        "dateTime": "2024-08-03T10:55:05Z"
+      },
+      {
+        "id": "1b8adb1a-3679-4252-b9fe-983a5cefebcf",
+        "shopName": "VURBO",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 37.63,
+        "dateTime": "2024-09-06T02:11:49Z"
+      },
+      {
+        "id": "bc27d592-4815-454f-a031-b51524418bd5",
+        "shopName": "EARTHPURE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 151.87,
+        "dateTime": "2024-09-10T09:27:24Z"
+      },
+      {
+        "id": "1e954195-6000-4ce4-adca-a7433be01734",
+        "shopName": "KEEG",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 53.44,
+        "dateTime": "2024-08-20T04:32:09Z"
+      },
+      {
+        "id": "ac68915d-0fbb-4c83-be8f-71f0879d6563",
+        "shopName": "PORTICA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 157.81,
+        "dateTime": "2024-09-15T09:11:08Z"
+      },
+      {
+        "id": "eb5733d7-dcbd-4677-b630-d56833fa1273",
+        "shopName": "VIXO",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 141.3,
+        "dateTime": "2024-08-14T08:50:30Z"
+      },
+      {
+        "id": "d5d255e5-de64-49a9-94c7-becc7a06610f",
+        "shopName": "LINGOAGE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 99.54,
+        "dateTime": "2024-08-07T06:44:42Z"
+      },
+      {
+        "id": "bfc94912-dae5-4af5-b02c-284c5b18f3f8",
+        "shopName": "PEARLESEX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 57.9,
+        "dateTime": "2024-08-30T03:16:41Z"
+      },
+      {
+        "id": "a853e763-df2c-4a41-bb6b-f109fd61446f",
+        "shopName": "CODAX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 114.29,
+        "dateTime": "2024-08-17T08:27:55Z"
+      },
+      {
+        "id": "b385c9c6-520c-47e2-9158-3a3c3e343c97",
+        "shopName": "AVENETRO",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 171.29,
+        "dateTime": "2024-08-08T10:18:19Z"
+      },
+      {
+        "id": "151c64f0-3e17-4d18-8a02-6c218958f2ac",
+        "shopName": "TELEPARK",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 154.15,
+        "dateTime": "2024-08-17T02:23:17Z"
+      },
+      {
+        "id": "3c096fa1-bdf5-4492-a306-9e7c0c89101e",
+        "shopName": "POOCHIES",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 91.38,
+        "dateTime": "2024-08-10T08:51:20Z"
+      },
+      {
+        "id": "5637d17b-8524-4072-aaa4-6565487159a2",
+        "shopName": "XLEEN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 162.93,
+        "dateTime": "2024-08-07T09:16:25Z"
+      },
+      {
+        "id": "1f02f40b-7c71-48c3-bf43-13bc6ca2d235",
+        "shopName": "BOLAX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 171.34,
+        "dateTime": "2024-09-13T01:13:46Z"
+      },
+      {
+        "id": "07490d66-f148-4b06-a28b-f6269908f388",
+        "shopName": "MICROLUXE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 107.4,
+        "dateTime": "2024-09-15T11:26:53Z"
+      },
+      {
+        "id": "9e672590-5024-4430-9b50-6b9010ad4dbd",
+        "shopName": "BISBA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 91.23,
+        "dateTime": "2024-08-08T03:34:58Z"
+      },
+      {
+        "id": "3a10a2a6-fa96-4faa-a65e-22f61a27c5b0",
+        "shopName": "EXOTERIC",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 138.93,
+        "dateTime": "2024-09-04T11:40:42Z"
+      },
+      {
+        "id": "47ccabfe-1749-46b0-b3b7-204652629764",
+        "shopName": "HINWAY",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 158.94,
+        "dateTime": "2024-08-08T09:20:51Z"
+      },
+      {
+        "id": "1cc3e817-7bd1-46b9-bee0-aa6f8cc7b779",
+        "shopName": "DIGIAL",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 37.8,
+        "dateTime": "2024-08-14T09:30:09Z"
+      },
+      {
+        "id": "e5b57526-7b27-4228-b6be-a26caf01d8bb",
+        "shopName": "BLUEGRAIN",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 197.42,
+        "dateTime": "2024-08-11T08:56:03Z"
+      },
+      {
+        "id": "bdd62744-90b7-431a-b7d8-f9fa0a54e4f3",
+        "shopName": "INTERLOO",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 1.24,
+        "dateTime": "2024-09-08T08:04:08Z"
+      },
+      {
+        "id": "5bdbd5d4-fd0c-4f0c-ab4d-8c4413ac6bc8",
+        "shopName": "INSOURCE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 147.02,
+        "dateTime": "2024-09-09T12:41:46Z"
+      },
+      {
+        "id": "2ccfa3fc-0fc8-481a-b10e-5d41d9425931",
+        "shopName": "CENTREXIN",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 9.29,
+        "dateTime": "2024-08-11T07:17:07Z"
+      },
+      {
+        "id": "6ef103a3-72bd-42d2-a4de-30e16a8788c8",
+        "shopName": "EMERGENT",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 163.65,
+        "dateTime": "2024-08-29T08:56:21Z"
+      },
+      {
+        "id": "9a7e1a83-adfd-488b-b79f-0ad4960b9c4e",
+        "shopName": "INSURESYS",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 81.53,
+        "dateTime": "2024-08-12T04:08:29Z"
+      },
+      {
+        "id": "1defa2a3-ddd7-45b5-9847-675f8d1a18d3",
+        "shopName": "NAMEGEN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 152.37,
+        "dateTime": "2024-08-27T06:10:36Z"
+      },
+      {
+        "id": "5e215aea-593c-4e35-a0ee-d00833c52c51",
+        "shopName": "BITTOR",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 73.44,
+        "dateTime": "2024-09-07T02:50:45Z"
+      },
+      {
+        "id": "d5c9bd77-5ec6-403f-aa62-a0503b43f6b2",
+        "shopName": "MAKINGWAY",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 180.74,
+        "dateTime": "2024-08-01T02:02:24Z"
+      },
+      {
+        "id": "c94d69dc-22cd-4351-925e-c8c48948508d",
+        "shopName": "FRENEX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 10.23,
+        "dateTime": "2024-08-01T05:57:38Z"
+      },
+      {
+        "id": "365e694d-94b4-4223-8a85-15c571824fc3",
+        "shopName": "OCEANICA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 154.18,
+        "dateTime": "2024-09-06T08:08:58Z"
+      },
+      {
+        "id": "b354bfbe-9ccb-4fe4-aeb2-43ca03bfb45a",
+        "shopName": "MARQET",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 154.47,
+        "dateTime": "2024-08-17T02:29:16Z"
+      },
+      {
+        "id": "04c5543b-17d2-4d6b-9021-a421156bc883",
+        "shopName": "NEOCENT",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 41.21,
+        "dateTime": "2024-08-29T09:51:35Z"
+      },
+      {
+        "id": "bf9b025f-b6a0-492d-988a-b7ef0281f3c4",
+        "shopName": "SNOWPOKE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 10.67,
+        "dateTime": "2024-08-14T02:51:35Z"
+      },
+      {
+        "id": "5383a1a8-424d-4c15-8fef-f5a6b5dae73d",
+        "shopName": "BOVIS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 104,
+        "dateTime": "2024-09-15T03:56:33Z"
+      },
+      {
+        "id": "d77b0a5a-76a3-46f7-bfa5-34706309444c",
+        "shopName": "ACCUSAGE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 133.52,
+        "dateTime": "2024-09-17T09:27:01Z"
+      },
+      {
+        "id": "b739e3cd-8092-4a27-95da-b71c67a69d36",
+        "shopName": "QUANTASIS",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 81.5,
+        "dateTime": "2024-08-31T01:56:50Z"
+      },
+      {
+        "id": "d1abfeb7-d4ef-48d6-8c2b-5f9fc64f85dd",
+        "shopName": "ELECTONIC",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 133.96,
+        "dateTime": "2024-09-01T08:01:05Z"
+      },
+      {
+        "id": "9ff6fdee-b5ed-452e-9c18-756ff565779c",
+        "shopName": "COLLAIRE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 189.55,
+        "dateTime": "2024-08-03T01:47:11Z"
+      },
+      {
+        "id": "09786a3e-6f21-4d1e-a07e-889829e0eddd",
+        "shopName": "TUBALUM",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 20.86,
+        "dateTime": "2024-09-08T02:21:50Z"
+      },
+      {
+        "id": "24cd1192-243e-48db-afc9-edb7724423ef",
+        "shopName": "PAWNAGRA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 139.7,
+        "dateTime": "2024-08-01T06:20:46Z"
+      },
+      {
+        "id": "5efd386b-4759-48a9-86f7-686e46d4de55",
+        "shopName": "ORBEAN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 76.07,
+        "dateTime": "2024-09-19T08:03:28Z"
+      },
+      {
+        "id": "2b869dee-c665-4959-8dc0-fa5286282251",
+        "shopName": "PYRAMIS",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 53.48,
+        "dateTime": "2024-08-13T07:56:40Z"
+      },
+      {
+        "id": "9b99231d-b95f-4bcf-9aa9-f323f48232f3",
+        "shopName": "XYMONK",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 138.31,
+        "dateTime": "2024-08-23T08:04:17Z"
+      },
+      {
+        "id": "02545bc7-77ce-4a80-a8bb-50ef40237ca3",
+        "shopName": "ENERVATE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 197.77,
+        "dateTime": "2024-09-19T05:03:56Z"
+      },
+      {
+        "id": "6f4f6398-f617-4ff4-9830-85e384181958",
+        "shopName": "ILLUMITY",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 119.26,
+        "dateTime": "2024-09-17T06:49:52Z"
+      },
+      {
+        "id": "61509a20-dde1-4fdc-89a6-66a59d745c30",
+        "shopName": "DIGITALUS",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 130.49,
+        "dateTime": "2024-08-18T03:47:17Z"
+      },
+      {
+        "id": "8e379333-012b-4520-a2de-90e0825b7ce9",
+        "shopName": "TOURMANIA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 131.23,
+        "dateTime": "2024-09-19T03:55:14Z"
+      },
+      {
+        "id": "6d35cbf7-64ad-4f35-915e-01fd7e6ec67b",
+        "shopName": "CONFERIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 138.47,
+        "dateTime": "2024-09-17T04:07:39Z"
+      },
+      {
+        "id": "074ebd2b-6fab-469a-828a-e820bf32a8c9",
+        "shopName": "FLUM",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 148.67,
+        "dateTime": "2024-08-30T07:39:40Z"
+      },
+      {
+        "id": "519d15ec-8fa9-4299-a34b-d724f1d54a64",
+        "shopName": "KOZGENE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 28.14,
+        "dateTime": "2024-08-16T06:28:21Z"
+      },
+      {
+        "id": "a9c031c8-b4d2-40b5-a871-2d98c25d9c55",
+        "shopName": "XIXAN",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 22.71,
+        "dateTime": "2024-09-16T10:45:11Z"
+      },
+      {
+        "id": "a9f3b2f9-dd08-4c83-bf6a-25be16f953bb",
+        "shopName": "RETRACK",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 149.66,
+        "dateTime": "2024-08-27T10:14:08Z"
+      },
+      {
+        "id": "e3cee453-b536-4d3d-b8ba-3662abe5b7fe",
+        "shopName": "QUAREX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 89.05,
+        "dateTime": "2024-09-10T12:03:44Z"
+      },
+      {
+        "id": "a79faa3d-a2f5-4a85-bdeb-b0cf7de61397",
+        "shopName": "DAIDO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 199.85,
+        "dateTime": "2024-08-31T01:34:59Z"
+      },
+      {
+        "id": "0f8ad90a-4682-4370-bbc3-73ba6986a334",
+        "shopName": "EMTRAC",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 31.7,
+        "dateTime": "2024-09-11T07:53:34Z"
+      },
+      {
+        "id": "28d2ac02-6372-47d5-b231-f46075856f06",
+        "shopName": "AMRIL",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 191.34,
+        "dateTime": "2024-09-07T12:50:52Z"
+      },
+      {
+        "id": "1f1d7518-7742-4ecd-9548-d8fc9192b0fe",
+        "shopName": "KENGEN",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 32.61,
+        "dateTime": "2024-09-13T12:39:27Z"
+      },
+      {
+        "id": "835a7522-75a6-4ae5-9b38-57f48c1f4f7f",
+        "shopName": "FIBRODYNE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 74.66,
+        "dateTime": "2024-08-24T11:45:04Z"
+      },
+      {
+        "id": "90f97722-09f2-4548-978e-80a917752e91",
+        "shopName": "ERSUM",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 142.35,
+        "dateTime": "2024-08-01T11:16:32Z"
+      },
+      {
+        "id": "030e74e1-aba5-4735-86fe-ae5a387152fe",
+        "shopName": "ZANILLA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 43.02,
+        "dateTime": "2024-09-14T01:21:42Z"
+      },
+      {
+        "id": "ed509940-4452-4d1e-a88e-08616604de56",
+        "shopName": "EXOPLODE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 162.65,
+        "dateTime": "2024-08-07T04:21:40Z"
+      },
+      {
+        "id": "d1027270-4b17-45e9-9fbb-9d8f4a7e9d1c",
+        "shopName": "EPLOSION",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 101.04,
+        "dateTime": "2024-09-13T05:40:52Z"
+      },
+      {
+        "id": "b4b5c93c-899e-493c-b9fc-01f3680f595c",
+        "shopName": "ENDIPINE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 114.23,
+        "dateTime": "2024-09-15T04:20:47Z"
+      },
+      {
+        "id": "a474af79-49b8-4839-91ed-8346d90d9392",
+        "shopName": "ELITA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 101.85,
+        "dateTime": "2024-08-18T06:01:49Z"
+      },
+      {
+        "id": "589f9519-93f0-4ff3-a76b-9f936ec0b845",
+        "shopName": "RAMJOB",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 159.46,
+        "dateTime": "2024-08-07T04:23:51Z"
+      },
+      {
+        "id": "930025b1-56c4-4c1d-8dc1-81e2e27ee460",
+        "shopName": "UXMOX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 115.47,
+        "dateTime": "2024-09-08T06:16:01Z"
+      },
+      {
+        "id": "8537da5f-bc8c-4050-a11a-42215903bb17",
+        "shopName": "MEDIFAX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 23.96,
+        "dateTime": "2024-08-17T10:14:49Z"
+      },
+      {
+        "id": "754553b1-1284-4661-a034-802dd69f3140",
+        "shopName": "ENOMEN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 157.84,
+        "dateTime": "2024-08-18T08:19:40Z"
+      },
+      {
+        "id": "452b4220-e59c-448f-95a2-e3d3732058cc",
+        "shopName": "KINETICA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 103.59,
+        "dateTime": "2024-08-04T03:57:19Z"
+      },
+      {
+        "id": "3530509b-402b-4246-886a-e258c5faf9d9",
+        "shopName": "GEEKWAGON",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 149.85,
+        "dateTime": "2024-08-10T06:01:58Z"
+      },
+      {
+        "id": "89d23c4e-1c04-4a27-a519-a1f53836d647",
+        "shopName": "QUALITEX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 48.02,
+        "dateTime": "2024-08-04T01:17:04Z"
+      },
+      {
+        "id": "8f3361fc-cf7f-4052-b5ae-d808d05b6a50",
+        "shopName": "INTRADISK",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 50.29,
+        "dateTime": "2024-08-03T10:20:26Z"
+      },
+      {
+        "id": "8bae9f8e-3c32-4ae5-8cd4-f7b0c3dff787",
+        "shopName": "POLARIUM",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 33.98,
+        "dateTime": "2024-08-27T08:50:25Z"
+      },
+      {
+        "id": "1afe18d5-77fa-4cf0-8a88-4e1a644ac31b",
+        "shopName": "GEEKETRON",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 85.11,
+        "dateTime": "2024-09-17T01:34:08Z"
+      },
+      {
+        "id": "7e54ef0f-914e-48f5-877c-7bcd3cdfd45b",
+        "shopName": "PLAYCE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 107.15,
+        "dateTime": "2024-08-06T01:37:14Z"
+      },
+      {
+        "id": "ee073442-f98f-4407-af2a-003a7f4c9031",
+        "shopName": "ANIMALIA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 39.1,
+        "dateTime": "2024-08-25T07:50:48Z"
+      },
+      {
+        "id": "2dc62588-6c7c-46fb-8735-953a86423d6b",
+        "shopName": "VALREDA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 71.61,
+        "dateTime": "2024-08-21T06:01:10Z"
+      },
+      {
+        "id": "bd11dbb6-f0a2-438a-a4f7-8f9a97416f40",
+        "shopName": "NURPLEX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 196.02,
+        "dateTime": "2024-08-28T12:21:03Z"
+      },
+      {
+        "id": "398e3da8-fc61-44cd-b180-ff76e13c5aa2",
+        "shopName": "MULTIFLEX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 18.43,
+        "dateTime": "2024-08-13T07:02:55Z"
+      },
+      {
+        "id": "50bd039a-40f8-42c2-a8c1-effb190b3737",
+        "shopName": "ACIUM",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 75.25,
+        "dateTime": "2024-08-26T06:26:54Z"
+      },
+      {
+        "id": "2344f33a-1305-4e37-bc0b-922c18475f0a",
+        "shopName": "ISOLOGICA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 76.33,
+        "dateTime": "2024-08-01T05:42:23Z"
+      },
+      {
+        "id": "82fd086c-64b6-4fc7-a172-cb51a650b2cf",
+        "shopName": "SPLINX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 20.47,
+        "dateTime": "2024-09-04T08:23:16Z"
+      },
+      {
+        "id": "ed7352a1-6f85-4171-869a-12d25f436316",
+        "shopName": "IZZBY",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 120.05,
+        "dateTime": "2024-08-14T03:54:25Z"
+      },
+      {
+        "id": "0fd5f8a9-6ded-40a2-a13d-c3c444234933",
+        "shopName": "MARTGO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 179.96,
+        "dateTime": "2024-09-16T05:51:07Z"
+      },
+      {
+        "id": "f06d9ef0-f96c-40a2-b69d-e4774fcd49ef",
+        "shopName": "TURNABOUT",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 103.81,
+        "dateTime": "2024-09-02T02:05:14Z"
+      },
+      {
+        "id": "513b53c8-f6a2-4e68-bbb2-154ed9621cc4",
+        "shopName": "GYNKO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 93.25,
+        "dateTime": "2024-08-13T08:56:02Z"
+      },
+      {
+        "id": "11859bb2-4e6f-451b-9585-458a70609e4a",
+        "shopName": "VICON",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 24,
+        "dateTime": "2024-09-18T05:55:19Z"
+      },
+      {
+        "id": "b269a9ad-1f27-496a-8c9c-79dbfdc405bb",
+        "shopName": "MANGLO",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 124.8,
+        "dateTime": "2024-09-14T09:12:19Z"
+      },
+      {
+        "id": "451074de-d32a-425f-8eda-738ef0c7b01c",
+        "shopName": "KEGULAR",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 52.75,
+        "dateTime": "2024-08-20T05:10:21Z"
+      },
+      {
+        "id": "b8916674-c844-4fdc-8196-b57b642762bc",
+        "shopName": "NETBOOK",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 179.48,
+        "dateTime": "2024-09-17T11:44:37Z"
+      },
+      {
+        "id": "297cb230-88d3-4177-8696-c05a4e1969f7",
+        "shopName": "UBERLUX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 192.06,
+        "dateTime": "2024-08-29T04:54:49Z"
+      },
+      {
+        "id": "505b26c4-0111-4a9d-bb6f-ebca34b8a221",
+        "shopName": "ECSTASIA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 140.47,
+        "dateTime": "2024-08-29T02:54:57Z"
+      },
+      {
+        "id": "648d7717-896a-4695-a071-839cf53a9c92",
+        "shopName": "NETPLAX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 67.82,
+        "dateTime": "2024-09-07T11:19:20Z"
+      },
+      {
+        "id": "a1da69c2-a1ac-477d-8fa7-ffe4b2c5e8a7",
+        "shopName": "GINKOGENE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 109.34,
+        "dateTime": "2024-08-15T10:18:13Z"
+      },
+      {
+        "id": "cfe095c6-93a3-4026-8013-418d9e363a3a",
+        "shopName": "UNEEQ",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 69.46,
+        "dateTime": "2024-08-17T06:26:20Z"
+      },
+      {
+        "id": "f8b368f6-a297-45c6-8339-55ae93bdfa93",
+        "shopName": "SYNKGEN",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 172.08,
+        "dateTime": "2024-09-10T10:15:26Z"
+      },
+      {
+        "id": "d5423df0-5491-4043-b579-adad9b1b17b8",
+        "shopName": "FROSNEX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 17.16,
+        "dateTime": "2024-08-20T06:52:25Z"
+      },
+      {
+        "id": "e91a06fb-f3af-417e-b29f-b2f03727d365",
+        "shopName": "SATIANCE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 12.8,
+        "dateTime": "2024-08-23T09:25:01Z"
+      },
+      {
+        "id": "6e0ee111-b05d-4043-b00a-329134af4637",
+        "shopName": "NETROPIC",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 93.39,
+        "dateTime": "2024-08-14T01:52:25Z"
+      },
+      {
+        "id": "534f666a-606f-46fd-9d9a-824c734a0d94",
+        "shopName": "MANTRO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 119.36,
+        "dateTime": "2024-08-05T09:37:14Z"
+      },
+      {
+        "id": "4eeb189d-8744-4ae1-a32f-5492d2697b19",
+        "shopName": "ZOINAGE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 173.23,
+        "dateTime": "2024-08-08T01:48:52Z"
+      },
+      {
+        "id": "bc2c4266-ca4d-4b89-887a-1122fb4c69fc",
+        "shopName": "INTRAWEAR",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 164.9,
+        "dateTime": "2024-08-28T09:52:37Z"
+      },
+      {
+        "id": "0c3717dd-7e2f-4a46-b142-01ca426cec2b",
+        "shopName": "PODUNK",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 5.64,
+        "dateTime": "2024-09-06T10:24:16Z"
+      },
+      {
+        "id": "28f8422a-7059-4a1a-bb03-24488ff0e612",
+        "shopName": "ISOSPHERE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 7.42,
+        "dateTime": "2024-09-17T11:24:37Z"
+      },
+      {
+        "id": "e0cd4980-9d46-4927-a4b0-83fc76ac688a",
+        "shopName": "QUOTEZART",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 138.26,
+        "dateTime": "2024-09-13T01:04:07Z"
+      },
+      {
+        "id": "9212a64a-75e2-473c-b759-71e7454aef17",
+        "shopName": "BRAINQUIL",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 52.81,
+        "dateTime": "2024-09-13T07:04:57Z"
+      },
+      {
+        "id": "942b68ff-d217-4821-abde-257211cc326b",
+        "shopName": "ORBAXTER",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 34.43,
+        "dateTime": "2024-08-19T06:40:07Z"
+      },
+      {
+        "id": "4781c74d-6be1-452f-82e4-447ef2e410a0",
+        "shopName": "RONBERT",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 166.45,
+        "dateTime": "2024-09-12T11:50:32Z"
+      },
+      {
+        "id": "2b360d32-ce59-4d1d-a5db-1d9b729c0795",
+        "shopName": "XUMONK",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 24.74,
+        "dateTime": "2024-09-04T06:59:28Z"
+      },
+      {
+        "id": "0c9e7d10-d14c-4e47-9c32-e80986d9b416",
+        "shopName": "TECHADE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 106.24,
+        "dateTime": "2024-08-29T08:50:04Z"
+      },
+      {
+        "id": "9a8352d0-33a6-4742-9cd2-5a43a85dd83f",
+        "shopName": "GINK",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 178.53,
+        "dateTime": "2024-08-31T12:15:32Z"
+      },
+      {
+        "id": "62001ef8-80cf-4af0-aeb2-9ddfb2e5af47",
+        "shopName": "FLEETMIX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 170.8,
+        "dateTime": "2024-09-09T01:12:58Z"
+      },
+      {
+        "id": "4eafb29e-0e56-4977-9712-c93251850c63",
+        "shopName": "KONGLE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 42.64,
+        "dateTime": "2024-08-18T02:04:21Z"
+      },
+      {
+        "id": "0fd89eb1-aea9-47a2-a61a-53acad50293b",
+        "shopName": "ZILLANET",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "b9c66dbb-51b1-4964-861b-fa22edeaa7c0",
+        "amount": 108.36,
+        "dateTime": "2024-08-04T08:15:47Z"
+      },
+      {
+        "id": "0b2134c2-a3e9-4e58-8950-18f743c010ef",
+        "shopName": "ZEAM",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 54.43,
+        "dateTime": "2024-09-09T01:22:18Z"
+      },
+      {
+        "id": "e626f00d-b9bb-48d7-8628-d631d1d89502",
+        "shopName": "ZIORE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 169.38,
+        "dateTime": "2024-08-17T12:31:13Z"
+      },
+      {
+        "id": "8b4e113b-a972-4002-85b3-f334f2aaa5f4",
+        "shopName": "EWEVILLE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 199.71,
+        "dateTime": "2024-09-10T07:58:15Z"
+      },
+      {
+        "id": "fd120198-9326-4cec-bac6-891df86a8fff",
+        "shopName": "PRINTSPAN",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 52.86,
+        "dateTime": "2024-08-31T10:27:49Z"
+      },
+      {
+        "id": "4a9e93fa-8992-4f4f-ac90-816f393b3170",
+        "shopName": "NEPTIDE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 28.15,
+        "dateTime": "2024-09-16T02:01:02Z"
+      },
+      {
+        "id": "a381aa31-90cb-4ccd-8e58-1febd81f1581",
+        "shopName": "VISUALIX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 90.52,
+        "dateTime": "2024-09-02T05:23:22Z"
+      },
+      {
+        "id": "50a0238f-76ee-4edb-b41a-ecf8a0f37b82",
+        "shopName": "ZYTRAX",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 190.39,
+        "dateTime": "2024-08-30T01:43:59Z"
+      },
+      {
+        "id": "025fe689-d068-4612-a994-55c12a9a0517",
+        "shopName": "SUPPORTAL",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 125.08,
+        "dateTime": "2024-08-09T01:26:39Z"
+      },
+      {
+        "id": "58760dc3-4333-4b44-a540-4420c684097e",
+        "shopName": "ZENTIME",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 69.86,
+        "dateTime": "2024-08-21T05:05:00Z"
+      },
+      {
+        "id": "e2efd893-3c47-4585-9bff-a356631bef92",
+        "shopName": "DATAGENE",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 140.71,
+        "dateTime": "2024-09-09T02:33:20Z"
+      },
+      {
+        "id": "0808356c-f8a0-4f85-a89c-c4208bcb83c3",
+        "shopName": "SEALOUD",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 76.77,
+        "dateTime": "2024-08-05T06:16:12Z"
+      },
+      {
+        "id": "d2976cdf-33f5-4ab0-b5e7-26ca7c0eee5d",
+        "shopName": "TECHMANIA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 152.8,
+        "dateTime": "2024-08-08T05:55:56Z"
+      },
+      {
+        "id": "8750a8e1-0c5e-4702-9149-0674a142442c",
+        "shopName": "CYTREX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 152.01,
+        "dateTime": "2024-08-21T07:59:16Z"
+      },
+      {
+        "id": "b5ebf339-42a3-4268-b51f-c3a0baa28342",
+        "shopName": "GLEAMINK",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 122.87,
+        "dateTime": "2024-08-15T06:41:29Z"
+      },
+      {
+        "id": "ec9818a7-9cc3-4814-97c5-e9a19fd4ee57",
+        "shopName": "ANIXANG",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 7.76,
+        "dateTime": "2024-09-10T09:27:33Z"
+      },
+      {
+        "id": "2e4a1bbb-3ac4-4fa4-b25b-4e22b50cd296",
+        "shopName": "MAZUDA",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 41.03,
+        "dateTime": "2024-08-30T11:47:44Z"
+      },
+      {
+        "id": "ae1d92f0-294d-4503-a3e7-5a5427f454d1",
+        "shopName": "ZIPAK",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "a002a86b-8efd-4cc1-b331-9a3cf312bed6",
+        "amount": 30.64,
+        "dateTime": "2024-08-28T07:32:58Z"
+      },
+      {
+        "id": "f06e8dc0-3bc1-4051-b586-fe4c5fb8e5ed",
+        "shopName": "PORTICO",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 161.21,
+        "dateTime": "2024-08-16T06:25:49Z"
+      },
+      {
+        "id": "8e9f69f5-9750-4f77-893a-d94730ccc00e",
+        "shopName": "AQUAMATE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 179.61,
+        "dateTime": "2024-09-14T11:31:21Z"
+      },
+      {
+        "id": "58e84fc4-a285-4555-a4be-846f41bd2266",
+        "shopName": "EXPOSA",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 26.77,
+        "dateTime": "2024-09-02T10:14:18Z"
+      },
+      {
+        "id": "f7964fbe-372a-4eaf-b549-b0debb1f47d2",
+        "shopName": "MARKETOID",
+        "paidById": "acf909f7-3e69-4398-b76f-9d91c37339ab",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 165.71,
+        "dateTime": "2024-08-17T11:49:11Z"
+      },
+      {
+        "id": "3bd509e9-7ea4-460f-baa1-e9b64bc14434",
+        "shopName": "ISOTERNIA",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "fb70af88-a1b2-4672-9124-b474de422b87",
+        "amount": 138.31,
+        "dateTime": "2024-08-13T09:16:02Z"
+      },
+      {
+        "id": "d7213e9f-ae05-408a-9852-d228661a9a38",
+        "shopName": "ACCUPRINT",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 103.59,
+        "dateTime": "2024-09-06T04:29:45Z"
+      },
+      {
+        "id": "83104908-bc65-4b0a-a46c-0463d0133ffe",
+        "shopName": "PROWASTE",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 122.42,
+        "dateTime": "2024-08-06T02:22:00Z"
+      },
+      {
+        "id": "ab9a70b4-b554-47b7-a5f7-12518a4edc5f",
+        "shopName": "ACRUEX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 199.77,
+        "dateTime": "2024-08-07T10:16:53Z"
+      },
+      {
+        "id": "16a6113f-e11a-4f1b-82ae-6c104e1de4f8",
+        "shopName": "CUBIX",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "1186e92d-7914-4a0a-9357-cdbb869e6d54",
+        "amount": 167.57,
+        "dateTime": "2024-09-05T09:23:49Z"
+      },
+      {
+        "id": "ecc02736-1e3d-403a-97f7-9f5de56c98d7",
+        "shopName": "OPPORTECH",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 75.77,
+        "dateTime": "2024-08-23T01:54:50Z"
+      },
+      {
+        "id": "4baf7ca1-332b-44eb-b76a-03549ee0bb44",
+        "shopName": "QUORDATE",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "2188e2bf-b126-463e-a41e-b33421870d24",
+        "amount": 171.66,
+        "dateTime": "2024-09-17T01:26:26Z"
+      },
+      {
+        "id": "f05f462f-01ca-4371-a7d7-795aa736b85d",
+        "shopName": "CIPROMOX",
+        "paidById": "b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be",
+        "categoryId": "ba4c46d3-b84e-44ab-a286-055c0de309aa",
+        "amount": 75.87,
+        "dateTime": "2024-09-10T03:56:17Z"
+      },
+      {
+        "id": "46815612-0ffb-4c07-a9f2-312db8988385",
+        "shopName": "TELLIFLY",
+        "paidById": "98f85943-acf4-4104-ae17-2ba5b73718ef",
+        "categoryId": "3ca901e7-0435-42b4-a3a1-99a3a5f55884",
+        "amount": 18.11,
+        "dateTime": "2024-09-01T09:11:25Z"
+      }
+    ]
+  }

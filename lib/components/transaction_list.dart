@@ -102,13 +102,12 @@ class _TransactionListState extends State<TransactionList> {
                           ),
                           SizedBox(height: 8),
                         ],
-                        GestureDetector(
-                          onTap: () => widget.onExpenseSelected(expense),
-                          child: ExpenseWidget(
-                            backgroundColor: index % 2 == 0
-                                ? Colors.white
-                                : Colors.grey[100]!,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: RoundedExpenseWidget(
                             expense: expense,
+                            onTap: () => widget.onExpenseSelected(expense),
                           ),
                         ),
                       ],
@@ -264,5 +263,100 @@ class _TransactionListState extends State<TransactionList> {
         widget.selectedCategories.isNotEmpty ||
         widget.selectedPersons.isNotEmpty ||
         widget.searchQuery.isNotEmpty;
+  }
+}
+
+class RoundedExpenseWidget extends StatelessWidget {
+  final Expense expense;
+  final VoidCallback onTap;
+
+  const RoundedExpenseWidget({
+    Key? key,
+    required this.expense,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: expense.category.color.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  expense.category.icon,
+                  color: expense.category.color,
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      expense.shopName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      expense.category.name,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '\$${expense.amount.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    expense.paidBy.name,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

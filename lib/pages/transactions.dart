@@ -31,7 +31,7 @@ class _TransactionsState extends State<Transactions>
       duration: Duration(milliseconds: 300),
     );
     _slideAnimation = Tween<Offset>(
-      begin: Offset(1.0, 0.0),
+      begin: Offset(-1.0, 0.0),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -154,10 +154,10 @@ class _TransactionsState extends State<Transactions>
                     bottom: 0,
                     left: 0,
                     right: 366, // Right column width + padding
-                    child: buildElevatedContainer(
-                      child: Stack(
-                        children: [
-                          TransactionList(
+                    child: Stack(
+                      children: [
+                        buildElevatedContainer(
+                          child: TransactionList(
                             expenses: filteredExpenses,
                             onSearch: expenseProvider.setSearchQuery,
                             showFilterBottomSheet: () =>
@@ -172,16 +172,25 @@ class _TransactionsState extends State<Transactions>
                             onExpenseSelected: (expense) =>
                                 _toggleAddExpensePanel(expense: expense),
                           ),
-                          Positioned(
-                            right: 16,
-                            bottom: 16,
-                            child: FloatingActionButton(
-                              onPressed: () => _toggleAddExpensePanel(),
-                              child: Icon(Icons.add),
+                        ),
+                        if (_showAddExpensePanel)
+                          Positioned.fill(
+                            child: GestureDetector(
+                              onTap: _toggleAddExpensePanel,
+                              child: Container(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    right: 382, // Right column width + padding + 16
+                    bottom: 16,
+                    child: FloatingActionButton(
+                      onPressed: () => _toggleAddExpensePanel(),
+                      child: Icon(Icons.add),
                     ),
                   ),
                 ],

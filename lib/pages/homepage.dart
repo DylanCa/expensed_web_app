@@ -65,7 +65,6 @@ class _HomepageState extends State<Homepage> {
               children: [
                 buildElevatedContainer(
                   child: Container(
-                    color: Theme.of(context).primaryColor.withOpacity(0.15),
                     width: 200,
                     child: Column(
                       children: [
@@ -120,7 +119,9 @@ class _HomepageState extends State<Homepage> {
                 ),
                 SizedBox(width: 16),
                 Expanded(
-                  child: _pages[selectedIndex],
+                  child: buildElevatedContainer(
+                    child: _pages[selectedIndex],
+                  ),
                 ),
               ],
             ),

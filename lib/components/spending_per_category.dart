@@ -33,8 +33,10 @@ class SpendingPerCategory extends StatelessWidget {
       }
     }
 
+    // Sort categories by amount spent, from highest to lowest
     List<Category> sortedCategories = categories.toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
+      ..sort((a, b) =>
+          (expensesByCategory[b] ?? 0).compareTo(expensesByCategory[a] ?? 0));
 
     // Calculate maxY (maximum amount rounded to the nearest 50 above)
     double maxY = expensesByCategory.values.isEmpty

@@ -122,40 +122,41 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            const fixedWidth = 1400.0;
-            const padding = 16.0; // Add padding constant
+            const fixedWidth = 1600.0;
+            const padding = 16.0;
+            const minWidth = 1200.0;
+            const minHeight = 800.0;
             final windowHeight = constraints.maxHeight;
             final windowWidth = constraints.maxWidth;
-            final appHeight =
-                (windowHeight - 2 * padding); // Adjust for padding
 
-            // Calculate the app's width
-            final appWidth = math.min(
-                fixedWidth, windowWidth - 2 * padding); // Adjust for padding
+            final appWidth = math.max(
+                minWidth, math.min(fixedWidth, windowWidth - 2 * padding));
+            final appHeight = math.max(minHeight, windowHeight - 2 * padding);
 
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
                 child: Container(
-                  width: windowWidth,
-                  height: windowHeight,
-                  padding: const EdgeInsets.all(padding), // Add padding
+                  width: math.max(windowWidth, minWidth + 2 * padding),
+                  height: math.max(windowHeight, minHeight + 2 * padding),
+                  padding: const EdgeInsets.all(padding),
                   child: Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        width: appWidth,
-                        height: appHeight,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              spreadRadius: 5,
-                            ),
-                          ],
-                        ),
+                    child: Container(
+                      width: appWidth,
+                      height: appHeight,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 10,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
                         child: child,
                       ),
                     ),

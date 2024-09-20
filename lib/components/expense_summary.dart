@@ -38,20 +38,20 @@ class ExpenseSummary extends StatelessWidget {
       children: [
         Text(
           'Selected Date Range Total',
-          style: Theme.of(context).textTheme.displayMedium,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         SizedBox(height: 8),
         Text(
           NumberFormat.currency(symbol: '\$')
               .format(selectedDateRangeTotal ?? 0),
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: Theme.of(context).primaryColor,
           ),
         ),
         SizedBox(height: 8),
         Text(
           _getDateRangeText(),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Colors.grey[600],
           ),
         ),
@@ -105,7 +105,7 @@ class ExpenseSummary extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.center,
@@ -113,14 +113,14 @@ class ExpenseSummary extends StatelessWidget {
         SizedBox(height: 4),
         Text(
           NumberFormat.currency(symbol: '\$').format(amount),
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Theme.of(context).primaryColor,
           ),
         ),
         SizedBox(height: 2),
         Text(
           percentageText,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.bold,
             color: percentageColor,
           ),

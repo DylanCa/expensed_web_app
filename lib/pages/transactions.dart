@@ -72,36 +72,26 @@ class Transactions extends StatelessWidget {
                   child: Column(
                     children: [
                       buildElevatedContainer(
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 170,
-                          child: ExpenseSummary(
-                            currentWeekTotal: currentWeekTotal,
-                            currentMonthTotal: currentMonthTotal,
-                            selectedDateRangeTotal: selectedDateRangeTotal,
-                            startDate: expenseProvider.startDate,
-                            endDate: expenseProvider.endDate,
-                            averageWeeklyTotal: averageWeeklyTotal,
-                            averageMonthlyTotal: averageMonthlyTotal,
-                          ),
+                        child: ExpenseSummary(
+                          currentWeekTotal: currentWeekTotal,
+                          currentMonthTotal: currentMonthTotal,
+                          selectedDateRangeTotal: selectedDateRangeTotal,
+                          startDate: expenseProvider.startDate,
+                          endDate: expenseProvider.endDate,
+                          averageWeeklyTotal: averageWeeklyTotal,
+                          averageMonthlyTotal: averageMonthlyTotal,
                         ),
                       ),
                       SizedBox(height: 16),
                       buildElevatedContainer(
-                        child: SizedBox(
-                          height: 300,
-                          child: SpendingByPerson(
-                            filteredExpenses: filteredExpenses,
-                          ),
+                        child: SpendingByPerson(
+                          filteredExpenses: filteredExpenses,
                         ),
                       ),
                       SizedBox(height: 16),
                       buildElevatedContainer(
-                        child: SizedBox(
-                          height: 300,
-                          child: SpendingPerCategory(
-                            filteredExpenses: filteredExpenses,
-                          ),
+                        child: SpendingPerCategory(
+                          filteredExpenses: filteredExpenses,
                         ),
                       ),
                     ],

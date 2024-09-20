@@ -68,7 +68,10 @@ class _TransactionListState extends State<TransactionList> {
     return Column(
       children: [
         _buildHeader(context),
-        Divider(height: 1, thickness: 1),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Divider(height: 1, thickness: 1),
+        ),
         Expanded(
           child: widget.expenses.isEmpty
               ? Center(

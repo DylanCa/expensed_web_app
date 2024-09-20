@@ -44,14 +44,14 @@ class Transactions extends StatelessWidget {
             _calculateSelectedDateRangeTotal(filteredExpenses);
 
         return Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Colors.transparent,
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 flex: 2,
                 child: buildElevatedContainer(
-                  TransactionList(
+                  child: TransactionList(
                     expenses: filteredExpenses,
                     onSearch: expenseProvider.setSearchQuery,
                     showFilterBottomSheet: () =>
@@ -72,7 +72,7 @@ class Transactions extends StatelessWidget {
                   child: Column(
                     children: [
                       buildElevatedContainer(
-                        SizedBox(
+                        child: SizedBox(
                           width: double.infinity,
                           height: 170,
                           child: ExpenseSummary(
@@ -88,7 +88,7 @@ class Transactions extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
                       buildElevatedContainer(
-                        SizedBox(
+                        child: SizedBox(
                           height: 300,
                           child: SpendingByPerson(
                             filteredExpenses: filteredExpenses,
@@ -97,7 +97,7 @@ class Transactions extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
                       buildElevatedContainer(
-                        SizedBox(
+                        child: SizedBox(
                           height: 300,
                           child: SpendingPerCategory(
                             filteredExpenses: filteredExpenses,

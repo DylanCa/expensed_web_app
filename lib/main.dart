@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           800: Color(0xFF5465BC),
           900: Color(0xFF4252B0),
         }),
-        scaffoldBackgroundColor: Color(0xFFF3F4FB),
+        scaffoldBackgroundColor: Colors.grey[200], // Light grey background
         cardColor: Colors.white,
         textTheme: TextTheme(
           displayLarge: TextStyle(
@@ -120,51 +120,58 @@ class MyApp extends StatelessWidget {
       ),
       routerConfig: _router,
       builder: (context, child) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            const fixedWidth = 1600.0;
-            const padding = 16.0;
-            const minWidth = 1200.0;
-            const minHeight = 800.0;
-            final windowHeight = constraints.maxHeight;
-            final windowWidth = constraints.maxWidth;
+        return Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Color(0xFFF4EBF9), Color(0xFFF1F9EB)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight)),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              const fixedWidth = 1600.0;
+              const padding = 16.0;
+              const minWidth = 1200.0;
+              const minHeight = 800.0;
+              final windowHeight = constraints.maxHeight;
+              final windowWidth = constraints.maxWidth;
 
-            final appWidth = math.max(
-                minWidth, math.min(fixedWidth, windowWidth - 2 * padding));
-            final appHeight = math.max(minHeight, windowHeight - 2 * padding);
+              final appWidth = math.max(
+                  minWidth, math.min(fixedWidth, windowWidth - 2 * padding));
+              final appHeight = math.max(minHeight, windowHeight - 2 * padding);
 
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                child: Container(
-                  width: math.max(windowWidth, minWidth + 2 * padding),
-                  height: math.max(windowHeight, minHeight + 2 * padding),
-                  padding: const EdgeInsets.all(padding),
-                  child: Center(
-                    child: Container(
-                      width: appWidth,
-                      height: appHeight,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            spreadRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: child,
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: math.max(windowWidth, minWidth + 2 * padding),
+                    height: math.max(windowHeight, minHeight + 2 * padding),
+                    padding: const EdgeInsets.all(padding),
+                    child: Center(
+                      child: Container(
+                        width: appWidth,
+                        height: appHeight,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withAlpha(200),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: child,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-Widget buildElevatedContainer(Widget child) {
+Widget buildElevatedContainer({
+  required Widget child,
+  double borderRadius = 20,
+  Color? backgroundColor,
+}) {
   return Container(
-    margin: EdgeInsets.all(8),
     decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
+      color: backgroundColor ?? Colors.white,
+      borderRadius: BorderRadius.circular(borderRadius),
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.1),
@@ -15,6 +18,9 @@ Widget buildElevatedContainer(Widget child) {
         ),
       ],
     ),
-    child: child,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: child,
+    ),
   );
 }

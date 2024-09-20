@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
+import 'package:expensed_web_app/utils/ui_utils.dart';
 import 'dashboard.dart';
 
 class Homepage extends StatefulWidget {
@@ -56,74 +57,74 @@ class _HomepageState extends State<Homepage> {
           );
         }
 
-        if (expenseProvider.error != null) {
-          return Scaffold(
-            body: Center(
-                child: Text(expenseProvider.error!,
-                    style: Theme.of(context).textTheme.bodyLarge)),
-          );
-        }
-
         return Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: Row(
-            children: [
-              Container(
-                width: 200,
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.account_balance_wallet,
-                            size: 32,
-                            color: Theme.of(context).primaryColor,
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                buildElevatedContainer(
+                  backgroundColor: Colors.white,
+                  child: Container(
+                    color: Theme.of(context).primaryColor.withOpacity(0.1),
+                    width: 200,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.account_balance_wallet,
+                                size: 32,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'Expensed',
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                            ],
                           ),
-                          SizedBox(width: 8),
-                          Text(
-                            'Expensed',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              for (int i = 0; i < _titles.length; i++)
+                                _buildNavItem(
+                                  icon: _icons[i],
+                                  label: _titles[i],
+                                  index: i,
+                                ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Divider(height: 1),
+                        _buildNavItem(
+                          icon: Icons.settings,
+                          label: 'Settings',
+                          onTap: () {
+                            // Handle settings
+                          },
+                        ),
+                        _buildNavItem(
+                          icon: Icons.account_circle,
+                          label: 'Account',
+                          onTap: () {
+                            // Handle account
+                          },
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          for (int i = 0; i < _titles.length; i++)
-                            _buildNavItem(
-                              icon: _icons[i],
-                              label: _titles[i],
-                              index: i,
-                            ),
-                        ],
-                      ),
-                    ),
-                    Divider(height: 1),
-                    _buildNavItem(
-                      icon: Icons.settings,
-                      label: 'Settings',
-                      onTap: () {
-                        // Handle settings
-                      },
-                    ),
-                    _buildNavItem(
-                      icon: Icons.account_circle,
-                      label: 'Account',
-                      onTap: () {
-                        // Handle account
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _pages[selectedIndex],
-              ),
-            ],
+                SizedBox(width: 16),
+                Expanded(
+                  child: _pages[selectedIndex],
+                ),
+              ],
+            ),
           ),
         );
       },

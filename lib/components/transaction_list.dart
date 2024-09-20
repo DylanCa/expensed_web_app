@@ -6,7 +6,6 @@ import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:expensed_web_app/components/filter_bottom_sheet.dart';
 
 class TransactionList extends StatefulWidget {
   final List<Expense> expenses;
@@ -269,7 +268,7 @@ class _TransactionListState extends State<TransactionList> {
   }
 }
 
-class RoundedExpenseWidget extends StatelessWidget {
+class RoundedExpenseWidget extends StatefulWidget {
   final Expense expense;
   final VoidCallback onTap;
   final bool isSelected;
@@ -282,53 +281,88 @@ class RoundedExpenseWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _RoundedExpenseWidgetState createState() => _RoundedExpenseWidgetState();
+}
+
+class _RoundedExpenseWidgetState extends State<RoundedExpenseWidget> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: _isHovered ? Colors.grey[100] : Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(isSelected ? 0.3 : 0.1),
-              spreadRadius: isSelected ? 2 : 1,
-              blurRadius: isSelected ? 6 : 3,
-              offset: Offset(0, isSelected ? 3 : 1),
+              color: Colors.grey
+                  .withOpacity(widget.isSelected || _isHovered ? 0.3 : 0.1),
+              spreadRadius: widget.isSelected || _isHovered ? 2 : 1,
+              blurRadius: widget.isSelected || _isHovered ? 6 : 3,
+              offset: Offset(0, widget.isSelected || _isHovered ? 3 : 1),
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: expense.category.color.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          onTap: widget.onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: widget.expense.category.color.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    widget.expense.category.icon,
+                    color: widget.expense.category.color,
+                  ),
                 ),
-                child: Icon(
-                  expense.category.icon,
-                  color: expense.category.color,
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.expense.shopName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        widget.expense.category.name,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      expense.shopName,
+                      '\$${widget.expense.amount.toStringAsFixed(2)}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
-                      expense.category.name,
+                      widget.expense.paidBy.name,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
@@ -336,29 +370,8 @@ class RoundedExpenseWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '\$${expense.amount.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    expense.paidBy.name,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -32,7 +32,7 @@ class _TransactionsState extends State<Transactions>
       duration: Duration(milliseconds: 300),
     );
     _slideAnimation = Tween<Offset>(
-      begin: Offset(-1.0, 0.0),
+      begin: Offset(1.0, 0.0),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -44,6 +44,17 @@ class _TransactionsState extends State<Transactions>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  void _toggleAddExpensePanel() {
+    setState(() {
+      _showAddExpensePanel = !_showAddExpensePanel;
+    });
+    if (_showAddExpensePanel) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
   }
 
   @override
@@ -78,9 +89,6 @@ class _TransactionsState extends State<Transactions>
 
         return LayoutBuilder(
           builder: (context, constraints) {
-            final rightColumnWidth = 350.0;
-            final addExpensePanelWidth = 400.0;
-
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: Stack(
@@ -125,60 +133,59 @@ class _TransactionsState extends State<Transactions>
                     ),
                   ),
                   // Add expense panel (middle z-index)
-                  if (_showAddExpensePanel)
-                    Positioned(
-                      top: 0,
-                      bottom: 0,
-                      right: 0,
-                      width: 400,
-                      child: SlideTransition(
-                        position: _slideAnimation,
+                  AnimatedBuilder(
+                    animation: _animationController,
+                    builder: (context, child) {
+                      return Positioned(
+                        top: 0,
+                        bottom: 0,
+                        right: _slideAnimation.value.dx * 400,
+                        width: 400,
                         child: buildElevatedContainer(
                           backgroundColor: Colors.white,
                           child: AddExpensePanel(
                             expenseProvider: expenseProvider,
-                            onClose: () {
-                              setState(() {
-                                _showAddExpensePanel = false;
-                              });
-                              _animationController.reverse();
-                            },
+                            onClose: _toggleAddExpensePanel,
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
+                  ),
                   // Transaction list (highest z-index)
                   Positioned(
                     top: 0,
                     bottom: 0,
                     left: 0,
-                    right:
-                        rightColumnWidth + 16, // Right column width + padding
-                    child: buildElevatedContainer(
-                      child: TransactionList(
-                        expenses: filteredExpenses,
-                        onSearch: expenseProvider.setSearchQuery,
-                        showFilterBottomSheet: () =>
-                            showFilterBottomSheet(context, expenseProvider),
-                        selectedCategories: expenseProvider.selectedCategories,
-                        selectedPersons: expenseProvider.selectedPersons,
-                        startDate: expenseProvider.startDate,
-                        endDate: expenseProvider.endDate,
-                        searchQuery: expenseProvider.searchQuery,
-                        expenseProvider: expenseProvider,
-                      ),
+                    right: 366, // Right column width + padding
+                    child: Stack(
+                      children: [
+                        buildElevatedContainer(
+                          child: TransactionList(
+                            expenses: filteredExpenses,
+                            onSearch: expenseProvider.setSearchQuery,
+                            showFilterBottomSheet: () =>
+                                showFilterBottomSheet(context, expenseProvider),
+                            selectedCategories:
+                                expenseProvider.selectedCategories,
+                            selectedPersons: expenseProvider.selectedPersons,
+                            startDate: expenseProvider.startDate,
+                            endDate: expenseProvider.endDate,
+                            searchQuery: expenseProvider.searchQuery,
+                            expenseProvider: expenseProvider,
+                          ),
+                        ),
+                        Positioned(
+                          right: 16,
+                          bottom: 16,
+                          child: FloatingActionButton(
+                            onPressed: _toggleAddExpensePanel,
+                            child: Icon(Icons.add),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  setState(() {
-                    _showAddExpensePanel = true;
-                  });
-                  _animationController.forward();
-                },
-                child: Icon(Icons.add),
               ),
             );
           },

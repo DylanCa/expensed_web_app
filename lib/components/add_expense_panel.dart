@@ -30,7 +30,8 @@ class _AddExpensePanelState extends State<AddExpensePanel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding:
+          EdgeInsets.fromLTRB(66, 16, 16, 16), // Added left padding of 50 + 16
       child: Form(
         key: _formKey,
         child: Column(

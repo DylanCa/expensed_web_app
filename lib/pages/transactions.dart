@@ -78,6 +78,9 @@ class _TransactionsState extends State<Transactions>
 
         return LayoutBuilder(
           builder: (context, constraints) {
+            final rightColumnWidth = 350.0;
+            final addExpensePanelWidth = 400.0;
+
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: Stack(
@@ -127,7 +130,7 @@ class _TransactionsState extends State<Transactions>
                       top: 0,
                       bottom: 0,
                       right: 0,
-                      width: 350,
+                      width: 400,
                       child: SlideTransition(
                         position: _slideAnimation,
                         child: buildElevatedContainer(
@@ -149,7 +152,8 @@ class _TransactionsState extends State<Transactions>
                     top: 0,
                     bottom: 0,
                     left: 0,
-                    right: 366, // 350 + 16 (right column width + padding)
+                    right:
+                        rightColumnWidth + 16, // Right column width + padding
                     child: buildElevatedContainer(
                       child: TransactionList(
                         expenses: filteredExpenses,

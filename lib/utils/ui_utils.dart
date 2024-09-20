@@ -7,7 +7,7 @@ Widget buildElevatedContainer({
 }) {
   return Container(
     decoration: BoxDecoration(
-      color: backgroundColor ?? Colors.white.withAlpha(200),
+      color: backgroundColor ?? Colors.white, // Changed to fully opaque
       borderRadius: BorderRadius.circular(borderRadius),
       boxShadow: [
         BoxShadow(

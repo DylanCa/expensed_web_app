@@ -18,6 +18,7 @@ class TransactionList extends StatefulWidget {
   final DateTime? endDate;
   final String searchQuery;
   final ExpenseProvider expenseProvider;
+  final Function(Expense) onExpenseSelected;
 
   const TransactionList({
     super.key,
@@ -30,6 +31,7 @@ class TransactionList extends StatefulWidget {
     this.endDate,
     required this.searchQuery,
     required this.expenseProvider,
+    required this.onExpenseSelected,
   });
 
   @override
@@ -101,8 +103,7 @@ class _TransactionListState extends State<TransactionList> {
                           SizedBox(height: 8),
                         ],
                         GestureDetector(
-                          onTap: () =>
-                              _showExpenseBottomSheet(context, expense),
+                          onTap: () => widget.onExpenseSelected(expense),
                           child: ExpenseWidget(
                             backgroundColor: index % 2 == 0
                                 ? Colors.white
@@ -263,227 +264,5 @@ class _TransactionListState extends State<TransactionList> {
         widget.selectedCategories.isNotEmpty ||
         widget.selectedPersons.isNotEmpty ||
         widget.searchQuery.isNotEmpty;
-  }
-
-  void _showExpenseBottomSheet(BuildContext context, Expense expense) {
-    final formKey = GlobalKey<FormState>();
-    String shopName = expense.shopName;
-    double amount = expense.amount;
-    Category category = expense.category;
-    Person paidBy = expense.paidBy;
-    DateTime dateTime = expense.dateTime;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              padding: EdgeInsets.all(20),
-              height: MediaQuery.of(context).size.height * 0.9,
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Edit Expense',
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      initialValue: shopName,
-                      decoration: InputDecoration(
-                        labelText: 'Shop Name',
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a shop name';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => shopName = value!,
-                    ),
-                    SizedBox(height: 15),
-                    TextFormField(
-                      initialValue: amount.toString(),
-                      decoration: InputDecoration(
-                        labelText: 'Amount',
-                        border: OutlineInputBorder(),
-                        prefixText: '\$',
-                      ),
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter an amount';
-                        }
-                        if (double.tryParse(value) == null) {
-                          return 'Please enter a valid number';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => amount = double.parse(value!),
-                    ),
-                    SizedBox(height: 15),
-                    DropdownButtonFormField<Category>(
-                      value: category,
-                      items:
-                          Provider.of<ExpenseProvider>(context, listen: false)
-                              .categories
-                              .map((Category cat) {
-                        return DropdownMenuItem<Category>(
-                          value: cat,
-                          child: Text(cat.name),
-                        );
-                      }).toList(),
-                      onChanged: (Category? newValue) {
-                        setState(() {
-                          category = newValue!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Category',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    DropdownButtonFormField<Person>(
-                      value: paidBy,
-                      items:
-                          Provider.of<ExpenseProvider>(context, listen: false)
-                              .persons
-                              .map((Person person) {
-                        return DropdownMenuItem<Person>(
-                          value: person,
-                          child: Text(person.name),
-                        );
-                      }).toList(),
-                      onChanged: (Person? newValue) {
-                        setState(() {
-                          paidBy = newValue!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Paid By',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    TextFormField(
-                      initialValue:
-                          DateFormat('yyyy-MM-dd HH:mm').format(dateTime),
-                      decoration: InputDecoration(
-                        labelText: 'Date and Time',
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.calendar_today),
-                      ),
-                      readOnly: true,
-                      onTap: () async {
-                        final DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: dateTime,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime.now(),
-                        );
-                        if (pickedDate != null) {
-                          final TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(dateTime),
-                          );
-                          if (pickedTime != null) {
-                            setState(() {
-                              dateTime = DateTime(
-                                pickedDate.year,
-                                pickedDate.month,
-                                pickedDate.day,
-                                pickedTime.hour,
-                                pickedTime.minute,
-                              );
-                            });
-                          }
-                        }
-                      },
-                    ),
-                    SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-                              final updatedExpense = expense.copyWith(
-                                shopName: shopName,
-                                amount: amount,
-                                category: category,
-                                paidBy: paidBy,
-                                dateTime: dateTime,
-                              );
-                              Provider.of<ExpenseProvider>(context,
-                                      listen: false)
-                                  .updateExpense(updatedExpense);
-                              Navigator.pop(context);
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 15),
-                          ),
-                          child: Text('Save Changes'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Delete Expense'),
-                                  content: Text(
-                                      'Are you sure you want to delete this expense?'),
-                                  actions: [
-                                    TextButton(
-                                      child: Text('Cancel'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: Text('Delete'),
-                                      onPressed: () {
-                                        Provider.of<ExpenseProvider>(context,
-                                                listen: false)
-                                            .deleteExpense(expense.id);
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 15),
-                          ),
-                          child: Text('Delete Expense'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
   }
 }

@@ -8,8 +8,6 @@ import 'package:expensed_web_app/components/expense_summary.dart';
 import 'package:expensed_web_app/components/add_expense_panel.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/models/expense.dart';
-import 'package:expensed_web_app/models/category.dart';
-import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
 import 'package:expensed_web_app/components/filter_bottom_sheet.dart';
 
@@ -21,6 +19,7 @@ class Transactions extends StatefulWidget {
 class _TransactionsState extends State<Transactions>
     with SingleTickerProviderStateMixin {
   bool _showAddExpensePanel = false;
+  Expense? _selectedExpense;
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
 
@@ -46,9 +45,10 @@ class _TransactionsState extends State<Transactions>
     super.dispose();
   }
 
-  void _toggleAddExpensePanel() {
+  void _toggleAddExpensePanel({Expense? expense}) {
     setState(() {
       _showAddExpensePanel = !_showAddExpensePanel;
+      _selectedExpense = expense;
     });
     if (_showAddExpensePanel) {
       _animationController.forward();
@@ -99,68 +99,65 @@ class _TransactionsState extends State<Transactions>
                     bottom: 0,
                     right: 0,
                     width: 350,
-                    child: Container(
-                      height: constraints.maxHeight,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            buildElevatedContainer(
-                              child: ExpenseSummary(
-                                currentWeekTotal: currentWeekTotal,
-                                currentMonthTotal: currentMonthTotal,
-                                selectedDateRangeTotal: selectedDateRangeTotal,
-                                startDate: expenseProvider.startDate,
-                                endDate: expenseProvider.endDate,
-                                averageWeeklyTotal: averageWeeklyTotal,
-                                averageMonthlyTotal: averageMonthlyTotal,
-                              ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          buildElevatedContainer(
+                            child: ExpenseSummary(
+                              currentWeekTotal: currentWeekTotal,
+                              currentMonthTotal: currentMonthTotal,
+                              selectedDateRangeTotal: selectedDateRangeTotal,
+                              startDate: expenseProvider.startDate,
+                              endDate: expenseProvider.endDate,
+                              averageWeeklyTotal: averageWeeklyTotal,
+                              averageMonthlyTotal: averageMonthlyTotal,
                             ),
-                            SizedBox(height: 16),
-                            buildElevatedContainer(
-                              child: SpendingByPerson(
-                                filteredExpenses: filteredExpenses,
-                              ),
+                          ),
+                          SizedBox(height: 16),
+                          buildElevatedContainer(
+                            child: SpendingByPerson(
+                              filteredExpenses: filteredExpenses,
                             ),
-                            SizedBox(height: 16),
-                            buildElevatedContainer(
-                              child: SpendingPerCategory(
-                                filteredExpenses: filteredExpenses,
-                              ),
+                          ),
+                          SizedBox(height: 16),
+                          buildElevatedContainer(
+                            child: SpendingPerCategory(
+                              filteredExpenses: filteredExpenses,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   // Add expense panel (middle z-index)
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Positioned(
-                        top: 0,
-                        bottom: 0,
-                        right: _slideAnimation.value.dx * 400,
-                        width: 400,
+                  if (_showAddExpensePanel)
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      width: 400,
+                      child: SlideTransition(
+                        position: _slideAnimation,
                         child: buildElevatedContainer(
                           backgroundColor: Colors.white,
                           child: AddExpensePanel(
                             expenseProvider: expenseProvider,
                             onClose: _toggleAddExpensePanel,
+                            expenseToEdit: _selectedExpense,
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    ),
                   // Transaction list (highest z-index)
                   Positioned(
                     top: 0,
                     bottom: 0,
                     left: 0,
                     right: 366, // Right column width + padding
-                    child: Stack(
-                      children: [
-                        buildElevatedContainer(
-                          child: TransactionList(
+                    child: buildElevatedContainer(
+                      child: Stack(
+                        children: [
+                          TransactionList(
                             expenses: filteredExpenses,
                             onSearch: expenseProvider.setSearchQuery,
                             showFilterBottomSheet: () =>
@@ -172,17 +169,19 @@ class _TransactionsState extends State<Transactions>
                             endDate: expenseProvider.endDate,
                             searchQuery: expenseProvider.searchQuery,
                             expenseProvider: expenseProvider,
+                            onExpenseSelected: (expense) =>
+                                _toggleAddExpensePanel(expense: expense),
                           ),
-                        ),
-                        Positioned(
-                          right: 16,
-                          bottom: 16,
-                          child: FloatingActionButton(
-                            onPressed: _toggleAddExpensePanel,
-                            child: Icon(Icons.add),
+                          Positioned(
+                            right: 16,
+                            bottom: 16,
+                            child: FloatingActionButton(
+                              onPressed: () => _toggleAddExpensePanel(),
+                              child: Icon(Icons.add),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

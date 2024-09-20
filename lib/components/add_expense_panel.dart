@@ -9,11 +9,13 @@ import 'package:uuid/uuid.dart';
 class AddExpensePanel extends StatefulWidget {
   final ExpenseProvider expenseProvider;
   final VoidCallback onClose;
+  final Expense? expenseToEdit;
 
   const AddExpensePanel({
     Key? key,
     required this.expenseProvider,
     required this.onClose,
+    this.expenseToEdit,
   }) : super(key: key);
 
   @override
@@ -22,11 +24,35 @@ class AddExpensePanel extends StatefulWidget {
 
 class _AddExpensePanelState extends State<AddExpensePanel> {
   final _formKey = GlobalKey<FormState>();
-  final _shopNameController = TextEditingController();
-  final _amountController = TextEditingController();
+  late TextEditingController _shopNameController;
+  late TextEditingController _amountController;
   Category? _category;
   Person? _paidBy;
-  DateTime _dateTime = DateTime.now();
+  late DateTime _dateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeFields();
+  }
+
+  void _initializeFields() {
+    _shopNameController =
+        TextEditingController(text: widget.expenseToEdit?.shopName ?? '');
+    _amountController = TextEditingController(
+        text: widget.expenseToEdit?.amount.toString() ?? '');
+    _category = widget.expenseToEdit?.category;
+    _paidBy = widget.expenseToEdit?.paidBy;
+    _dateTime = widget.expenseToEdit?.dateTime ?? DateTime.now();
+  }
+
+  @override
+  void didUpdateWidget(AddExpensePanel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.expenseToEdit != oldWidget.expenseToEdit) {
+      _initializeFields();
+    }
+  }
 
   @override
   void dispose() {
@@ -55,7 +81,7 @@ class _AddExpensePanelState extends State<AddExpensePanel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Add New Expense',
+              widget.expenseToEdit == null ? 'Add New Expense' : 'Edit Expense',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             SizedBox(height: 24),
@@ -177,7 +203,9 @@ class _AddExpensePanelState extends State<AddExpensePanel> {
                 ),
                 ElevatedButton(
                   onPressed: _submitForm,
-                  child: Text('Add Expense'),
+                  child: Text(widget.expenseToEdit == null
+                      ? 'Add Expense'
+                      : 'Update Expense'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
@@ -221,20 +249,29 @@ class _AddExpensePanelState extends State<AddExpensePanel> {
         _category != null &&
         _paidBy != null) {
       _formKey.currentState!.save();
-      final newExpense = Expense(
-        id: Uuid().v4(),
+      final expense = Expense(
+        id: widget.expenseToEdit?.id ?? Uuid().v4(),
         shopName: _shopNameController.text,
         amount: double.parse(_amountController.text),
         category: _category!,
         paidBy: _paidBy!,
         dateTime: _dateTime,
       );
-      widget.expenseProvider.addExpense(newExpense);
+      
+      if (widget.expenseToEdit == null) {
+        widget.expenseProvider.addExpense(expense);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Expense added successfully')),
+        );
+      } else {
+        widget.expenseProvider.updateExpense(expense);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Expense updated successfully')),
+        );
+      }
+
       _resetForm();
       widget.onClose();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Expense added successfully')),
-      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please fill in all fields')),

@@ -1,4 +1,4 @@
-import 'package:expensed_web_app/components/expense_panel.dart';
+import 'package:expensed_web_app/components/side_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:expensed_web_app/components/transaction_list.dart';
@@ -16,7 +16,7 @@ class Transactions extends StatefulWidget {
 
 class _TransactionsState extends State<Transactions>
     with SingleTickerProviderStateMixin {
-  bool _showExpensePanel = false;
+  bool _showSidePanel = false;
   bool _isFilterMode = false;
   Expense? _selectedExpense;
   late AnimationController _animationController;
@@ -44,13 +44,13 @@ class _TransactionsState extends State<Transactions>
     super.dispose();
   }
 
-  void _toggleExpensePanel({Expense? expense, bool isFilterMode = false}) {
+  void _toggleSidePanel({Expense? expense, bool isFilterMode = false}) {
     setState(() {
-      _showExpensePanel = !_showExpensePanel;
-      _selectedExpense = _showExpensePanel ? expense : null;
+      _showSidePanel = !_showSidePanel;
+      _selectedExpense = _showSidePanel ? expense : null;
       _isFilterMode = isFilterMode;
     });
-    if (_showExpensePanel) {
+    if (_showSidePanel) {
       _animationController.forward();
     } else {
       _animationController.reverse();
@@ -135,8 +135,8 @@ class _TransactionsState extends State<Transactions>
                       ),
                     ),
                   ),
-                  // Expense panel (middle z-index)
-                  if (_showExpensePanel)
+                  // Side panel (middle z-index)
+                  if (_showSidePanel)
                     Positioned(
                       top: 0,
                       bottom: 0,
@@ -146,9 +146,9 @@ class _TransactionsState extends State<Transactions>
                         position: _slideAnimation,
                         child: buildElevatedContainer(
                           backgroundColor: Colors.white,
-                          child: ExpensePanel(
+                          child: SidePanel(
                             expenseProvider: expenseProvider,
-                            onClose: () => _toggleExpensePanel(),
+                            onClose: () => _toggleSidePanel(),
                             expenseToEdit: _selectedExpense,
                             isFilterMode: _isFilterMode,
                           ),
@@ -162,28 +162,31 @@ class _TransactionsState extends State<Transactions>
                     left: 0,
                     right: 366, // Right column width + padding
                     child: buildElevatedContainer(
-                      child: TransactionList(
-                        expenses: filteredExpenses,
-                        onSearch: expenseProvider.setSearchQuery,
-                        showFilterPanel: () =>
-                            _toggleExpensePanel(isFilterMode: true),
-                        selectedCategories: expenseProvider.selectedCategories,
-                        selectedPersons: expenseProvider.selectedPersons,
-                        startDate: expenseProvider.startDate,
-                        endDate: expenseProvider.endDate,
-                        searchQuery: expenseProvider.searchQuery,
-                        expenseProvider: expenseProvider,
-                        onExpenseSelected: (expense) =>
-                            _toggleExpensePanel(expense: expense),
-                        selectedExpense: _selectedExpense,
-                      ),
+                      child: filteredExpenses.isEmpty
+                          ? Center(child: Text("No expenses found"))
+                          : TransactionList(
+                              expenses: filteredExpenses,
+                              onSearch: expenseProvider.setSearchQuery,
+                              showFilterPanel: () =>
+                                  _toggleSidePanel(isFilterMode: true),
+                              selectedCategories:
+                                  expenseProvider.selectedCategories,
+                              selectedPersons: expenseProvider.selectedPersons,
+                              startDate: expenseProvider.startDate,
+                              endDate: expenseProvider.endDate,
+                              searchQuery: expenseProvider.searchQuery,
+                              expenseProvider: expenseProvider,
+                              onExpenseSelected: (expense) =>
+                                  _toggleSidePanel(expense: expense),
+                              selectedExpense: _selectedExpense,
+                            ),
                     ),
                   ),
                   Positioned(
                     right: 382, // Right column width + padding + 16
                     bottom: 16,
                     child: FloatingActionButton(
-                      onPressed: () => _toggleExpensePanel(),
+                      onPressed: () => _toggleSidePanel(),
                       child: Icon(Icons.add),
                     ),
                   ),

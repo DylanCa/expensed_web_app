@@ -177,14 +177,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// Helper functions remain the same
-double _lerp(double a, double b, double t) {
-  return a + (b - a) * t;
-}
-
-double _smoothstep(double edge0, double edge1, double x) {
-  x = ((x - edge0) / (edge1 - edge0)).clamp(0.0, 1.0);
-  return x * x * (3 - 2 * x);
-}
-

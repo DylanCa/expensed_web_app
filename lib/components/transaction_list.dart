@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expensed_web_app/models/expense.dart';
-import 'package:expensed_web_app/components/expense.dart';
 import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
-import 'package:provider/provider.dart';
 
 class TransactionList extends StatefulWidget {
   final List<Expense> expenses;

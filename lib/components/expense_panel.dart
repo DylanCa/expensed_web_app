@@ -30,11 +30,11 @@ class _ExpensePanelState extends State<ExpensePanel> {
   late TextEditingController _amountController;
   Category? _category;
   Person? _paidBy;
-  late DateTime _dateTime;
+  late DateTime _expenseDateTime;
   Set<Category> _selectedCategories = {};
   Set<Person> _selectedPersons = {};
-  DateTime? _startDate;
-  DateTime? _endDate;
+  DateTime? _filterStartDate;
+  DateTime? _filterEndDate;
 
   @override
   void initState() {
@@ -46,8 +46,8 @@ class _ExpensePanelState extends State<ExpensePanel> {
     if (widget.isFilterMode) {
       _selectedCategories = Set.from(widget.expenseProvider.selectedCategories);
       _selectedPersons = Set.from(widget.expenseProvider.selectedPersons);
-      _startDate = widget.expenseProvider.startDate;
-      _endDate = widget.expenseProvider.endDate;
+      _filterStartDate = widget.expenseProvider.startDate;
+      _filterEndDate = widget.expenseProvider.endDate;
     } else {
       _shopNameController =
           TextEditingController(text: widget.expenseToEdit?.shopName ?? '');
@@ -55,7 +55,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
           text: widget.expenseToEdit?.amount.toString() ?? '');
       _category = widget.expenseToEdit?.category;
       _paidBy = widget.expenseToEdit?.paidBy;
-      _dateTime = widget.expenseToEdit?.dateTime ?? DateTime.now();
+      _expenseDateTime = widget.expenseToEdit?.dateTime ?? DateTime.now();
     }
   }
 
@@ -73,8 +73,8 @@ class _ExpensePanelState extends State<ExpensePanel> {
       setState(() {
         _selectedCategories.clear();
         _selectedPersons.clear();
-        _startDate = null;
-        _endDate = null;
+        _filterStartDate = null;
+        _filterEndDate = null;
       });
     } else {
       _shopNameController.clear();
@@ -82,7 +82,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
       setState(() {
         _category = null;
         _paidBy = null;
-        _dateTime = DateTime.now();
+        _expenseDateTime = DateTime.now();
       });
     }
   }
@@ -90,7 +90,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
   void _updateFilters() {
     widget.expenseProvider.setSelectedCategories(_selectedCategories);
     widget.expenseProvider.setSelectedPersons(_selectedPersons);
-    widget.expenseProvider.setDateRange(_startDate, _endDate);
+    widget.expenseProvider.setDateRange(_filterStartDate, _filterEndDate);
   }
 
   @override
@@ -174,7 +174,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
                                 } else {
                                   _selectedCategories.remove(cat);
                                 }
-                                _updateFilters(); // Update filters immediately
+                                _updateFilters();
                               } else {
                                 _category = selected ? cat : null;
                               }
@@ -206,7 +206,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
                                 } else {
                                   _selectedPersons.remove(person);
                                 }
-                                _updateFilters(); // Update filters immediately
+                                _updateFilters();
                               } else {
                                 _paidBy = selected ? person : null;
                               }
@@ -220,51 +220,11 @@ class _ExpensePanelState extends State<ExpensePanel> {
                       }).toList(),
                     ),
                     SizedBox(height: 24),
-                    Text('Date Range',
-                        style: Theme.of(context).textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => _selectDate(isStartDate: true),
-                            child: InputDecorator(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Start Date',
-                              ),
-                              child: Text(
-                                widget.isFilterMode && _startDate != null
-                                    ? DateFormat('MMM d, y').format(_startDate!)
-                                    : (!widget.isFilterMode
-                                        ? DateFormat('MMM d, y')
-                                            .format(_dateTime)
-                                        : 'Select'),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => _selectDate(isStartDate: false),
-                            child: InputDecorator(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'End Date',
-                              ),
-                              child: Text(
-                                widget.isFilterMode && _endDate != null
-                                    ? DateFormat('MMM d, y').format(_endDate!)
-                                    : (!widget.isFilterMode
-                                        ? DateFormat('h:mm a').format(_dateTime)
-                                        : 'Select'),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    if (widget.isFilterMode) ...[
+                      _buildFilterDateRange(),
+                    ] else ...[
+                      _buildExpenseDateTimePicker(),
+                    ],
                   ],
                 ),
               ),
@@ -317,24 +277,132 @@ class _ExpensePanelState extends State<ExpensePanel> {
     );
   }
 
-  Future<void> _selectDate({required bool isStartDate}) async {
+  // New method for building the filter date range
+  Widget _buildFilterDateRange() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Date Range', style: Theme.of(context).textTheme.titleMedium),
+        SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: _selectFilterStartDate,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Start Date',
+                  ),
+                  child: Text(
+                    _filterStartDate != null
+                        ? DateFormat('MMM d, y').format(_filterStartDate!)
+                        : 'Select',
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: InkWell(
+                onTap: _selectFilterEndDate,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'End Date',
+                  ),
+                  child: Text(
+                    _filterEndDate != null
+                        ? DateFormat('MMM d, y').format(_filterEndDate!)
+                        : 'Select',
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // New method for building the expense date and time picker
+  Widget _buildExpenseDateTimePicker() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Expense Date and Time',
+            style: Theme.of(context).textTheme.titleMedium),
+        SizedBox(height: 8),
+        InkWell(
+          onTap: _selectExpenseDateTime,
+          child: InputDecorator(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Date and Time',
+            ),
+            child:
+                Text(DateFormat('MMM d, y - h:mm a').format(_expenseDateTime)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Separate methods for filter date selection
+  Future<void> _selectFilterStartDate() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: isStartDate
-          ? (_startDate ?? DateTime.now())
-          : (_endDate ?? DateTime.now()),
+      initialDate: _filterStartDate ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
     );
     if (pickedDate != null) {
       setState(() {
-        if (isStartDate) {
-          _startDate = pickedDate;
-        } else {
-          _endDate = pickedDate;
-        }
-        _updateFilters(); // Update filters immediately after date selection
+        _filterStartDate = pickedDate;
+        _updateFilters();
       });
+    }
+  }
+
+  Future<void> _selectFilterEndDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _filterEndDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _filterEndDate = pickedDate;
+        _updateFilters();
+      });
+    }
+  }
+
+  // Separate method for expense date and time selection
+  Future<void> _selectExpenseDateTime() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _expenseDateTime,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(_expenseDateTime),
+      );
+      if (pickedTime != null) {
+        setState(() {
+          _expenseDateTime = DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            pickedTime.hour,
+            pickedTime.minute,
+          );
+        });
+      }
     }
   }
 
@@ -342,7 +410,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
     if (widget.isFilterMode) {
       widget.expenseProvider.setSelectedCategories(_selectedCategories);
       widget.expenseProvider.setSelectedPersons(_selectedPersons);
-      widget.expenseProvider.setDateRange(_startDate, _endDate);
+      widget.expenseProvider.setDateRange(_filterStartDate, _filterEndDate);
       widget.onClose();
     } else {
       if (_formKey.currentState!.validate() &&
@@ -355,7 +423,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
           amount: double.parse(_amountController.text),
           category: _category!,
           paidBy: _paidBy!,
-          dateTime: _dateTime,
+          dateTime: _expenseDateTime,
         );
 
         if (widget.expenseToEdit == null) {
@@ -424,8 +492,8 @@ class _ExpensePanelState extends State<ExpensePanel> {
     setState(() {
       _selectedCategories.clear();
       _selectedPersons.clear();
-      _startDate = null;
-      _endDate = null;
+      _filterStartDate = null;
+      _filterEndDate = null;
     });
     widget.expenseProvider.clearFilters();
     widget.onClose();

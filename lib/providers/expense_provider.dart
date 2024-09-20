@@ -128,7 +128,7 @@ class ExpenseProvider with ChangeNotifier {
   }
 
   List<Expense> getFilteredExpenses() {
-    return _expenses.where((expense) {
+    List<Expense> filteredList = _expenses.where((expense) {
       bool categoryMatch = _selectedCategories.isEmpty ||
           _selectedCategories.contains(expense.category);
       bool personMatch =
@@ -148,6 +148,11 @@ class ExpenseProvider with ChangeNotifier {
 
       return categoryMatch && personMatch && dateMatch && searchMatch;
     }).toList();
+
+    // Sort the filtered list by date (most recent first)
+    filteredList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+
+    return filteredList;
   }
 
   List<Expense> getAllFilteredExpenses() {

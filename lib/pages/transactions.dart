@@ -452,11 +452,11 @@ class Transactions extends StatelessWidget {
                             Navigator.pop(context);
                           }
                         },
-                        child: Text('Add Expense'),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: 30, vertical: 15),
                         ),
+                        child: Text('Add Expense'),
                       ),
                     ),
                   ],

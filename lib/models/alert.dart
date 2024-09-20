@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/models/expense.dart';
 

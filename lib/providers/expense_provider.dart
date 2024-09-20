@@ -86,9 +86,6 @@ class ExpenseProvider with ChangeNotifier {
 
     try {
       _expenses = await TestData.getTestExpenses();
-      if (_expenses.isEmpty) {
-        _error = "No expenses loaded. Please check the data source.";
-      }
       _isLoading = false;
     } catch (e) {
       _error = "Failed to load expenses: $e";

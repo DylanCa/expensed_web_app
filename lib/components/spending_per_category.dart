@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/category.dart';
@@ -122,7 +121,7 @@ class SpendingPerCategory extends StatelessWidget {
                                     sortedCategories[index].name;
                                 if (categoryName.length > 6) {
                                   categoryName =
-                                      categoryName.substring(0, 6) + '...';
+                                      '${categoryName.substring(0, 6)}...';
                                 }
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),

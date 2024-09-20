@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/pages/homepage.dart';
-import 'package:expensed_web_app/pages/dashboard.dart';
-import 'package:expensed_web_app/pages/transactions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +13,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) {
+        ChangeNotifierProvider<ExpenseProvider>(create: (context) {
           final provider = ExpenseProvider();
           provider.loadExpenses();
           return provider;
@@ -27,7 +25,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  MyApp({super.key});
 
   final GoRouter _router = GoRouter(
     routes: [

@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
-import 'package:expensed_web_app/models/alert.dart';
 import 'package:intl/intl.dart';
 import 'dashboard.dart';
 
 class Homepage extends StatefulWidget {
   final int initialIndex;
 
-  Homepage({Key? key, this.initialIndex = 0}) : super(key: key);
+  Homepage({super.key, this.initialIndex = 0});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -192,16 +191,12 @@ class _HomepageState extends State<Homepage> {
         switch (index) {
           case 0:
             context.go('/dashboard');
-            break;
           case 1:
             context.go('/transactions');
-            break;
           case 2:
             context.go('/goals');
-            break;
           case 3:
             context.go('/household');
-            break;
         }
       },
       child: Row(

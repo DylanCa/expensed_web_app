@@ -11,7 +11,7 @@ class ExpenseSummary extends StatelessWidget {
   final double averageMonthlyTotal;
 
   const ExpenseSummary({
-    Key? key,
+    super.key,
     required this.currentWeekTotal,
     required this.currentMonthTotal,
     this.selectedDateRangeTotal,
@@ -19,7 +19,7 @@ class ExpenseSummary extends StatelessWidget {
     this.endDate,
     required this.averageWeeklyTotal,
     required this.averageMonthlyTotal,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

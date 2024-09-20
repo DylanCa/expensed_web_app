@@ -20,7 +20,7 @@ class TransactionList extends StatefulWidget {
   final ExpenseProvider expenseProvider;
 
   const TransactionList({
-    Key? key,
+    super.key,
     required this.expenses,
     required this.onSearch,
     required this.showFilterBottomSheet,
@@ -30,7 +30,7 @@ class TransactionList extends StatefulWidget {
     this.endDate,
     required this.searchQuery,
     required this.expenseProvider,
-  }) : super(key: key);
+  });
 
   @override
   _TransactionListState createState() => _TransactionListState();
@@ -430,11 +430,11 @@ class _TransactionListState extends State<TransactionList> {
                               Navigator.pop(context);
                             }
                           },
-                          child: Text('Save Changes'),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 15),
                           ),
+                          child: Text('Save Changes'),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -467,12 +467,12 @@ class _TransactionListState extends State<TransactionList> {
                               },
                             );
                           },
-                          child: Text('Delete Expense'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 15),
                           ),
+                          child: Text('Delete Expense'),
                         ),
                       ],
                     ),

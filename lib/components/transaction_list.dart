@@ -213,10 +213,17 @@ class _TransactionListState extends State<TransactionList> {
     }
   
     if (widget.selectedCategories.isNotEmpty) {
-      headerParts
-          .add(widget.selectedCategories
+      List<String> categoryNames =
+          widget.selectedCategories
           .map((c) => c.name.toLowerCase())
-          .join(', '));
+          .toList();
+
+      if (categoryNames.length <= 2) {
+        headerParts.add(categoryNames.join(', '));
+      } else {
+        headerParts.add(
+            '${categoryNames[0]}, ${categoryNames[1]} and ${categoryNames.length - 2} more categories');
+      }
     }
   
     headerParts.add('expenses');

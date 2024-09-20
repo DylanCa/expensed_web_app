@@ -94,9 +94,11 @@ class ExpenseSummary extends StatelessWidget {
       double average, String averageLabel) {
     double percentageDifference = ((amount - average) / average) * 100;
     String percentageText =
-        '${percentageDifference >= 0 ? '+' : '-'}${percentageDifference.abs().toStringAsFixed(1)}%';
+        '${percentageDifference >= 0 ? '+' : ''}${percentageDifference.toStringAsFixed(1)}%';
+
+    // Change this line to reverse the color logic
     Color percentageColor =
-        percentageDifference >= 0 ? Colors.green : Colors.red;
+        percentageDifference >= 0 ? Colors.red : Colors.green;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

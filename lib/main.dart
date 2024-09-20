@@ -16,7 +16,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider<ExpenseProvider>(create: (context) {
           final provider = ExpenseProvider();
-          provider.loadExpenses();
+          provider.loadExpenses(); // Ensure this line is present
           return provider;
         }),
       ],

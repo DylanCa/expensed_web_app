@@ -1,15 +1,13 @@
+import 'package:expensed_web_app/components/expense_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import 'package:expensed_web_app/components/transaction_list.dart';
 import 'package:expensed_web_app/components/spending_by_person.dart';
 import 'package:expensed_web_app/components/spending_per_category.dart';
 import 'package:expensed_web_app/components/expense_summary.dart';
-import 'package:expensed_web_app/components/add_expense_panel.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
-import 'package:expensed_web_app/components/filter_bottom_sheet.dart';
 
 class Transactions extends StatefulWidget {
   @override
@@ -18,7 +16,8 @@ class Transactions extends StatefulWidget {
 
 class _TransactionsState extends State<Transactions>
     with SingleTickerProviderStateMixin {
-  bool _showAddExpensePanel = false;
+  bool _showExpensePanel = false;
+  bool _isFilterMode = false;
   Expense? _selectedExpense;
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
@@ -45,12 +44,13 @@ class _TransactionsState extends State<Transactions>
     super.dispose();
   }
 
-  void _toggleAddExpensePanel({Expense? expense}) {
+  void _toggleExpensePanel({Expense? expense, bool isFilterMode = false}) {
     setState(() {
-      _showAddExpensePanel = !_showAddExpensePanel;
-      _selectedExpense = _showAddExpensePanel ? expense : null;
+      _showExpensePanel = !_showExpensePanel;
+      _selectedExpense = _showExpensePanel ? expense : null;
+      _isFilterMode = isFilterMode;
     });
-    if (_showAddExpensePanel) {
+    if (_showExpensePanel) {
       _animationController.forward();
     } else {
       _animationController.reverse();
@@ -61,6 +61,12 @@ class _TransactionsState extends State<Transactions>
   Widget build(BuildContext context) {
     return Consumer<ExpenseProvider>(
       builder: (context, expenseProvider, child) {
+        print("Building Transactions widget");
+        print("Is loading: ${expenseProvider.isLoading}");
+        print("Error: ${expenseProvider.error}");
+        print(
+            "Filtered expenses count: ${expenseProvider.getFilteredExpenses().length}");
+
         if (expenseProvider.isLoading) {
           return Center(
               child: CircularProgressIndicator(
@@ -69,7 +75,7 @@ class _TransactionsState extends State<Transactions>
 
         if (expenseProvider.error != null) {
           return Center(
-              child: Text(expenseProvider.error!,
+              child: Text("Error: ${expenseProvider.error}",
                   style: Theme.of(context).textTheme.bodyLarge));
         }
 
@@ -129,8 +135,8 @@ class _TransactionsState extends State<Transactions>
                       ),
                     ),
                   ),
-                  // Add expense panel (middle z-index)
-                  if (_showAddExpensePanel)
+                  // Expense panel (middle z-index)
+                  if (_showExpensePanel)
                     Positioned(
                       top: 0,
                       bottom: 0,
@@ -140,10 +146,11 @@ class _TransactionsState extends State<Transactions>
                         position: _slideAnimation,
                         child: buildElevatedContainer(
                           backgroundColor: Colors.white,
-                          child: AddExpensePanel(
+                          child: ExpensePanel(
                             expenseProvider: expenseProvider,
-                            onClose: _toggleAddExpensePanel,
+                            onClose: () => _toggleExpensePanel(),
                             expenseToEdit: _selectedExpense,
+                            isFilterMode: _isFilterMode,
                           ),
                         ),
                       ),
@@ -158,8 +165,8 @@ class _TransactionsState extends State<Transactions>
                       child: TransactionList(
                         expenses: filteredExpenses,
                         onSearch: expenseProvider.setSearchQuery,
-                        showFilterBottomSheet: () =>
-                            showFilterBottomSheet(context, expenseProvider),
+                        showFilterPanel: () =>
+                            _toggleExpensePanel(isFilterMode: true),
                         selectedCategories: expenseProvider.selectedCategories,
                         selectedPersons: expenseProvider.selectedPersons,
                         startDate: expenseProvider.startDate,
@@ -167,7 +174,7 @@ class _TransactionsState extends State<Transactions>
                         searchQuery: expenseProvider.searchQuery,
                         expenseProvider: expenseProvider,
                         onExpenseSelected: (expense) =>
-                            _toggleAddExpensePanel(expense: expense),
+                            _toggleExpensePanel(expense: expense),
                         selectedExpense: _selectedExpense,
                       ),
                     ),
@@ -176,7 +183,7 @@ class _TransactionsState extends State<Transactions>
                     right: 382, // Right column width + padding + 16
                     bottom: 16,
                     child: FloatingActionButton(
-                      onPressed: () => _toggleAddExpensePanel(),
+                      onPressed: () => _toggleExpensePanel(),
                       child: Icon(Icons.add),
                     ),
                   ),

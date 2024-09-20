@@ -86,8 +86,10 @@ class ExpenseProvider with ChangeNotifier {
 
     try {
       _expenses = await TestData.getTestExpenses();
+      print("Loaded ${_expenses.length} expenses"); // Add this debug print
       _isLoading = false;
     } catch (e) {
+      print("Error loading expenses: $e"); // Add this debug print
       _error = "Failed to load expenses: $e";
       _expenses = [];
       _isLoading = false;
@@ -126,22 +128,16 @@ class ExpenseProvider with ChangeNotifier {
   }
 
   List<Expense> getFilteredExpenses() {
-    List<Expense> filtered = _expenses.where((expense) {
-      bool dateInRange = true;
-      if (_startDate != null && _endDate != null) {
-        dateInRange = expense.dateTime.isAtSameMomentAs(_startDate!) ||
-            expense.dateTime.isAtSameMomentAs(_endDate!) ||
-            (expense.dateTime.isAfter(_startDate!) &&
-                expense.dateTime.isBefore(_endDate!.add(Duration(days: 1))));
-      } else if (_startDate != null) {
-        dateInRange = expense.dateTime.isAtSameMomentAs(_startDate!) ||
-            expense.dateTime.isAfter(_startDate!);
-      } else if (_endDate != null) {
-        dateInRange = expense.dateTime.isAtSameMomentAs(_endDate!) ||
-            expense.dateTime.isBefore(_endDate!.add(Duration(days: 1)));
-      }
-
-      bool matchesSearch = _searchQuery.isEmpty ||
+    return _expenses.where((expense) {
+      bool categoryMatch = _selectedCategories.isEmpty ||
+          _selectedCategories.contains(expense.category);
+      bool personMatch =
+          _selectedPersons.isEmpty || _selectedPersons.contains(expense.paidBy);
+      bool dateMatch =
+          (_startDate == null || expense.dateTime.isAfter(_startDate!)) &&
+              (_endDate == null ||
+                  expense.dateTime.isBefore(_endDate!.add(Duration(days: 1))));
+      bool searchMatch = _searchQuery.isEmpty ||
           expense.shopName.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           expense.category.name
               .toLowerCase()
@@ -150,17 +146,8 @@ class ExpenseProvider with ChangeNotifier {
               .toLowerCase()
               .contains(_searchQuery.toLowerCase());
 
-      return dateInRange &&
-          matchesSearch &&
-          (_selectedCategories.isEmpty ||
-              _selectedCategories.contains(expense.category)) &&
-          (_selectedPersons.isEmpty ||
-              _selectedPersons.contains(expense.paidBy));
+      return categoryMatch && personMatch && dateMatch && searchMatch;
     }).toList();
-
-    filtered.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-
-    return filtered;
   }
 
   List<Expense> getAllFilteredExpenses() {

@@ -11,7 +11,7 @@ import 'package:expensed_web_app/components/filter_bottom_sheet.dart';
 class TransactionList extends StatefulWidget {
   final List<Expense> expenses;
   final Function(String) onSearch;
-  final Function showFilterBottomSheet;
+  final VoidCallback showFilterPanel;
   final Set<Category> selectedCategories;
   final Set<Person> selectedPersons;
   final DateTime? startDate;
@@ -25,7 +25,7 @@ class TransactionList extends StatefulWidget {
     super.key,
     required this.expenses,
     required this.onSearch,
-    required this.showFilterBottomSheet,
+    required this.showFilterPanel,
     required this.selectedCategories,
     required this.selectedPersons,
     this.startDate,
@@ -191,7 +191,7 @@ class _TransactionListState extends State<TransactionList> {
 
   Widget _buildFilterButton(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () => showFilterBottomSheet(context, widget.expenseProvider),
+      onPressed: widget.showFilterPanel,
       style: ElevatedButton.styleFrom(
         backgroundColor: _isFilterActive()
             ? Theme.of(context).primaryColor

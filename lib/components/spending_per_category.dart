@@ -121,7 +121,7 @@ class SpendingPerCategory extends StatelessWidget {
                                     sortedCategories[index].name;
                                 if (categoryName.length > 6) {
                                   categoryName =
-                                      '${categoryName.substring(0, 6)}...';
+                                      '${categoryName.substring(0, 4)}...';
                                 }
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),

@@ -49,7 +49,6 @@ class Transactions extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                flex: 2,
                 child: buildElevatedContainer(
                   child: TransactionList(
                     expenses: filteredExpenses,
@@ -66,8 +65,8 @@ class Transactions extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 16),
-              Expanded(
-                flex: 1,
+              Container(
+                width: 350, // Set a fixed width for the right column
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

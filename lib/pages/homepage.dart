@@ -65,6 +65,7 @@ class _HomepageState extends State<Homepage> {
               children: [
                 buildElevatedContainer(
                   child: Container(
+                    color: Theme.of(context).primaryColor.withAlpha(45),
                     width: 200,
                     child: Column(
                       children: [

@@ -48,7 +48,7 @@ class _TransactionsState extends State<Transactions>
   void _toggleAddExpensePanel({Expense? expense}) {
     setState(() {
       _showAddExpensePanel = !_showAddExpensePanel;
-      _selectedExpense = expense;
+      _selectedExpense = _showAddExpensePanel ? expense : null;
     });
     if (_showAddExpensePanel) {
       _animationController.forward();
@@ -154,35 +154,22 @@ class _TransactionsState extends State<Transactions>
                     bottom: 0,
                     left: 0,
                     right: 366, // Right column width + padding
-                    child: Stack(
-                      children: [
-                        buildElevatedContainer(
-                          child: TransactionList(
-                            expenses: filteredExpenses,
-                            onSearch: expenseProvider.setSearchQuery,
-                            showFilterBottomSheet: () =>
-                                showFilterBottomSheet(context, expenseProvider),
-                            selectedCategories:
-                                expenseProvider.selectedCategories,
-                            selectedPersons: expenseProvider.selectedPersons,
-                            startDate: expenseProvider.startDate,
-                            endDate: expenseProvider.endDate,
-                            searchQuery: expenseProvider.searchQuery,
-                            expenseProvider: expenseProvider,
-                            onExpenseSelected: (expense) =>
-                                _toggleAddExpensePanel(expense: expense),
-                          ),
-                        ),
-                        if (_showAddExpensePanel)
-                          Positioned.fill(
-                            child: GestureDetector(
-                              onTap: _toggleAddExpensePanel,
-                              child: Container(
-                                color: Colors.black.withOpacity(0.5),
-                              ),
-                            ),
-                          ),
-                      ],
+                    child: buildElevatedContainer(
+                      child: TransactionList(
+                        expenses: filteredExpenses,
+                        onSearch: expenseProvider.setSearchQuery,
+                        showFilterBottomSheet: () =>
+                            showFilterBottomSheet(context, expenseProvider),
+                        selectedCategories: expenseProvider.selectedCategories,
+                        selectedPersons: expenseProvider.selectedPersons,
+                        startDate: expenseProvider.startDate,
+                        endDate: expenseProvider.endDate,
+                        searchQuery: expenseProvider.searchQuery,
+                        expenseProvider: expenseProvider,
+                        onExpenseSelected: (expense) =>
+                            _toggleAddExpensePanel(expense: expense),
+                        selectedExpense: _selectedExpense,
+                      ),
                     ),
                   ),
                   Positioned(

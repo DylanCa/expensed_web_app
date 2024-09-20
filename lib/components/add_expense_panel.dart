@@ -201,6 +201,14 @@ class _AddExpensePanelState extends State<AddExpensePanel> {
                   },
                   child: Text('Cancel'),
                 ),
+                if (widget.expenseToEdit != null)
+                  TextButton(
+                    onPressed: _showDeleteConfirmation,
+                    child: Text('Delete'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.red,
+                    ),
+                  ),
                 ElevatedButton(
                   onPressed: _submitForm,
                   child: Text(widget.expenseToEdit == null
@@ -276,6 +284,46 @@ class _AddExpensePanelState extends State<AddExpensePanel> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please fill in all fields')),
       );
+    }
+  }
+
+  void _showDeleteConfirmation() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Expense'),
+          content: Text('Are you sure you want to delete this expense?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _deleteExpense();
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteExpense() {
+    if (widget.expenseToEdit != null) {
+      widget.expenseProvider.deleteExpense(widget.expenseToEdit!.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Expense deleted successfully')),
+      );
+      widget.onClose();
     }
   }
 }

@@ -19,6 +19,7 @@ class TransactionList extends StatefulWidget {
   final String searchQuery;
   final ExpenseProvider expenseProvider;
   final Function(Expense) onExpenseSelected;
+  final Expense? selectedExpense;
 
   const TransactionList({
     super.key,
@@ -32,6 +33,7 @@ class TransactionList extends StatefulWidget {
     required this.searchQuery,
     required this.expenseProvider,
     required this.onExpenseSelected,
+    this.selectedExpense,
   });
 
   @override
@@ -108,6 +110,7 @@ class _TransactionListState extends State<TransactionList> {
                           child: RoundedExpenseWidget(
                             expense: expense,
                             onTap: () => widget.onExpenseSelected(expense),
+                            isSelected: expense == widget.selectedExpense,
                           ),
                         ),
                       ],
@@ -269,11 +272,13 @@ class _TransactionListState extends State<TransactionList> {
 class RoundedExpenseWidget extends StatelessWidget {
   final Expense expense;
   final VoidCallback onTap;
+  final bool isSelected;
 
   const RoundedExpenseWidget({
     Key? key,
     required this.expense,
     required this.onTap,
+    required this.isSelected,
   }) : super(key: key);
 
   @override
@@ -286,10 +291,10 @@ class RoundedExpenseWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(0, 1),
+              color: Colors.grey.withOpacity(isSelected ? 0.3 : 0.1),
+              spreadRadius: isSelected ? 2 : 1,
+              blurRadius: isSelected ? 6 : 3,
+              offset: Offset(0, isSelected ? 3 : 1),
             ),
           ],
         ),

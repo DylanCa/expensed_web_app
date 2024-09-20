@@ -33,206 +33,87 @@ class Transactions extends StatelessWidget {
         List<Expense> allFilteredExpenses =
             expenseProvider.getAllFilteredExpenses();
 
-        // Calculate current week and month totals
         double currentWeekTotal = _calculateCurrentWeekTotal(filteredExpenses);
         double currentMonthTotal =
             _calculateCurrentMonthTotal(filteredExpenses);
-
-        // Calculate average weekly and monthly totals
         double averageWeeklyTotal =
             _calculateAverageWeeklyTotal(allFilteredExpenses);
         double averageMonthlyTotal =
             _calculateAverageMonthlyTotal(allFilteredExpenses);
-
-        // Calculate selected date range total
         double selectedDateRangeTotal =
             _calculateSelectedDateRangeTotal(filteredExpenses);
 
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              final totalWidth = constraints.maxWidth;
-              const rightColumnWidth = 400.0;
-              const minLeftColumnWidth = 600.0;
-              final isWideLayout =
-                  totalWidth >= minLeftColumnWidth + rightColumnWidth;
-
-              if (isWideLayout) {
-                // Wide layout
-                return Stack(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: buildElevatedContainer(
-                            TransactionList(
-                              expenses: filteredExpenses,
-                              onSearch: expenseProvider.setSearchQuery,
-                              showFilterBottomSheet: () =>
-                                  showFilterBottomSheet(
-                                      context, expenseProvider),
-                              selectedCategories:
-                                  expenseProvider.selectedCategories,
-                              selectedPersons: expenseProvider.selectedPersons,
-                              startDate: expenseProvider.startDate,
-                              endDate: expenseProvider.endDate,
-                              searchQuery: expenseProvider.searchQuery,
-                              expenseProvider: expenseProvider,
-                            ),
-                          ),
-                        ),
+          body: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 2,
+                child: buildElevatedContainer(
+                  TransactionList(
+                    expenses: filteredExpenses,
+                    onSearch: expenseProvider.setSearchQuery,
+                    showFilterBottomSheet: () =>
+                        showFilterBottomSheet(context, expenseProvider),
+                    selectedCategories: expenseProvider.selectedCategories,
+                    selectedPersons: expenseProvider.selectedPersons,
+                    startDate: expenseProvider.startDate,
+                    endDate: expenseProvider.endDate,
+                    searchQuery: expenseProvider.searchQuery,
+                    expenseProvider: expenseProvider,
+                  ),
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      buildElevatedContainer(
                         SizedBox(
-                          width: rightColumnWidth,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                buildElevatedContainer(
-                                  SizedBox(
-                                    width: double.infinity,
-                                    height:
-                                        170, // Increased height to accommodate the taller ExpenseSummary
-                                    child: ExpenseSummary(
-                                      currentWeekTotal: currentWeekTotal,
-                                      currentMonthTotal: currentMonthTotal,
-                                      selectedDateRangeTotal:
-                                          selectedDateRangeTotal,
-                                      startDate: expenseProvider.startDate,
-                                      endDate: expenseProvider.endDate,
-                                      averageWeeklyTotal: averageWeeklyTotal,
-                                      averageMonthlyTotal: averageMonthlyTotal,
-                                    ),
-                                  ),
-                                ),
-                                buildElevatedContainer(
-                                  Container(
-                                    constraints: BoxConstraints(minWidth: 400),
-                                    width: 450,
-                                    height: 300, // Reduced height
-                                    child: SpendingByPerson(
-                                      filteredExpenses: filteredExpenses,
-                                    ),
-                                  ),
-                                ),
-                                buildElevatedContainer(
-                                  Container(
-                                    constraints: BoxConstraints(minWidth: 400),
-                                    width: 450,
-                                    height: 300, // Reduced height
-                                    child: SpendingPerCategory(
-                                      filteredExpenses: filteredExpenses,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          width: double.infinity,
+                          height: 170,
+                          child: ExpenseSummary(
+                            currentWeekTotal: currentWeekTotal,
+                            currentMonthTotal: currentMonthTotal,
+                            selectedDateRangeTotal: selectedDateRangeTotal,
+                            startDate: expenseProvider.startDate,
+                            endDate: expenseProvider.endDate,
+                            averageWeeklyTotal: averageWeeklyTotal,
+                            averageMonthlyTotal: averageMonthlyTotal,
                           ),
                         ),
-                      ],
-                    ),
-                    Positioned(
-                      right: rightColumnWidth + 32,
-                      bottom: 32,
-                      child: FloatingActionButton(
-                        onPressed: () => _showAddExpenseBottomSheet(
-                            context, expenseProvider),
-                        child: Icon(Icons.add),
                       ),
-                    ),
-                  ],
-                );
-              } else {
-                // Narrow layout
-                return Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          buildElevatedContainer(
-                            SizedBox(
-                              width: double.infinity,
-                              height:
-                                  170, // Increased height to accommodate the taller ExpenseSummary
-                              child: ExpenseSummary(
-                                currentWeekTotal: currentWeekTotal,
-                                currentMonthTotal: currentMonthTotal,
-                                selectedDateRangeTotal: selectedDateRangeTotal,
-                                startDate: expenseProvider.startDate,
-                                endDate: expenseProvider.endDate,
-                                averageWeeklyTotal: averageWeeklyTotal,
-                                averageMonthlyTotal: averageMonthlyTotal,
-                              ),
-                            ),
+                      SizedBox(height: 16),
+                      buildElevatedContainer(
+                        SizedBox(
+                          height: 300,
+                          child: SpendingByPerson(
+                            filteredExpenses: filteredExpenses,
                           ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  buildElevatedContainer(
-                                    Container(
-                                      constraints:
-                                          BoxConstraints(minWidth: 400),
-                                      width: 450,
-                                      height: 300, // Reduced height
-                                      child: SpendingByPerson(
-                                        filteredExpenses: filteredExpenses,
-                                      ),
-                                    ),
-                                  ),
-                                  buildElevatedContainer(
-                                    Container(
-                                      constraints:
-                                          BoxConstraints(minWidth: 400),
-                                      width: 450,
-                                      height: 300, // Reduced height
-                                      child: SpendingPerCategory(
-                                        filteredExpenses: filteredExpenses,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          buildElevatedContainer(
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: TransactionList(
-                                expenses: filteredExpenses,
-                                onSearch: expenseProvider.setSearchQuery,
-                                showFilterBottomSheet: () =>
-                                    showFilterBottomSheet(
-                                        context, expenseProvider),
-                                selectedCategories:
-                                    expenseProvider.selectedCategories,
-                                selectedPersons:
-                                    expenseProvider.selectedPersons,
-                                startDate: expenseProvider.startDate,
-                                endDate: expenseProvider.endDate,
-                                searchQuery: expenseProvider.searchQuery,
-                                expenseProvider: expenseProvider,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      right: 32,
-                      bottom: 32,
-                      child: FloatingActionButton(
-                        onPressed: () => _showAddExpenseBottomSheet(
-                            context, expenseProvider),
-                        child: Icon(Icons.add),
+                      SizedBox(height: 16),
+                      buildElevatedContainer(
+                        SizedBox(
+                          height: 300,
+                          child: SpendingPerCategory(
+                            filteredExpenses: filteredExpenses,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }
-            },
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () =>
+                _showAddExpenseBottomSheet(context, expenseProvider),
+            child: Icon(Icons.add),
           ),
         );
       },

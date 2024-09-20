@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/pages/homepage.dart';
+import 'dart:math' as math;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -118,7 +119,64 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routerConfig: _router,
+      builder: (context, child) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            const fixedWidth = 1400.0;
+            const padding = 16.0; // Add padding constant
+            final windowHeight = constraints.maxHeight;
+            final windowWidth = constraints.maxWidth;
+            final appHeight =
+                (windowHeight - 2 * padding); // Adjust for padding
+
+            // Calculate the app's width
+            final appWidth = math.min(
+                fixedWidth, windowWidth - 2 * padding); // Adjust for padding
+
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SingleChildScrollView(
+                child: Container(
+                  width: windowWidth,
+                  height: windowHeight,
+                  padding: const EdgeInsets.all(padding), // Add padding
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        width: appWidth,
+                        height: appHeight,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: child,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
+}
+
+// Helper functions remain the same
+double _lerp(double a, double b, double t) {
+  return a + (b - a) * t;
+}
+
+double _smoothstep(double edge0, double edge1, double x) {
+  x = ((x - edge0) / (edge1 - edge0)).clamp(0.0, 1.0);
+  return x * x * (3 - 2 * x);
 }
 

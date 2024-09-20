@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
-import 'package:intl/intl.dart';
 import 'dashboard.dart';
 
 class Homepage extends StatefulWidget {
@@ -17,7 +16,6 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   late int selectedIndex;
-  int? hoveredIndex;
 
   @override
   void initState() {
@@ -28,7 +26,6 @@ class _HomepageState extends State<Homepage> {
   final List<Widget> _pages = [
     Dashboard(),
     Transactions(),
-    // Add your other pages here
     Placeholder(), // Placeholder for Goals page
     Placeholder(), // Placeholder for Household page
   ];
@@ -45,13 +42,6 @@ class _HomepageState extends State<Homepage> {
     Icons.trending_up,
     Icons.flag,
     Icons.home,
-  ];
-
-  final List<IconData> _outlinedIcons = [
-    Icons.dashboard_outlined,
-    Icons.trending_up_outlined,
-    Icons.flag_outlined,
-    Icons.home_outlined,
   ];
 
   @override
@@ -76,90 +66,64 @@ class _HomepageState extends State<Homepage> {
 
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              final isWideLayout = constraints.maxWidth > 1400;
-              final menuWidth = isWideLayout ? 175.0 : 75.0;
-
-              return Row(
-                children: [
-                  Container(
-                    width: menuWidth,
-                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.account_balance_wallet,
-                                size: 40,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              if (isWideLayout) SizedBox(width: 8),
-                              if (isWideLayout)
-                                Text(
-                                  'Expensed',
-                                  style:
-                                      Theme.of(context).textTheme.displayMedium,
-                                ),
-                            ],
+          body: Row(
+            children: [
+              Container(
+                width: 200,
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.account_balance_wallet,
+                            size: 32,
+                            color: Theme.of(context).primaryColor,
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (int i = 0; i < _titles.length; i++)
-                                _buildNavItem(
-                                  icon: _icons[i],
-                                  outlinedIcon: _outlinedIcons[i],
-                                  label: _titles[i],
-                                  index: i,
-                                  isWideLayout: isWideLayout,
-                                ),
-                            ],
+                          SizedBox(width: 8),
+                          Text(
+                            'Expensed',
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Divider(
-                                thickness: 1,
-                                height: 1,
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.1)),
-                            _buildBottomNavItem(
-                              icon: Icons.settings,
-                              outlinedIcon: Icons.settings_outlined,
-                              label: 'Settings',
-                              onPressed: () {
-                                // Handle settings button press
-                              },
-                              isWideLayout: isWideLayout,
-                            ),
-                            _buildBottomNavItem(
-                              icon: Icons.account_circle,
-                              outlinedIcon: Icons.account_circle_outlined,
-                              label: 'Account',
-                              onPressed: () {
-                                // Handle account button press
-                              },
-                              isWideLayout: isWideLayout,
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: _pages[selectedIndex],
-                  ),
-                ],
-              );
-            },
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          for (int i = 0; i < _titles.length; i++)
+                            _buildNavItem(
+                              icon: _icons[i],
+                              label: _titles[i],
+                              index: i,
+                            ),
+                        ],
+                      ),
+                    ),
+                    Divider(height: 1),
+                    _buildNavItem(
+                      icon: Icons.settings,
+                      label: 'Settings',
+                      onTap: () {
+                        // Handle settings
+                      },
+                    ),
+                    _buildNavItem(
+                      icon: Icons.account_circle,
+                      label: 'Account',
+                      onTap: () {
+                        // Handle account
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: _pages[selectedIndex],
+              ),
+            ],
           ),
         );
       },
@@ -168,128 +132,35 @@ class _HomepageState extends State<Homepage> {
 
   Widget _buildNavItem({
     required IconData icon,
-    required IconData outlinedIcon,
     required String label,
-    required int index,
-    required bool isWideLayout,
+    int? index,
+    VoidCallback? onTap,
   }) {
-    final isSelected = selectedIndex == index;
-    return TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor: isSelected
-            ? Theme.of(context).primaryColor.withOpacity(0.2)
-            : Colors.transparent,
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0),
-        ),
-      ),
-      onPressed: () {
+    final isSelected = index != null && selectedIndex == index;
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).primaryColor),
+      title: Text(label),
+      selected: isSelected,
+      onTap: onTap ??
+          () {
         setState(() {
-          selectedIndex = index;
+              selectedIndex = index!;
         });
         switch (index) {
           case 0:
             context.go('/dashboard');
+                break;
           case 1:
             context.go('/transactions');
+                break;
           case 2:
             context.go('/goals');
+                break;
           case 3:
             context.go('/household');
+                break;
         }
-      },
-      child: Row(
-        mainAxisAlignment:
-            isWideLayout ? MainAxisAlignment.start : MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: isWideLayout
-                ? const EdgeInsets.only(left: 16.0)
-                : EdgeInsets.zero,
-            child: Icon(
-              isSelected ? icon : outlinedIcon,
-              color: Theme.of(context).primaryColor,
-              size: 28,
-            ),
-          ),
-          if (isWideLayout) SizedBox(width: 8),
-          if (isWideLayout)
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).primaryColor,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNavItem({
-    required IconData icon,
-    required IconData outlinedIcon,
-    required String label,
-    required VoidCallback onPressed,
-    required bool isWideLayout,
-  }) {
-    final isSelected = hoveredIndex == label.hashCode;
-    return MouseRegion(
-      onEnter: (_) => setState(() {
-        hoveredIndex = label.hashCode;
-      }),
-      onExit: (_) => setState(() {
-        hoveredIndex = null;
-      }),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).primaryColor.withOpacity(0.05)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            minimumSize: Size(double.infinity, 60),
-          ),
-          onPressed: onPressed,
-          child: Row(
-            mainAxisAlignment: isWideLayout
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: isWideLayout
-                    ? const EdgeInsets.only(left: 16.0)
-                    : EdgeInsets.zero,
-                child: Icon(
-                  isSelected ? icon : outlinedIcon,
-                  color: Theme.of(context).primaryColor,
-                  size: 28,
-                ),
-              ),
-              if (isWideLayout) SizedBox(width: 8),
-              if (isWideLayout)
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                    fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
+          },
     );
   }
 }

@@ -4,37 +4,45 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/models/expense.dart';
+import 'dart:math';
 
 class TestData {
   static final List<Category> categories = [
     Category(
         id: '2188e2bf-b126-463e-a41e-b33421870d24',
         name: 'Groceries',
-        color: Colors.green),
+        color: Colors.green,
+        icon: Icons.shopping_cart),
     Category(
         id: '1186e92d-7914-4a0a-9357-cdbb869e6d54',
         name: 'Dining',
-        color: Colors.red),
+        color: Colors.red,
+        icon: Icons.restaurant),
     Category(
         id: 'ba4c46d3-b84e-44ab-a286-055c0de309aa',
         name: 'Transportation',
-        color: Colors.purple),
+        color: Colors.purple,
+        icon: Icons.directions_car),
     Category(
         id: 'a002a86b-8efd-4cc1-b331-9a3cf312bed6',
         name: 'Entertainment',
-        color: Colors.teal),
+        color: Colors.teal,
+        icon: Icons.movie),
     Category(
         id: 'b9c66dbb-51b1-4964-861b-fa22edeaa7c0',
         name: 'Health',
-        color: Colors.indigo),
+        color: Colors.indigo,
+        icon: Icons.local_hospital),
     Category(
         id: '3ca901e7-0435-42b4-a3a1-99a3a5f55884',
         name: 'Education',
-        color: Colors.brown),
+        color: Colors.brown,
+        icon: Icons.school),
     Category(
         id: 'fb70af88-a1b2-4672-9124-b474de422b87',
         name: 'Shopping',
-        color: Colors.cyan),
+        color: Colors.cyan,
+        icon: Icons.shopping_bag),
   ];
 
   static final List<Person> persons = [

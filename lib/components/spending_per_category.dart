@@ -10,33 +10,22 @@ class SpendingPerCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the last 7 days
-    final now = DateTime.now();
-    final lastSevenDays = List.generate(
-        7,
-        (index) => DateTime(now.year, now.month, now.day)
-            .subtract(Duration(days: 6 - index)));
-
     // Group expenses by category
     Map<Category, double> expensesByCategory = {};
     Set<Category> categories = {};
 
     for (var expense in filteredExpenses) {
-      if (lastSevenDays.contains(DateTime(expense.dateTime.year,
-          expense.dateTime.month, expense.dateTime.day))) {
-        Category category = expense.category;
-        double amount = expense.amount;
+      Category category = expense.category;
+      double amount = expense.amount;
 
-        expensesByCategory[category] =
-            (expensesByCategory[category] ?? 0) + amount;
-        categories.add(category);
-      }
+      expensesByCategory[category] =
+          (expensesByCategory[category] ?? 0) + amount;
+      categories.add(category);
     }
 
-    // Sort categories by amount spent, from highest to lowest
+    // Sort categories by name
     List<Category> sortedCategories = categories.toList()
-      ..sort((a, b) =>
-          (expensesByCategory[b] ?? 0).compareTo(expensesByCategory[a] ?? 0));
+      ..sort((a, b) => a.name.compareTo(b.name));
 
     // Calculate maxY (maximum amount rounded to the nearest 50 above)
     double maxY = expensesByCategory.values.isEmpty
@@ -87,7 +76,7 @@ class SpendingPerCategory extends StatelessWidget {
             height: 200,
             child: barGroups.isEmpty
                 ? Center(
-                    child: Text('No data available for the last 7 days',
+                    child: Text('No data available',
                         style: Theme.of(context).textTheme.bodyMedium))
                 : BarChart(
                     BarChartData(

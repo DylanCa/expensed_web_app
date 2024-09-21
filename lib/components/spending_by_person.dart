@@ -39,16 +39,23 @@ class _SpendingByPersonState extends State<SpendingByPerson> {
         color: color,
         value: amount,
         title: touchedIndex == amountByPerson.keys.toList().indexOf(person)
-            ? '${person.name}\n\$${amount.toStringAsFixed(2)}'
+            ? '\$${amount.toStringAsFixed(2)}'
             : '${percentage.toStringAsFixed(1)}%',
         radius: touchedIndex == amountByPerson.keys.toList().indexOf(person)
-            ? 60
-            : 50,
+            ? 110
+            : 100,
         titleStyle: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
+        badgeWidget: _Badge(
+          person.name[0],
+          color: person.color,
+          size: 30, // Reduced size from 40 to 30
+          borderColor: Colors.white,
+        ),
+        badgePositionPercentageOffset: .98,
       );
     }).toList();
 
@@ -66,7 +73,8 @@ class _SpendingByPersonState extends State<SpendingByPerson> {
                 ? PieChart(
                     PieChartData(
                       sections: sections,
-                      centerSpaceRadius: 40,
+                      centerSpaceRadius:
+                          0, // Change this to 0 to make it a full pie chart
                       sectionsSpace: 0,
                       pieTouchData: PieTouchData(
                         touchCallback: (FlTouchEvent event, pieTouchResponse) {
@@ -89,6 +97,55 @@ class _SpendingByPersonState extends State<SpendingByPerson> {
                         style: Theme.of(context).textTheme.bodyMedium)),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _Badge extends StatelessWidget {
+  final String text;
+  final Color color;
+  final double size;
+  final Color borderColor;
+
+  const _Badge(
+    this.text, {
+    required this.color,
+    required this.size,
+    required this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: PieChart.defaultDuration,
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: borderColor,
+          width: 2,
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black.withOpacity(.5),
+            offset: const Offset(3, 3),
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(size * .15),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: size * .5,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

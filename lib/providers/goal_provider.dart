@@ -71,5 +71,11 @@ class GoalProvider with ChangeNotifier {
     return _goals[categoryId];
   }
 
+  List<Expense> getExpensesForCategory(String categoryId) {
+    return _expenses
+        .where((expense) => expense.category.id == categoryId)
+        .toList();
+  }
+
   // Add more methods as needed
 }

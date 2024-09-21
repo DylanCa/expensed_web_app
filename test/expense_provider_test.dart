@@ -1,12 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
+import 'package:expensed_web_app/providers/goal_provider.dart';
 
 void main() {
   group('ExpenseProvider Tests', () {
     late ExpenseProvider provider;
+    late GoalProvider goalProvider;
 
     setUp(() {
-      provider = ExpenseProvider();
+      goalProvider = GoalProvider();
+      provider = ExpenseProvider(goalProvider);
     });
 
     test('Initial state', () {

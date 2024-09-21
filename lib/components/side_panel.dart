@@ -13,12 +13,12 @@ class SidePanel extends StatefulWidget {
   final bool isFilterMode;
 
   const SidePanel({
-    Key? key,
+    super.key,
     required this.expenseProvider,
     required this.onClose,
     this.expenseToEdit,
     this.isFilterMode = false,
-  }) : super(key: key);
+  });
 
   @override
   _SidePanelState createState() => _SidePanelState();
@@ -213,8 +213,8 @@ class _SidePanelState extends State<SidePanel> {
                             });
                           },
                           avatar: CircleAvatar(
-                            child: Text(person.name[0]),
                             radius: 12,
+                            child: Text(person.name[0]),
                           ),
                         );
                       }).toList(),
@@ -274,10 +274,10 @@ class _SidePanelState extends State<SidePanel> {
               Center(
                 child: ElevatedButton(
                   onPressed: _resetFilters,
-                  child: Text('Reset Filters'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
+                  child: Text('Reset Filters'),
                 ),
               )
             else
@@ -294,20 +294,20 @@ class _SidePanelState extends State<SidePanel> {
                   if (widget.expenseToEdit != null)
                     TextButton(
                       onPressed: _showDeleteConfirmation,
-                      child: Text('Delete'),
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.red,
                       ),
+                      child: Text('Delete'),
                     ),
                   ElevatedButton(
                     onPressed: _submitForm,
-                    child: Text(widget.expenseToEdit == null
-                        ? 'Add Expense'
-                        : 'Update Expense'),
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     ),
+                    child: Text(widget.expenseToEdit == null
+                        ? 'Add Expense'
+                        : 'Update Expense'),
                   ),
                 ],
               ),
@@ -395,7 +395,6 @@ class _SidePanelState extends State<SidePanel> {
               },
             ),
             TextButton(
-              child: Text('Delete'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _deleteExpense();
@@ -403,6 +402,7 @@ class _SidePanelState extends State<SidePanel> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.red,
               ),
+              child: Text('Delete'),
             ),
           ],
         );

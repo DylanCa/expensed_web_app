@@ -150,17 +150,13 @@ class _HomepageState extends State<Homepage> {
         });
         switch (index) {
           case 0:
-            context.go('/dashboard');
-                break;
+                context.go('/dashboard');
           case 1:
-            context.go('/transactions');
-                break;
+                context.go('/transactions');
           case 2:
-            context.go('/goals');
-                break;
+                context.go('/goals');
           case 3:
-            context.go('/household');
-                break;
+                context.go('/household');
         }
           },
     );

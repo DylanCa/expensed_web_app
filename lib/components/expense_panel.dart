@@ -13,12 +13,12 @@ class ExpensePanel extends StatefulWidget {
   final bool isFilterMode;
 
   const ExpensePanel({
-    Key? key,
+    super.key,
     required this.expenseProvider,
     required this.onClose,
     this.expenseToEdit,
     this.isFilterMode = false,
-  }) : super(key: key);
+  });
 
   @override
   _ExpensePanelState createState() => _ExpensePanelState();
@@ -102,13 +102,22 @@ class _ExpensePanelState extends State<ExpensePanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.isFilterMode
-                  ? 'Filter Expenses'
-                  : (widget.expenseToEdit == null
-                      ? 'Add New Expense'
-                      : 'Edit Expense'),
-              style: Theme.of(context).textTheme.headlineSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.isFilterMode
+                      ? 'Filter Expenses'
+                      : (widget.expenseToEdit == null
+                          ? 'Add New Expense'
+                          : 'Edit Expense'),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: widget.onClose,
+                ),
+              ],
             ),
             SizedBox(height: 24),
             Expanded(
@@ -213,8 +222,8 @@ class _ExpensePanelState extends State<ExpensePanel> {
                             });
                           },
                           avatar: CircleAvatar(
-                            child: Text(person.name[0]),
                             radius: 12,
+                            child: Text(person.name[0]),
                           ),
                         );
                       }).toList(),
@@ -234,40 +243,34 @@ class _ExpensePanelState extends State<ExpensePanel> {
               Center(
                 child: ElevatedButton(
                   onPressed: _resetFilters,
-                  child: Text('Reset Filters'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
+                  child: Text('Reset Filters'),
                 ),
               )
             else
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      _resetForm();
-                      widget.onClose();
-                    },
-                    child: Text('Cancel'),
-                  ),
                   if (widget.expenseToEdit != null)
                     TextButton(
                       onPressed: _showDeleteConfirmation,
-                      child: Text('Delete'),
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.red,
                       ),
+                      child: Text('Delete'),
                     ),
+                  SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: _submitForm,
-                    child: Text(widget.expenseToEdit == null
-                        ? 'Add Expense'
-                        : 'Update Expense'),
                     style: ElevatedButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     ),
+                    child: Text(widget.expenseToEdit == null
+                        ? 'Add Expense'
+                        : 'Update Expense'),
                   ),
                 ],
               ),
@@ -463,7 +466,6 @@ class _ExpensePanelState extends State<ExpensePanel> {
               },
             ),
             TextButton(
-              child: Text('Delete'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _deleteExpense();
@@ -471,6 +473,7 @@ class _ExpensePanelState extends State<ExpensePanel> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.red,
               ),
+              child: Text('Delete'),
             ),
           ],
         );

@@ -275,11 +275,11 @@ class RoundedExpenseWidget extends StatefulWidget {
   final bool isSelected;
 
   const RoundedExpenseWidget({
-    Key? key,
+    super.key,
     required this.expense,
     required this.onTap,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   @override
   _RoundedExpenseWidgetState createState() => _RoundedExpenseWidgetState();

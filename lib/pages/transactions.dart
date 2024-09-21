@@ -169,9 +169,7 @@ class _TransactionsState extends State<Transactions>
                     left: 0,
                     right: 366, // Right column width + padding
                     child: buildElevatedContainer(
-                      child: filteredExpenses.isEmpty
-                          ? Center(child: Text("No expenses found"))
-                          : TransactionList(
+                      child: TransactionList(
                               expenses: filteredExpenses,
                               onSearch: expenseProvider.setSearchQuery,
                               showFilterPanel: () =>

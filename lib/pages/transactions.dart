@@ -1,4 +1,4 @@
-import 'package:expensed_web_app/components/expense_panel.dart';
+import 'package:expensed_web_app/components/side_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:expensed_web_app/components/transaction_list.dart';
@@ -16,12 +16,12 @@ class Transactions extends StatefulWidget {
 
 class _TransactionsState extends State<Transactions>
     with SingleTickerProviderStateMixin {
-  bool _showExpensePanel = false;
+  bool _showSidePanel = false;
   bool _isFilterMode = false;
   Expense? _selectedExpense;
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
-  int _expensePanelKey = 0;
+  int _sidePanelKey = 0;
 
   @override
   void initState() {
@@ -45,14 +45,14 @@ class _TransactionsState extends State<Transactions>
     super.dispose();
   }
 
-  void _toggleExpensePanel({Expense? expense, bool isFilterMode = false}) {
+  void _toggleSidePanel({Expense? expense, bool isFilterMode = false}) {
     setState(() {
-      _showExpensePanel = !_showExpensePanel;
-      _selectedExpense = _showExpensePanel ? expense : null;
+      _showSidePanel = !_showSidePanel;
+      _selectedExpense = _showSidePanel ? expense : null;
       _isFilterMode = isFilterMode;
-      _expensePanelKey++;
+      _sidePanelKey++;
     });
-    if (_showExpensePanel) {
+    if (_showSidePanel) {
       _animationController.forward();
     } else {
       _animationController.reverse();
@@ -138,7 +138,7 @@ class _TransactionsState extends State<Transactions>
                     ),
                   ),
                   // Expense panel (middle z-index)
-                  if (_showExpensePanel)
+                  if (_showSidePanel)
                     Positioned(
                       top: 0,
                       bottom: 0,
@@ -148,11 +148,11 @@ class _TransactionsState extends State<Transactions>
                         position: _slideAnimation,
                         child: buildElevatedContainer(
                           backgroundColor: Colors.white,
-                          child: ExpensePanel(
-                            key: ValueKey(_expensePanelKey),
+                          child: SidePanel(
+                            key: ValueKey(_sidePanelKey),
                             expenseProvider: expenseProvider,
                             onClose: () {
-                              _toggleExpensePanel();
+                              _toggleSidePanel();
                               // Force a rebuild of the widget tree
                               setState(() {});
                             },
@@ -173,7 +173,7 @@ class _TransactionsState extends State<Transactions>
                               expenses: filteredExpenses,
                               onSearch: expenseProvider.setSearchQuery,
                               showFilterPanel: () =>
-                                  _toggleExpensePanel(isFilterMode: true),
+                            _toggleSidePanel(isFilterMode: true),
                               selectedCategories:
                                   expenseProvider.selectedCategories,
                               selectedPersons: expenseProvider.selectedPersons,
@@ -182,7 +182,7 @@ class _TransactionsState extends State<Transactions>
                               searchQuery: expenseProvider.searchQuery,
                               expenseProvider: expenseProvider,
                               onExpenseSelected: (expense) =>
-                                  _toggleExpensePanel(expense: expense),
+                            _toggleSidePanel(expense: expense),
                               selectedExpense: _selectedExpense,
                             ),
                     ),
@@ -191,7 +191,7 @@ class _TransactionsState extends State<Transactions>
                     right: 382, // Right column width + padding + 16
                     bottom: 16,
                     child: FloatingActionButton(
-                      onPressed: () => _toggleExpensePanel(),
+                      onPressed: () => _toggleSidePanel(),
                       child: Icon(Icons.add),
                     ),
                   ),

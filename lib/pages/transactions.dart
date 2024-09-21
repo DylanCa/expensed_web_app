@@ -48,7 +48,7 @@ class _TransactionsState extends State<Transactions>
   void _toggleSidePanel({Expense? expense, bool isFilterMode = false}) {
     setState(() {
       _showSidePanel = !_showSidePanel;
-      _selectedExpense = _showSidePanel ? expense : null;
+      _selectedExpense = expense;
       _isFilterMode = isFilterMode;
       _sidePanelKey++;
     });
@@ -56,6 +56,10 @@ class _TransactionsState extends State<Transactions>
       _animationController.forward();
     } else {
       _animationController.reverse();
+      if (_selectedExpense != null) {
+        _showSidePanel = true;
+        _animationController.forward();
+      }
     }
   }
 

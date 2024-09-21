@@ -15,15 +15,13 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<ExpenseProvider>(create: (context) {
-          final provider = ExpenseProvider();
-          provider.loadExpenses(); // Ensure this line is present
-          return provider;
-        }),
-        ChangeNotifierProvider<GoalProvider>(create: (context) {
-          final provider = GoalProvider();
-          return provider;
-        }),
+        ChangeNotifierProvider<GoalProvider>(
+            create: (context) => GoalProvider()),
+        ChangeNotifierProxyProvider<GoalProvider, ExpenseProvider>(
+          create: (context) => ExpenseProvider(context.read<GoalProvider>()),
+          update: (context, goalProvider, previous) =>
+              previous ?? ExpenseProvider(goalProvider),
+        ),
       ],
       child: MyApp(),
     ),

@@ -7,12 +7,14 @@ import 'package:expensed_web_app/repositories/expense_repository.dart';
 import 'package:expensed_web_app/data/test_data.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
+import 'package:expensed_web_app/providers/goal_provider.dart';
 
 class ExpenseProvider with ChangeNotifier {
   final ExpenseRepository _repository = ExpenseRepository();
+  final GoalProvider _goalProvider;
   List<Expense> _expenses = [];
-  List<app_category.Category> _categories = [];
   List<Person> _persons = [];
+  List<app_category.Category> _categories = [];
   bool _isLoading = false;
   String? _error;
   Set<app_category.Category> _selectedCategories = {};
@@ -22,19 +24,25 @@ class ExpenseProvider with ChangeNotifier {
   String _searchQuery = '';
   List<Alert> _alerts = [];
 
-  List<Expense> get expenses => _expenses;
-  List<Alert> get alerts => _alerts;
-
-  final _searchSubject = BehaviorSubject<String>();
-
-  ExpenseProvider() {
+  ExpenseProvider(this._goalProvider) {
     _searchSubject
         .debounceTime(Duration(milliseconds: 300))
         .listen((query) => setSearchQuery(query));
 
     loadExpenses();
-    loadCategoriesAndPersons();
+    loadPersons();
     _createTestAlerts();
+  }
+
+  List<Expense> get expenses => _expenses;
+  List<Alert> get alerts => _alerts;
+  List<app_category.Category> get categories => _goalProvider.categories;
+
+  final _searchSubject = BehaviorSubject<String>();
+
+  void loadPersons() {
+    _persons = TestData.persons;
+    notifyListeners();
   }
 
   void _createTestAlerts() {
@@ -86,10 +94,9 @@ class ExpenseProvider with ChangeNotifier {
 
     try {
       _expenses = await TestData.getTestExpenses();
-      print("Loaded ${_expenses.length} expenses"); // Add this debug print
+      _goalProvider.updateExpenses(_expenses);
       _isLoading = false;
     } catch (e) {
-      print("Error loading expenses: $e"); // Add this debug print
       _error = "Failed to load expenses: $e";
       _expenses = [];
       _isLoading = false;
@@ -190,6 +197,7 @@ class ExpenseProvider with ChangeNotifier {
         _expenses.insert(insertIndex, expense);
       }
       
+      _goalProvider.updateExpenses(_expenses);
       notifyListeners();
     } catch (e) {
       _error = "Failed to add expense: $e";
@@ -203,6 +211,7 @@ class ExpenseProvider with ChangeNotifier {
       int index = _expenses.indexWhere((e) => e.id == expense.id);
       if (index != -1) {
         _expenses[index] = expense;
+        _goalProvider.updateExpenses(_expenses);
         notifyListeners();
       }
     } catch (e) {
@@ -215,6 +224,7 @@ class ExpenseProvider with ChangeNotifier {
     try {
       await _repository.deleteExpense(id);
       _expenses.removeWhere((e) => e.id == id);
+      _goalProvider.updateExpenses(_expenses);
       notifyListeners();
     } catch (e) {
       _error = "Failed to delete expense: $e";
@@ -240,7 +250,6 @@ class ExpenseProvider with ChangeNotifier {
 
   bool get isLoading => _isLoading;
   String? get error => _error;
-  List<app_category.Category> get categories => _categories;
   List<Person> get persons => _persons;
   Set<app_category.Category> get selectedCategories => _selectedCategories;
   Set<Person> get selectedPersons => _selectedPersons;

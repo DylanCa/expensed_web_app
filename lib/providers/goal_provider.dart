@@ -7,28 +7,37 @@ import 'package:expensed_web_app/data/test_data.dart';
 class GoalProvider with ChangeNotifier {
   Map<String, Goal> _goals = {}; // Using category ID as key
   List<Expense> _expenses = [];
+  List<Category> _categories = [];
 
   GoalProvider() {
     // Initialize with test data
+    _categories = List.from(TestData.categories);
     for (var goal in TestData.goals) {
       _goals[goal.category.id] = goal;
     }
-    // Load test expenses
-    _loadTestExpenses();
   }
 
-  void _loadTestExpenses() async {
-    _expenses = await TestData.getTestExpenses();
+  void updateExpenses(List<Expense> expenses) {
+    _expenses = expenses;
     notifyListeners();
   }
 
   List<Goal> get goals => _goals.values.toList();
+  List<Category> get categories => _categories;
+
+  void addCategory(Category category) {
+    _categories.add(category);
+    notifyListeners();
+  }
 
   void setGoal(Category category, double monthlyBudget) {
     _goals[category.id] = Goal(
       category: category,
       monthlyBudget: monthlyBudget,
     );
+    if (!_categories.contains(category)) {
+      addCategory(category);
+    }
     notifyListeners();
   }
 

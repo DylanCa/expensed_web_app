@@ -4,44 +4,52 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:expensed_web_app/models/category.dart';
 import 'package:expensed_web_app/models/person.dart';
 import 'package:expensed_web_app/models/expense.dart';
+import 'package:expensed_web_app/models/goal.dart';
 
 class TestData {
   static final List<Category> categories = [
     Category(
-        id: '2188e2bf-b126-463e-a41e-b33421870d24',
-        name: 'Groceries',
-        color: Colors.green,
-        icon: Icons.shopping_cart),
+      id: '2188e2bf-b126-463e-a41e-b33421870d24',
+      name: 'Groceries',
+      color: Colors.green,
+      icon: Icons.shopping_cart,
+    ),
     Category(
-        id: '1186e92d-7914-4a0a-9357-cdbb869e6d54',
-        name: 'Dining',
-        color: Colors.red,
-        icon: Icons.restaurant),
+      id: '1186e92d-7914-4a0a-9357-cdbb869e6d54',
+      name: 'Dining',
+      color: Colors.red,
+      icon: Icons.restaurant,
+    ),
     Category(
-        id: 'ba4c46d3-b84e-44ab-a286-055c0de309aa',
-        name: 'Transportation',
-        color: Colors.purple,
-        icon: Icons.directions_car),
+      id: 'ba4c46d3-b84e-44ab-a286-055c0de309aa',
+      name: 'Transportation',
+      color: Colors.purple,
+      icon: Icons.directions_car,
+    ),
     Category(
-        id: 'a002a86b-8efd-4cc1-b331-9a3cf312bed6',
-        name: 'Entertainment',
-        color: Colors.teal,
-        icon: Icons.movie),
+      id: 'a002a86b-8efd-4cc1-b331-9a3cf312bed6',
+      name: 'Entertainment',
+      color: Colors.teal,
+      icon: Icons.movie,
+    ),
     Category(
-        id: 'b9c66dbb-51b1-4964-861b-fa22edeaa7c0',
-        name: 'Health',
-        color: Colors.indigo,
-        icon: Icons.local_hospital),
+      id: 'b9c66dbb-51b1-4964-861b-fa22edeaa7c0',
+      name: 'Health',
+      color: Colors.indigo,
+      icon: Icons.local_hospital,
+    ),
     Category(
-        id: '3ca901e7-0435-42b4-a3a1-99a3a5f55884',
-        name: 'Education',
-        color: Colors.brown,
-        icon: Icons.school),
+      id: '3ca901e7-0435-42b4-a3a1-99a3a5f55884',
+      name: 'Education',
+      color: Colors.brown,
+      icon: Icons.school,
+    ),
     Category(
-        id: 'fb70af88-a1b2-4672-9124-b474de422b87',
-        name: 'Shopping',
-        color: Colors.cyan,
-        icon: Icons.shopping_bag),
+      id: 'fb70af88-a1b2-4672-9124-b474de422b87',
+      name: 'Shopping',
+      color: Colors.cyan,
+      icon: Icons.shopping_bag,
+    ),
   ];
 
   static final List<Person> persons = [
@@ -57,6 +65,37 @@ class TestData {
         id: 'b869c082-c1e9-4cd5-ba6b-5f2d67a0f8be',
         name: 'Charlie',
         color: Colors.pink),
+  ];
+
+  static final List<Goal> goals = [
+    Goal(
+      category: categories[0], // Groceries
+      monthlyBudget: 5000.0,
+    ),
+    Goal(
+      category: categories[1], // Dining
+      monthlyBudget: 3000.0,
+    ),
+    Goal(
+      category: categories[2], // Transportation
+      monthlyBudget: 200.0,
+    ),
+    Goal(
+      category: categories[3], // Entertainment
+      monthlyBudget: 1500.0,
+    ),
+    Goal(
+      category: categories[4], // Health
+      monthlyBudget: 1000.0,
+    ),
+    Goal(
+      category: categories[5], // Education
+      monthlyBudget: 2500.0,
+    ),
+    Goal(
+      category: categories[6], // Shopping
+      monthlyBudget: 4000.0,
+    ),
   ];
 
   static Future<List<Expense>> getTestExpenses() async {

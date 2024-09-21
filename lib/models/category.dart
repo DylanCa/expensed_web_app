@@ -30,4 +30,18 @@ class Category {
       'icon': icon.codePoint,
     };
   }
+
+  Category copyWith({
+    String? id,
+    String? name,
+    Color? color,
+    IconData? icon,
+  }) {
+    return Category(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      color: color ?? this.color,
+      icon: icon ?? this.icon,
+    );
+  }
 }

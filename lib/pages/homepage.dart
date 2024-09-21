@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:expensed_web_app/providers/expense_provider.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
 import 'dashboard.dart';
+import 'goals.dart';
 
 class Homepage extends StatefulWidget {
   final int initialIndex;
@@ -27,7 +28,7 @@ class _HomepageState extends State<Homepage> {
   final List<Widget> _pages = [
     Dashboard(),
     Transactions(),
-    Placeholder(), // Placeholder for Goals page
+    Goals(), // Placeholder for Goals page
     Placeholder(), // Placeholder for Household page
   ];
 

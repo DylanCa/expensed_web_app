@@ -1,3 +1,4 @@
+import 'package:expensed_web_app/providers/goal_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,10 @@ void main() async {
         ChangeNotifierProvider<ExpenseProvider>(create: (context) {
           final provider = ExpenseProvider();
           provider.loadExpenses(); // Ensure this line is present
+          return provider;
+        }),
+        ChangeNotifierProvider<GoalProvider>(create: (context) {
+          final provider = GoalProvider();
           return provider;
         }),
       ],

@@ -9,8 +9,9 @@ import 'goals.dart';
 
 class Homepage extends StatefulWidget {
   final int initialIndex;
+  final String? categoryId;
 
-  Homepage({super.key, this.initialIndex = 0});
+  Homepage({super.key, this.initialIndex = 0, this.categoryId});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -25,29 +26,31 @@ class _HomepageState extends State<Homepage> {
     selectedIndex = widget.initialIndex;
   }
 
-  final List<Widget> _pages = [
-    Dashboard(),
-    Transactions(),
-    Goals(), // Placeholder for Goals page
-    Placeholder(), // Placeholder for Household page
-  ];
-
-  final List<String> _titles = [
-    'Dashboard',
-    'Transactions',
-    'Goals',
-    'Household',
-  ];
-
-  final List<IconData> _icons = [
-    Icons.dashboard,
-    Icons.trending_up,
-    Icons.flag,
-    Icons.home,
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      Dashboard(),
+      Transactions(),
+      Goals(categoryId: widget.categoryId), // Pass categoryId to Goals page
+      Placeholder(), // Placeholder for Household page
+    ];
+
+    final List<String> _titles = [
+      'Dashboard',
+      'Transactions',
+      'Goals',
+      'Household',
+      'Subscriptions',
+    ];
+
+    final List<IconData> _icons = [
+      Icons.dashboard,
+      Icons.trending_up,
+      Icons.flag,
+      Icons.home,
+      Icons.subscriptions,
+    ];
+
     return Consumer<ExpenseProvider>(
       builder: (context, expenseProvider, child) {
         if (expenseProvider.isLoading) {

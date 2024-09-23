@@ -62,10 +62,27 @@ class MyApp extends StatelessWidget {
         ),
       ),
       GoRoute(
+        path: '/goals/:categoryId',
+        pageBuilder: (context, state) {
+          final categoryId = state.pathParameters['categoryId']!;
+          return NoTransitionPage<void>(
+            key: state.pageKey,
+            child: Homepage(initialIndex: 2, categoryId: categoryId),
+          );
+        },
+      ),
+      GoRoute(
         path: '/household',
         pageBuilder: (context, state) => NoTransitionPage<void>(
           key: state.pageKey,
           child: Homepage(initialIndex: 3),
+        ),
+      ),
+      GoRoute(
+        path: '/subscriptions',
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: Homepage(initialIndex: 4),
         ),
       ),
     ],

@@ -8,6 +8,10 @@ import 'package:expensed_web_app/models/goal.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
 
 class Goals extends StatefulWidget {
+  final String? categoryId;
+
+  Goals({super.key, this.categoryId});
+
   @override
   _GoalsState createState() => _GoalsState();
 }
@@ -32,6 +36,17 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
       parent: _animationController,
       curve: Curves.easeOut,
     ));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.categoryId != null) {
+        final goalProvider = Provider.of<GoalProvider>(context, listen: false);
+        final goal = goalProvider.goals
+            .firstWhere((goal) => goal.category.id == widget.categoryId);
+        setState(() {
+          _selectedGoal = goal;
+        });
+      }
+    });
   }
 
   @override
@@ -65,12 +80,12 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: GoalsList(
-                      onGoalSelected: (goal) {
-                        setState(() {
-                          _selectedGoal = goal;
-                        });
-                      },
-                    ),
+                        onGoalSelected: (goal) {
+                          setState(() {
+                            _selectedGoal = goal;
+                          });
+                        },
+                      ),
                     ),
                   ),
                   if (_showAddPanel)

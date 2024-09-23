@@ -3,6 +3,7 @@ import 'package:expensed_web_app/models/goal.dart';
 import 'package:expensed_web_app/providers/goal_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
+import 'package:go_router/go_router.dart';
 
 class GoalsList extends StatelessWidget {
   final Function(Goal) onGoalSelected;
@@ -32,7 +33,10 @@ class GoalsList extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
               child: buildElevatedContainer(
                 child: InkWell(
-                  onTap: () => onGoalSelected(goal),
+                  onTap: () {
+                    onGoalSelected(goal);
+                    context.go('/goals/${goal.category.id}');
+                  },
                   child: Container(
                     height: 70,
                     decoration: BoxDecoration(

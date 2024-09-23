@@ -21,7 +21,7 @@ class MonthlyAverageGraph extends StatelessWidget {
 
     if (monthlyTotals.isEmpty) {
       return SizedBox(
-        height: 200,
+        height: 240, // Increased height to accommodate top padding
         child: Center(child: Text('No data available')),
       );
     }
@@ -46,6 +46,11 @@ class MonthlyAverageGraph extends StatelessWidget {
     sortedEntries.insert(0, extraFirstEntry);
     sortedEntries.add(extraLastEntry);
 
+    // Calculate average monthly expense
+    final averageMonthlyExpense = monthlyTotals.values.isEmpty
+        ? 0.0
+        : monthlyTotals.values.reduce((a, b) => a + b) / monthlyTotals.length;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final graphWidth = constraints.maxWidth * 1.4; // 40% wider
@@ -54,10 +59,13 @@ class MonthlyAverageGraph extends StatelessWidget {
         return OverflowBox(
           maxWidth: graphWidth,
           child: SizedBox(
-            height: 200,
+            height: 240, // Increased height to accommodate top padding
             width: graphWidth,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: overflowAmount),
+              padding: EdgeInsets.only(
+                  top: 50,
+                  left: overflowAmount,
+                  right: overflowAmount), // Added top padding
               child: LineChart(
                 LineChartData(
                   minY: minY,
@@ -146,6 +154,24 @@ class MonthlyAverageGraph extends StatelessWidget {
                           ),
                           labelResolver: (line) =>
                               'Goal: \$${goal.monthlyBudget.toStringAsFixed(2)}',
+                        ),
+                      ),
+                      HorizontalLine(
+                        y: averageMonthlyExpense,
+                        color: Colors.blue.withOpacity(0.3),
+                        strokeWidth: 1,
+                        dashArray: [5, 5],
+                        label: HorizontalLineLabel(
+                          show: true,
+                          alignment: Alignment.topRight,
+                          padding: EdgeInsets.only(right: 5, bottom: 5),
+                          style: TextStyle(
+                            color: Colors.blue.withOpacity(0.5),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
+                          labelResolver: (line) =>
+                              'Avg: \$${averageMonthlyExpense.toStringAsFixed(2)}',
                         ),
                       ),
                     ],

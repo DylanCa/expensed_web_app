@@ -23,32 +23,29 @@ class GoalDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 200, // Fixed height for the graph
-          child: ClipRect(
-            child: MonthlyAverageGraph(expenses: expenses, goal: goal),
-          ),
+          height: 240, // Updated to match the new graph height
+          child: MonthlyAverageGraph(expenses: expenses, goal: goal),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(goal.category.name,
+                        style: Theme.of(context).textTheme.headlineSmall),
+                    SizedBox(height: 16),
+                    _buildSummaryCard(context, currentSpent),
+                    SizedBox(height: 16),
+                    _buildTransactionsCard(context, expenses),
+                  ],
                 ),
-              ),
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(goal.category.name,
-                      style: Theme.of(context).textTheme.headlineSmall),
-                  SizedBox(height: 16),
-                  _buildSummaryCard(context, currentSpent),
-                  SizedBox(height: 16),
-                  _buildTransactionsCard(context, expenses),
-                ],
               ),
             ),
           ),

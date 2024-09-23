@@ -62,12 +62,15 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
               child: Stack(
                 children: [
                   buildElevatedContainer(
-                    child: GoalsList(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: GoalsList(
                       onGoalSelected: (goal) {
                         setState(() {
                           _selectedGoal = goal;
                         });
                       },
+                    ),
                     ),
                   ),
                   if (_showAddPanel)
@@ -93,12 +96,19 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
             ),
             SizedBox(width: 16),
             Expanded(
-              child: SizedBox(
-                width: 600, // Fixed width for the goal details
-                child: buildElevatedContainer(
-                  child: _selectedGoal != null
-                      ? GoalDetails(goal: _selectedGoal!)
-                      : Center(child: Text('Select a goal to view details')),
+              child: Container(
+                color:
+                    Colors.transparent, // Set background color to transparent
+                child: SizedBox(
+                  width: 600, // Fixed width for the goal details
+                  child: buildElevatedContainer(
+                    backgroundColor: _selectedGoal != null
+                        ? Colors.transparent
+                        : Colors.white,
+                    child: _selectedGoal != null
+                        ? GoalDetails(goal: _selectedGoal!)
+                        : Center(child: Text('Select a goal to view details')),
+                  ),
                 ),
               ),
             ),

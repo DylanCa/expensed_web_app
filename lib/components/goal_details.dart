@@ -22,8 +22,10 @@ class GoalDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        Container(
           height: 240, // Updated to match the new graph height
+          color:
+              Colors.white.withOpacity(0.6), // Slightly transparent background
           child: MonthlyAverageGraph(expenses: expenses, goal: goal),
         ),
         Expanded(

@@ -58,21 +58,21 @@ class GoalDetails extends StatelessWidget {
                     Text(goal.category.name,
                         style: Theme.of(context).textTheme.headlineSmall),
                     SizedBox(height: 16),
-                    IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: _buildSummaryCard(
-                                context, currentSpent, expenses),
-                          ),
-                          SizedBox(width: 16),
-                          Expanded(
-                            child: _buildExpensesPerPersonCard(
-                                context, expenses, goalProvider),
-                          ),
-                        ],
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: _buildSummaryCard(
+                              context, currentSpent, expenses),
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          flex: 1,
+                          child: _buildTotalAmountPerPersonBarChart(
+                              context, expenses),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 16),
                     _buildTransactionsCard(context, expenses),
@@ -114,7 +114,7 @@ class GoalDetails extends StatelessWidget {
                 Container(
                   height: 8,
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -138,70 +138,45 @@ class GoalDetails extends StatelessWidget {
             Text(
                 'Average: \$${expenses.isNotEmpty ? (currentSpent / expenses.length).toStringAsFixed(2) : "0.00"} per entry',
                 style: Theme.of(context).textTheme.bodyMedium),
-            SizedBox(height: 16),
-            _buildTotalAmountPerPersonDonut(context, expenses),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTotalAmountPerPersonDonut(
+  Widget _buildTotalAmountPerPersonBarChart(
       BuildContext context, List<Expense> expenses) {
-    Map<Person, double> totalPerPerson = {};
+    final goalProvider = Provider.of<GoalProvider>(context, listen: false);
+    Map<Person, List<double>> dataPerPerson = {};
+    
     for (var expense in expenses) {
-      totalPerPerson[expense.paidBy] =
-          (totalPerPerson[expense.paidBy] ?? 0) + expense.amount;
-    }
-
-    List<PieChartSectionData> sections = totalPerPerson.entries.map((entry) {
-      return PieChartSectionData(
-        color: entry.key.color,
-        value: entry.value,
-        title: '${entry.key.name}\n\$${entry.value.toStringAsFixed(0)}',
-        radius: 50,
-        titleStyle: TextStyle(
-            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
-      );
-    }).toList();
-
-    return SizedBox(
-      height: 200,
-      child: PieChart(
-        PieChartData(
-          sections: sections,
-          centerSpaceRadius: 30,
-          sectionsSpace: 2,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildExpensesPerPersonCard(
-      BuildContext context, List<Expense> expenses, GoalProvider goalProvider) {
-    Map<Person, List<double>> expensesPerPerson = {};
-    double totalCurrentExpenses = 0;
-
-    for (var expense in expenses) {
-      expensesPerPerson.putIfAbsent(expense.paidBy, () => [0.0, 0.0]);
-      expensesPerPerson[expense.paidBy]![0] += expense.amount;
-      totalCurrentExpenses += expense.amount;
+      if (!dataPerPerson.containsKey(expense.paidBy)) {
+        dataPerPerson[expense.paidBy] = [0.0, 0.0];
+      }
+      dataPerPerson[expense.paidBy]![0] += expense.amount;
     }
 
     // Calculate average for each person
-    for (var person in expensesPerPerson.keys) {
+    for (var person in dataPerPerson.keys) {
       double averageExpense =
           goalProvider.getAverageExpenseForPersonAndCategory(
         person.id,
         goal.category.id,
         selectedMonth,
       );
-      expensesPerPerson[person]![1] = averageExpense;
+      dataPerPerson[person]![1] = averageExpense;
     }
 
-    // Sort persons by current month expenses (descending)
-    var sortedPersons = expensesPerPerson.entries.toList()
-      ..sort((a, b) => b.value[0].compareTo(a.value[0]));
+    // Sort entries by person name
+    List<MapEntry<Person, List<double>>> sortedEntries = dataPerPerson.entries
+        .toList()
+      ..sort((a, b) => a.key.name.compareTo(b.key.name));
+
+    double maxAmount = sortedEntries.isNotEmpty
+        ? sortedEntries
+            .map((e) => e.value.reduce((a, b) => a > b ? a : b))
+            .reduce((a, b) => a > b ? a : b)
+        : 0;
 
     return buildElevatedContainer(
       child: Padding(
@@ -209,87 +184,117 @@ class GoalDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Total vs their Average per Person',
+            Text('Spending by Person',
                 style: Theme.of(context).textTheme.titleLarge),
             SizedBox(height: 16),
-            ...sortedPersons.map((entry) => _buildPersonProgressBar(
-                context,
-                entry.key,
-                entry.value[0],
-                entry.value[1],
-                totalCurrentExpenses)),
+            Container(
+              height: 200, // Fixed height for the chart
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  maxY: maxAmount,
+                  barTouchData: BarTouchData(
+                    touchTooltipData: BarTouchTooltipData(
+                      tooltipBgColor: Colors.blueGrey,
+                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                        String label = rodIndex == 0 ? 'Current' : 'Average';
+                        return BarTooltipItem(
+                          '${sortedEntries[groupIndex].key.name} ($label): \$${rod.toY.toStringAsFixed(2)}',
+                          TextStyle(color: Colors.white),
+                        );
+                      },
+                    ),
+                  ),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          if (value.toInt() >= 0 &&
+                              value.toInt() < sortedEntries.length) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                sortedEntries[value.toInt()].key.name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                            );
+                          }
+                          return Text('');
+                        },
+                        reservedSize: 40,
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                        getTitlesWidget: (value, meta) {
+                          return Text('\$${value.toInt()}',
+                              style: TextStyle(fontSize: 10));
+                        },
+                      ),
+                    ),
+                    topTitles:
+                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles:
+                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  ),
+                  borderData: FlBorderData(show: false),
+                  barGroups: List.generate(sortedEntries.length, (index) {
+                    return BarChartGroupData(
+                      x: index,
+                      barRods: [
+                        BarChartRodData(
+                          toY: sortedEntries[index].value[0],
+                          color: sortedEntries[index].key.color,
+                          width: 16,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        BarChartRodData(
+                          toY: sortedEntries[index].value[1],
+                          color:
+                              sortedEntries[index].key.color.withOpacity(0.5),
+                          width: 16,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildLegendItem(
+                    Theme.of(context).primaryColor, 'Current Month'),
+                SizedBox(width: 16),
+                _buildLegendItem(
+                    Theme.of(context).primaryColor.withOpacity(0.5), 'Average'),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPersonProgressBar(BuildContext context, Person person,
-      double currentTotal, double average, double totalCurrentExpenses) {
-    final ratio = average > 0 ? currentTotal / average : 0.0;
-    final percentage = (ratio * 100).toStringAsFixed(1);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 12,
-                backgroundColor: person.color.withOpacity(0.2),
-                child: Text(person.name[0],
-                    style: TextStyle(color: person.color, fontSize: 10)),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: Text(person.name,
-                    style: Theme.of(context).textTheme.bodyMedium),
-              ),
-              Text('$percentage%',
-                  style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          SizedBox(height: 4),
-          Tooltip(
-            message:
-                'Current: \$${currentTotal.toStringAsFixed(2)}\nAverage: \$${average.toStringAsFixed(2)}',
-            child: Stack(
-              children: [
-                Container(
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                FractionallySizedBox(
-                  widthFactor: ratio.clamp(0.0, 1.0),
-                  child: Container(
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: _getProgressColor(ratio),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+  Widget _buildLegendItem(Color color, String label) {
+    return Row(
+      children: [
+        Container(
+          width: 16,
+          height: 16,
+          color: color,
+        ),
+        SizedBox(width: 4),
+        Text(label),
+      ],
     );
-  }
-
-  Color _getProgressColor(double ratio) {
-    if (ratio <= 0.5) {
-      return Colors.green.withOpacity(0.5);
-    } else if (ratio <= 1.0) {
-      return Colors.orange.withOpacity(0.5);
-    } else {
-      return Colors.red.withOpacity(0.5);
-    }
   }
 
   Widget _buildTransactionsCard(BuildContext context, List<Expense> expenses) {

@@ -88,6 +88,12 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
     });
   }
 
+  void _onMonthSelected(DateTime month) {
+    setState(() {
+      _selectedMonth = month;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GoalProvider>(
@@ -178,7 +184,9 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
                         : Colors.white,
                     child: _selectedGoal != null
                         ? GoalDetails(
-                            goal: _selectedGoal!, selectedMonth: _selectedMonth)
+                            goal: _selectedGoal!,
+                            selectedMonth: _selectedMonth,
+                            onMonthSelected: _onMonthSelected)
                         : Center(child: Text('Select a goal to view details')),
                   ),
                 ),

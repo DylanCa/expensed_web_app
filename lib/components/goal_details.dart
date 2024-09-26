@@ -13,9 +13,14 @@ import 'package:fl_chart/fl_chart.dart';
 class GoalDetails extends StatelessWidget {
   final Goal goal;
   final DateTime selectedMonth;
+  final Function(DateTime) onMonthSelected;
 
-  const GoalDetails({Key? key, required this.goal, required this.selectedMonth})
-      : super(key: key);
+  const GoalDetails({
+    Key? key,
+    required this.goal,
+    required this.selectedMonth,
+    required this.onMonthSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +37,11 @@ class GoalDetails extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.3,
           color: Colors.white.withOpacity(0.6),
           child: MonthlyAverageGraph(
-              expenses: goalProvider.getExpensesForCategory(goal.category.id),
-              goal: goal),
+            expenses: goalProvider.getExpensesForCategory(goal.category.id),
+            goal: goal,
+            onMonthSelected: onMonthSelected,
+            selectedMonth: selectedMonth,
+          ),
         ),
         Expanded(
           child: Container(

@@ -7,11 +7,15 @@ import 'package:intl/intl.dart';
 class MonthlyAverageGraph extends StatelessWidget {
   final List<Expense> expenses;
   final Goal goal;
+  final Function(DateTime) onMonthSelected;
+  final DateTime selectedMonth;
 
   const MonthlyAverageGraph({
     Key? key,
     required this.expenses,
     required this.goal,
+    required this.onMonthSelected,
+    required this.selectedMonth,
   }) : super(key: key);
 
   @override
@@ -84,11 +88,15 @@ class MonthlyAverageGraph extends StatelessWidget {
                       dotData: FlDotData(
                         show: true,
                         getDotPainter: (spot, percent, barData, index) {
-                          final isCurrentMonth =
-                              index == sortedEntries.length - 2;
+                          final isSelectedMonth = index >= 1 &&
+                              index < sortedEntries.length - 1 &&
+                              sortedEntries[index].key.year ==
+                                  selectedMonth.year &&
+                              sortedEntries[index].key.month ==
+                                  selectedMonth.month;
                           return FlDotCirclePainter(
                             radius: 6,
-                            color: isCurrentMonth
+                            color: isSelectedMonth
                                 ? Colors.green
                                 : theme.primaryColor,
                             strokeWidth: 2,
@@ -133,6 +141,18 @@ class MonthlyAverageGraph extends StatelessWidget {
                             .toList();
                       },
                     ),
+                    touchCallback:
+                        (FlTouchEvent event, LineTouchResponse? touchResponse) {
+                      if (event is FlTapUpEvent &&
+                          touchResponse?.lineBarSpots != null &&
+                          touchResponse!.lineBarSpots!.isNotEmpty) {
+                        final index = touchResponse.lineBarSpots![0].x.toInt();
+                        if (index >= 1 && index < sortedEntries.length - 1) {
+                          final selectedMonth = sortedEntries[index].key;
+                          onMonthSelected(selectedMonth);
+                        }
+                      }
+                    },
                   ),
                   extraLinesData: ExtraLinesData(
                     horizontalLines: [

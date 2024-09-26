@@ -42,13 +42,6 @@ class _AddGoalPanelState extends State<AddGoalPanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppBar(
-              title: Text('Add New Goal'),
-              leading: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: widget.onClose,
-              ),
-            ),
             Expanded(
               child: ListView(
                 padding: EdgeInsets.all(16),
@@ -85,9 +78,11 @@ class _AddGoalPanelState extends State<AddGoalPanel> {
             ),
             Padding(
               padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: _submitForm,
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: _submitForm,
                 child: Text('Add Goal'),
+                ),
               ),
             ),
           ],

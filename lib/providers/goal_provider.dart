@@ -122,5 +122,14 @@ class GoalProvider with ChangeNotifier {
     return totalAmount / monthsDifference;
   }
 
+  DateTime getOldestMonthWithData() {
+    if (_expenses.isEmpty) {
+      return DateTime.now();
+    }
+    return _expenses
+        .map((e) => DateTime(e.dateTime.year, e.dateTime.month, 1))
+        .reduce((a, b) => a.isBefore(b) ? a : b);
+  }
+
   // Add more methods as needed
 }

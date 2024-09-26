@@ -22,7 +22,8 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
   bool _showAddPanel = false;
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
-  DateTime _selectedMonth = DateTime.now();
+  late DateTime _selectedMonth;
+  late DateTime _oldestMonth;
 
   @override
   void initState() {
@@ -39,16 +40,16 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
       curve: Curves.easeOut,
     ));
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.categoryId != null) {
-        final goalProvider = Provider.of<GoalProvider>(context, listen: false);
-        final goal = goalProvider.goals
-            .firstWhere((goal) => goal.category.id == widget.categoryId);
-        setState(() {
-          _selectedGoal = goal;
-        });
-      }
-    });
+    // Initialize _oldestMonth and _selectedMonth
+    final goalProvider = Provider.of<GoalProvider>(context, listen: false);
+    _oldestMonth = goalProvider.getOldestMonthWithData();
+    _selectedMonth = DateTime.now();
+
+    if (widget.categoryId != null) {
+      final goal = goalProvider.goals
+          .firstWhere((goal) => goal.category.id == widget.categoryId);
+      _selectedGoal = goal;
+    }
   }
 
   @override
@@ -69,17 +70,22 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
   }
 
   void _selectPreviousMonth() {
-    setState(() {
-      _selectedMonth =
-          DateTime(_selectedMonth.year, _selectedMonth.month - 1, 1);
-    });
+    final previousMonth =
+        DateTime(_selectedMonth.year, _selectedMonth.month - 1, 1);
+    if (previousMonth.isAfter(_oldestMonth) ||
+        previousMonth.isAtSameMomentAs(_oldestMonth)) {
+      setState(() {
+        _selectedMonth = previousMonth;
+      });
+    }
   }
 
   void _selectNextMonth() {
     final nextMonth =
         DateTime(_selectedMonth.year, _selectedMonth.month + 1, 1);
-    if (nextMonth.isBefore(DateTime.now()) ||
-        nextMonth.month == DateTime.now().month) {
+    final currentMonth = DateTime(DateTime.now().year, DateTime.now().month);
+    if (nextMonth.isBefore(currentMonth) ||
+        nextMonth.isAtSameMomentAs(currentMonth)) {
       setState(() {
         _selectedMonth = nextMonth;
       });
@@ -106,103 +112,89 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
             DateTime(DateTime.now().year, DateTime.now().month);
         final isCurrentMonth = _selectedMonth.year == currentMonth.year &&
             _selectedMonth.month == currentMonth.month;
+        final isOldestMonth = _selectedMonth.year == _oldestMonth.year &&
+            _selectedMonth.month == _oldestMonth.month;
 
         return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 400,
-              child: Stack(
-                children: [
-                  buildElevatedContainer(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: Column(
+              child: buildElevatedContainer(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.arrow_back_ios),
-                                  onPressed: _selectPreviousMonth,
-                                ),
-                                GestureDetector(
-                                  onTap: _resetToCurrentMonth,
-                                  child: Text(
-                                    DateFormat('MMMM yyyy')
-                                        .format(_selectedMonth),
-                                    style:
-                                        Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.arrow_forward_ios),
-                                  onPressed:
-                                      isCurrentMonth ? null : _selectNextMonth,
-                                  color: isCurrentMonth ? Colors.grey : null,
-                                ),
-                              ],
+                          IconButton(
+                            icon: Icon(Icons.arrow_back_ios),
+                            onPressed:
+                                isOldestMonth ? null : _selectPreviousMonth,
+                            color: isOldestMonth ? Colors.grey : null,
+                          ),
+                          GestureDetector(
+                            onTap: _resetToCurrentMonth,
+                            child: Text(
+                              DateFormat('MMMM yyyy').format(_selectedMonth),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
-                          SizedBox(height: 16),
-                          Expanded(
-                            child: GoalsList(
-                              onGoalSelected: (goal) {
-                                setState(() {
-                                  _selectedGoal = goal;
-                                });
-                              },
-                              selectedMonth: _selectedMonth,
-                            ),
+                          IconButton(
+                            icon: Icon(Icons.arrow_forward_ios),
+                            onPressed: isCurrentMonth ? null : _selectNextMonth,
+                            color: isCurrentMonth ? Colors.grey : null,
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  if (_showAddPanel)
-                    SlideTransition(
-                      position: _slideAnimation,
-                      child: AddGoalPanel(
-                        onClose: _toggleAddPanel,
+                    Expanded(
+                      child: GoalsList(
+                        onGoalSelected: (goal) {
+                          setState(() {
+                            _selectedGoal = goal;
+                          });
+                        },
+                        selectedMonth: _selectedMonth,
                       ),
                     ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 16,
-                    child: Center(
-                      child: FloatingActionButton(
-                        onPressed: _toggleAddPanel,
-                        child: Icon(_showAddPanel ? Icons.close : Icons.add),
-                      ),
+                    SizedBox(height: 16),
+                    FloatingActionButton(
+                      onPressed: _toggleAddPanel,
+                      child: Icon(_showAddPanel ? Icons.close : Icons.add),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 16),
+                  ],
+                ),
               ),
             ),
             SizedBox(width: 16),
             Expanded(
-              child: Container(
-                color:
-                    Colors.transparent, // Set background color to transparent
+              child: buildElevatedContainer(
+                backgroundColor:
+                    _selectedGoal != null ? Colors.transparent : Colors.white,
+                child: _selectedGoal != null
+                    ? GoalDetails(
+                        goal: _selectedGoal!,
+                        selectedMonth: _selectedMonth,
+                        onMonthSelected: _onMonthSelected)
+                    : Center(child: Text('Select a goal to view details')),
+              ),
+            ),
+            if (_showAddPanel)
+              SlideTransition(
+                position: _slideAnimation,
                 child: SizedBox(
-                  width: 600, // Fixed width for the goal details
+                  width: 400,
                   child: buildElevatedContainer(
-                    backgroundColor: _selectedGoal != null
-                        ? Colors.transparent
-                        : Colors.white,
-                    child: _selectedGoal != null
-                        ? GoalDetails(
-                            goal: _selectedGoal!,
-                            selectedMonth: _selectedMonth,
-                            onMonthSelected: _onMonthSelected)
-                        : Center(child: Text('Select a goal to view details')),
+                    child: AddGoalPanel(
+                      onClose: _toggleAddPanel,
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         );
       },

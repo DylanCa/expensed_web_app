@@ -8,17 +8,22 @@ import 'package:intl/intl.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
 import 'package:expensed_web_app/models/expense.dart';
 import 'package:expensed_web_app/models/person.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class GoalDetails extends StatelessWidget {
   final Goal goal;
+  final DateTime selectedMonth;
 
-  const GoalDetails({Key? key, required this.goal}) : super(key: key);
+  const GoalDetails({Key? key, required this.goal, required this.selectedMonth})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final goalProvider = Provider.of<GoalProvider>(context);
-    final currentSpent = goalProvider.getGoalSpending(goal.category.id);
-    final expenses = goalProvider.getExpensesForCategory(goal.category.id);
+    final currentSpent =
+        goalProvider.getGoalSpendingForMonth(goal.category.id, selectedMonth);
+    final expenses = goalProvider.getExpensesForCategoryAndMonth(
+        goal.category.id, selectedMonth);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +31,9 @@ class GoalDetails extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).size.height * 0.3,
           color: Colors.white.withOpacity(0.6),
-          child: MonthlyAverageGraph(expenses: expenses, goal: goal),
+          child: MonthlyAverageGraph(
+              expenses: goalProvider.getExpensesForCategory(goal.category.id),
+              goal: goal),
         ),
         Expanded(
           child: Container(
@@ -48,12 +55,13 @@ class GoalDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
-                            child: _buildSummaryCard(context, currentSpent),
+                            child: _buildSummaryCard(
+                                context, currentSpent, expenses),
                           ),
                           SizedBox(width: 16),
                           Expanded(
-                            child:
-                                _buildExpensesPerPersonCard(context, expenses),
+                            child: _buildExpensesPerPersonCard(
+                                context, expenses, goalProvider),
                           ),
                         ],
                       ),
@@ -70,9 +78,9 @@ class GoalDetails extends StatelessWidget {
     );
   }
 
-Widget _buildSummaryCard(BuildContext context, double currentSpent) {
+  Widget _buildSummaryCard(
+      BuildContext context, double currentSpent, List<Expense> expenses) {
     final progress = (currentSpent / goal.monthlyBudget).clamp(0.0, 1.0);
-    final remainingBudget = goal.monthlyBudget - currentSpent;
     final isOverBudget = currentSpent > goal.monthlyBudget;
 
     return buildElevatedContainer(
@@ -117,82 +125,71 @@ Widget _buildSummaryCard(BuildContext context, double currentSpent) {
               ],
             ),
             SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildSummaryItem(
-                  'Remaining',
-                  '\$${remainingBudget.abs().toStringAsFixed(2)}',
-                  isOverBudget ? Colors.red : Colors.green,
-                ),
-                _buildSummaryItem(
-                  'Days left',
-                  '${_getRemainingDays()}',
-                  Colors.blue,
-              ),
-              ],
-            ),
+            Text('${expenses.length} entries this month',
+                style: Theme.of(context).textTheme.bodyMedium),
+            Text(
+                'Average: \$${expenses.isNotEmpty ? (currentSpent / expenses.length).toStringAsFixed(2) : "0.00"} per entry',
+                style: Theme.of(context).textTheme.bodyMedium),
+            SizedBox(height: 16),
+            _buildTotalAmountPerPersonDonut(context, expenses),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSummaryItem(String label, String value, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-        Text(value,
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: color)),
-      ],
-    );
-  }
+  Widget _buildTotalAmountPerPersonDonut(
+      BuildContext context, List<Expense> expenses) {
+    Map<Person, double> totalPerPerson = {};
+    for (var expense in expenses) {
+      totalPerPerson[expense.paidBy] =
+          (totalPerPerson[expense.paidBy] ?? 0) + expense.amount;
+    }
 
-  Widget _buildTransactionsCard(BuildContext context, List<Expense> expenses) {
-    return buildElevatedContainer(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Current Month Transactions',
-                style: Theme.of(context).textTheme.titleLarge),
-            SizedBox(height: 16),
-            CurrentMonthTransactions(expenses: expenses),
-          ],
+    List<PieChartSectionData> sections = totalPerPerson.entries.map((entry) {
+      return PieChartSectionData(
+        color: entry.key.color,
+        value: entry.value,
+        title: '${entry.key.name}\n\$${entry.value.toStringAsFixed(0)}',
+        radius: 50,
+        titleStyle: TextStyle(
+            fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+      );
+    }).toList();
+
+    return SizedBox(
+      height: 200,
+      child: PieChart(
+        PieChartData(
+          sections: sections,
+          centerSpaceRadius: 30,
+          sectionsSpace: 2,
         ),
       ),
     );
   }
 
   Widget _buildExpensesPerPersonCard(
-      BuildContext context, List<Expense> expenses) {
+      BuildContext context, List<Expense> expenses, GoalProvider goalProvider) {
     Map<Person, List<double>> expensesPerPerson = {};
     double totalCurrentExpenses = 0;
-    double totalAverageExpenses = 0;
 
     for (var expense in expenses) {
       expensesPerPerson.putIfAbsent(expense.paidBy, () => [0.0, 0.0]);
-
-      // Current month total
-      if (expense.dateTime.month == DateTime.now().month &&
-          expense.dateTime.year == DateTime.now().year) {
-        expensesPerPerson[expense.paidBy]![0] += expense.amount;
-        totalCurrentExpenses += expense.amount;
-      }
-
-      // Add to total for average calculation
-      expensesPerPerson[expense.paidBy]![1] += expense.amount;
+      expensesPerPerson[expense.paidBy]![0] += expense.amount;
+      totalCurrentExpenses += expense.amount;
     }
 
-    // Calculate average
-    int monthsSinceFirstExpense = _getMonthsSinceFirstExpense(expenses);
-    expensesPerPerson.forEach((person, amounts) {
-      amounts[1] = amounts[1] / monthsSinceFirstExpense;
-      totalAverageExpenses += amounts[1];
-    });
+    // Calculate average for each person
+    for (var person in expensesPerPerson.keys) {
+      double averageExpense =
+          goalProvider.getAverageExpenseForPersonAndCategory(
+        person.id,
+        goal.category.id,
+        selectedMonth,
+      );
+      expensesPerPerson[person]![1] = averageExpense;
+    }
 
     // Sort persons by current month expenses (descending)
     var sortedPersons = expensesPerPerson.entries.toList()
@@ -204,7 +201,7 @@ Widget _buildSummaryCard(BuildContext context, double currentSpent) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Current vs Average per Person',
+            Text('Total vs their Average per Person',
                 style: Theme.of(context).textTheme.titleLarge),
             SizedBox(height: 16),
             ...sortedPersons.map((entry) => _buildPersonProgressBar(
@@ -287,22 +284,48 @@ Widget _buildSummaryCard(BuildContext context, double currentSpent) {
     }
   }
 
-  int _getRemainingDays() {
-    final now = DateTime.now();
-    final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
-    return lastDayOfMonth.difference(now).inDays + 1;
-  }
-
-  int _getMonthsSinceFirstExpense(List<Expense> expenses) {
-    if (expenses.isEmpty) return 1;
-
-    final firstExpenseDate =
-        expenses.map((e) => e.dateTime).reduce((a, b) => a.isBefore(b) ? a : b);
-    final now = DateTime.now();
-
-    return (now.year - firstExpenseDate.year) * 12 +
-        now.month -
-        firstExpenseDate.month +
-        1;
+  Widget _buildTransactionsCard(BuildContext context, List<Expense> expenses) {
+    return buildElevatedContainer(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                'Transactions for ${DateFormat('MMMM yyyy').format(selectedMonth)}',
+                style: Theme.of(context).textTheme.titleLarge),
+            SizedBox(height: 16),
+            expenses.isEmpty
+                ? Center(child: Text('No transactions for this month'))
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: expenses.length,
+                    itemBuilder: (context, index) {
+                      final expense = expenses[index];
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor:
+                              expense.category.color.withOpacity(0.2),
+                          child: Icon(expense.category.icon,
+                              color: expense.category.color),
+                        ),
+                        title: Text(expense.shopName),
+                        subtitle: Text(
+                            DateFormat('MMM d, y').format(expense.dateTime)),
+                        trailing: Text(
+                          '\$${expense.amount.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+          ],
+        ),
+      ),
+    );
   }
 }

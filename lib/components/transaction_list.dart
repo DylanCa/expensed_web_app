@@ -61,6 +61,20 @@ class _TransactionListState extends State<TransactionList> {
     super.dispose();
   }
 
+  void _setCurrentMonthFilter() {
+    final now = DateTime.now();
+    final startOfMonth = DateTime(now.year, now.month, 1);
+    final endOfMonth = DateTime(now.year, now.month + 1, 0);
+    widget.expenseProvider.setDateRange(startOfMonth, endOfMonth);
+  }
+
+  void _setCurrentWeekFilter() {
+    final now = DateTime.now();
+    final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    final endOfWeek = startOfWeek.add(Duration(days: 6));
+    widget.expenseProvider.setDateRange(startOfWeek, endOfWeek);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -151,6 +165,20 @@ class _TransactionListState extends State<TransactionList> {
                 .textTheme
                 .bodyMedium
                 ?.copyWith(color: Colors.grey[600]),
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: _setCurrentMonthFilter,
+                child: Text('Current Month'),
+              ),
+              SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: _setCurrentWeekFilter,
+                child: Text('Current Week'),
+              ),
+            ],
           ),
         ],
       ),

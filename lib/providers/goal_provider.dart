@@ -43,27 +43,37 @@ class GoalProvider with ChangeNotifier {
 
   double getGoalSpending(String categoryId) {
     final now = DateTime.now();
-    final startOfMonth = DateTime(now.year, now.month, 1);
-    final endOfMonth = DateTime(now.year, now.month + 1, 0);
+    return getGoalSpendingForMonth(categoryId, now);
+  }
+
+  double getGoalSpendingForMonth(String categoryId, DateTime month) {
+    final startOfMonth = DateTime(month.year, month.month, 1);
+    final endOfMonth = DateTime(month.year, month.month + 1, 0);
 
     return _expenses
         .where((expense) =>
             expense.category.id == categoryId &&
-            expense.dateTime.isAfter(startOfMonth) &&
-            expense.dateTime.isBefore(endOfMonth))
+            expense.dateTime
+                .isAfter(startOfMonth.subtract(Duration(days: 1))) &&
+            expense.dateTime.isBefore(endOfMonth.add(Duration(days: 1))))
         .fold(0.0, (sum, expense) => sum + expense.amount);
   }
 
   int getMonthlyEntryCount(String categoryId) {
     final now = DateTime.now();
-    final startOfMonth = DateTime(now.year, now.month, 1);
-    final endOfMonth = DateTime(now.year, now.month + 1, 0);
+    return getMonthlyEntryCountForMonth(categoryId, now);
+  }
+
+  int getMonthlyEntryCountForMonth(String categoryId, DateTime month) {
+    final startOfMonth = DateTime(month.year, month.month, 1);
+    final endOfMonth = DateTime(month.year, month.month + 1, 0);
 
     return _expenses
         .where((expense) =>
             expense.category.id == categoryId &&
-            expense.dateTime.isAfter(startOfMonth) &&
-            expense.dateTime.isBefore(endOfMonth))
+            expense.dateTime
+                .isAfter(startOfMonth.subtract(Duration(days: 1))) &&
+            expense.dateTime.isBefore(endOfMonth.add(Duration(days: 1))))
         .length;
   }
 
@@ -75,6 +85,41 @@ class GoalProvider with ChangeNotifier {
     return _expenses
         .where((expense) => expense.category.id == categoryId)
         .toList();
+  }
+
+  List<Expense> getExpensesForCategoryAndMonth(
+      String categoryId, DateTime month) {
+    final startOfMonth = DateTime(month.year, month.month, 1);
+    final endOfMonth = DateTime(month.year, month.month + 1, 0);
+
+    return _expenses
+        .where((expense) =>
+            expense.category.id == categoryId &&
+            expense.dateTime.isAfter(startOfMonth) &&
+            expense.dateTime.isBefore(endOfMonth.add(Duration(days: 1))))
+        .toList();
+  }
+
+  double getAverageExpenseForPersonAndCategory(
+      String personId, String categoryId, DateTime upToMonth) {
+    final relevantExpenses = _expenses.where((expense) =>
+        expense.paidBy.id == personId &&
+        expense.category.id == categoryId &&
+        expense.dateTime.isBefore(upToMonth.add(Duration(days: 1))));
+
+    if (relevantExpenses.isEmpty) return 0.0;
+
+    final totalAmount =
+        relevantExpenses.fold(0.0, (sum, expense) => sum + expense.amount);
+    final firstExpenseDate = relevantExpenses
+        .map((e) => e.dateTime)
+        .reduce((a, b) => a.isBefore(b) ? a : b);
+    final monthsDifference = (upToMonth.year - firstExpenseDate.year) * 12 +
+        upToMonth.month -
+        firstExpenseDate.month +
+        1;
+
+    return totalAmount / monthsDifference;
   }
 
   // Add more methods as needed

@@ -6,6 +6,7 @@ import 'package:expensed_web_app/components/add_goal_panel.dart';
 import 'package:expensed_web_app/providers/goal_provider.dart';
 import 'package:expensed_web_app/models/goal.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
+import 'package:intl/intl.dart';
 
 class Goals extends StatefulWidget {
   final String? categoryId;
@@ -21,6 +22,7 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
   bool _showAddPanel = false;
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
+  DateTime _selectedMonth = DateTime.now();
 
   @override
   void initState() {
@@ -66,6 +68,26 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
     }
   }
 
+  void _selectPreviousMonth() {
+    setState(() {
+      _selectedMonth =
+          DateTime(_selectedMonth.year, _selectedMonth.month - 1, 1);
+    });
+  }
+
+  void _selectNextMonth() {
+    setState(() {
+      _selectedMonth =
+          DateTime(_selectedMonth.year, _selectedMonth.month + 1, 1);
+    });
+  }
+
+  void _resetToCurrentMonth() {
+    setState(() {
+      _selectedMonth = DateTime.now();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GoalProvider>(
@@ -73,18 +95,52 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
         return Row(
           children: [
             SizedBox(
-              width: 400, // Fixed width for the goals list
+              width: 400,
               child: Stack(
                 children: [
                   buildElevatedContainer(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 16.0),
-                      child: GoalsList(
-                        onGoalSelected: (goal) {
-                          setState(() {
-                            _selectedGoal = goal;
-                          });
-                        },
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.arrow_back_ios),
+                                  onPressed: _selectPreviousMonth,
+                                ),
+                                GestureDetector(
+                                  onTap: _resetToCurrentMonth,
+                                  child: Text(
+                                    DateFormat('MMMM yyyy')
+                                        .format(_selectedMonth),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.arrow_forward_ios),
+                                  onPressed: _selectNextMonth,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Expanded(
+                            child: GoalsList(
+                              onGoalSelected: (goal) {
+                                setState(() {
+                                  _selectedGoal = goal;
+                                });
+                              },
+                              selectedMonth: _selectedMonth,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -121,7 +177,8 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
                         ? Colors.transparent
                         : Colors.white,
                     child: _selectedGoal != null
-                        ? GoalDetails(goal: _selectedGoal!)
+                        ? GoalDetails(
+                            goal: _selectedGoal!, selectedMonth: _selectedMonth)
                         : Center(child: Text('Select a goal to view details')),
                   ),
                 ),

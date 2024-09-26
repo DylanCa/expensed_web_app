@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 
 class GoalsList extends StatelessWidget {
   final Function(Goal) onGoalSelected;
+  final DateTime selectedMonth;
 
   const GoalsList({
     Key? key,
     required this.onGoalSelected,
+    required this.selectedMonth,
   }) : super(key: key);
 
   @override
@@ -23,10 +25,11 @@ class GoalsList extends StatelessWidget {
           itemCount: goals.length,
           itemBuilder: (context, index) {
             final goal = goals[index];
-            final currentSpent = goalProvider.getGoalSpending(goal.category.id);
+            final currentSpent = goalProvider.getGoalSpendingForMonth(
+                goal.category.id, selectedMonth);
             final progress = currentSpent / goal.monthlyBudget;
-            final entryCount =
-                goalProvider.getMonthlyEntryCount(goal.category.id);
+            final entryCount = goalProvider.getMonthlyEntryCountForMonth(
+                goal.category.id, selectedMonth);
 
             return Padding(
               padding:

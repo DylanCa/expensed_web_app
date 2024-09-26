@@ -21,7 +21,7 @@ class MonthlyAverageGraph extends StatelessWidget {
 
     if (monthlyTotals.isEmpty) {
       return SizedBox(
-        height: 240, // Increased height to accommodate top padding
+        height: 240,
         child: Center(child: Text('No data available')),
       );
     }
@@ -36,7 +36,6 @@ class MonthlyAverageGraph extends StatelessWidget {
     final sortedEntries = monthlyTotals.entries.toList()
       ..sort((a, b) => a.key.compareTo(b.key));
 
-    // Add extra data points before and after
     final firstEntry = sortedEntries.first;
     final lastEntry = sortedEntries.last;
     final extraFirstEntry =
@@ -46,26 +45,25 @@ class MonthlyAverageGraph extends StatelessWidget {
     sortedEntries.insert(0, extraFirstEntry);
     sortedEntries.add(extraLastEntry);
 
-    // Calculate average monthly expense
     final averageMonthlyExpense = monthlyTotals.values.isEmpty
         ? 0.0
         : monthlyTotals.values.reduce((a, b) => a + b) / monthlyTotals.length;
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final graphWidth = constraints.maxWidth * 1.4; // 40% wider
+        final graphWidth = constraints.maxWidth * 1.4;
         final overflowAmount = (graphWidth - constraints.maxWidth) / 2;
 
         return OverflowBox(
           maxWidth: graphWidth,
           child: SizedBox(
-            height: 240, // Increased height to accommodate top padding
+            height: 240,
             width: graphWidth,
             child: Padding(
               padding: EdgeInsets.only(
                   top: 50,
                   left: overflowAmount,
-                  right: overflowAmount), // Added top padding
+                  right: overflowAmount),
               child: LineChart(
                 LineChartData(
                   minY: minY,
@@ -102,13 +100,13 @@ class MonthlyAverageGraph extends StatelessWidget {
                         show: true,
                         gradient: LinearGradient(
                           colors: [
-                            theme.primaryColor.withOpacity(0.3),
+                            Colors.pink.withOpacity(0.2),
                             theme.primaryColor.withOpacity(0.05),
                           ],
                           begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
+                          end: Alignment.center,
                         ),
-                      ),
+                      ), 
                     ),
                   ],
                   lineTouchData: LineTouchData(

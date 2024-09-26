@@ -76,10 +76,14 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
   }
 
   void _selectNextMonth() {
-    setState(() {
-      _selectedMonth =
-          DateTime(_selectedMonth.year, _selectedMonth.month + 1, 1);
-    });
+    final nextMonth =
+        DateTime(_selectedMonth.year, _selectedMonth.month + 1, 1);
+    if (nextMonth.isBefore(DateTime.now()) ||
+        nextMonth.month == DateTime.now().month) {
+      setState(() {
+        _selectedMonth = nextMonth;
+      });
+    }
   }
 
   void _resetToCurrentMonth() {
@@ -98,6 +102,11 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Consumer<GoalProvider>(
       builder: (context, goalProvider, child) {
+        final currentMonth =
+            DateTime(DateTime.now().year, DateTime.now().month);
+        final isCurrentMonth = _selectedMonth.year == currentMonth.year &&
+            _selectedMonth.month == currentMonth.month;
+
         return Row(
           children: [
             SizedBox(
@@ -130,7 +139,9 @@ class _GoalsState extends State<Goals> with SingleTickerProviderStateMixin {
                                 ),
                                 IconButton(
                                   icon: Icon(Icons.arrow_forward_ios),
-                                  onPressed: _selectNextMonth,
+                                  onPressed:
+                                      isCurrentMonth ? null : _selectNextMonth,
+                                  color: isCurrentMonth ? Colors.grey : null,
                                 ),
                               ],
                             ),

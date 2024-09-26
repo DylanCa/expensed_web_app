@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:expensed_web_app/utils/ui_utils.dart';
 import 'package:go_router/go_router.dart';
 
-class GoalsList extends StatelessWidget {
+class GoalsList extends StatefulWidget {
   final Function(Goal) onGoalSelected;
   final DateTime selectedMonth;
 
@@ -14,6 +14,14 @@ class GoalsList extends StatelessWidget {
     required this.onGoalSelected,
     required this.selectedMonth,
   }) : super(key: key);
+
+  @override
+  _GoalsListState createState() => _GoalsListState();
+}
+
+class _GoalsListState extends State<GoalsList> {
+  Goal? _hoveredGoal;
+  Goal? _selectedGoal;
 
   @override
   Widget build(BuildContext context) {
@@ -26,88 +34,113 @@ class GoalsList extends StatelessWidget {
           itemBuilder: (context, index) {
             final goal = goals[index];
             final currentSpent = goalProvider.getGoalSpendingForMonth(
-                goal.category.id, selectedMonth);
+                goal.category.id, widget.selectedMonth);
             final progress = currentSpent / goal.monthlyBudget;
             final entryCount = goalProvider.getMonthlyEntryCountForMonth(
-                goal.category.id, selectedMonth);
+                goal.category.id, widget.selectedMonth);
+
+            final isHovered = _hoveredGoal == goal;
+            final isSelected = _selectedGoal == goal;
 
             return Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
-              child: buildElevatedContainer(
-                child: InkWell(
-                  onTap: () {
-                    onGoalSelected(goal);
-                    context.go('/goals/${goal.category.id}');
-                  },
-                  child: Container(
-                    height: 70,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          _getProgressColor(progress),
-                          Colors.white,
-                        ],
-                        stops: [
-                          progress.clamp(0.0, 1.0),
-                          progress.clamp(0.0, 1.0)
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
+              child: MouseRegion(
+                onEnter: (_) => setState(() => _hoveredGoal = goal),
+                onExit: (_) => setState(() => _hoveredGoal = null),
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey
+                            .withOpacity(isHovered || isSelected ? 0.5 : 0.1),
+                        spreadRadius: isHovered || isSelected ? 2 : 1,
+                        blurRadius: isHovered || isSelected ? 6 : 3,
+                        offset: Offset(0, isHovered || isSelected ? 3 : 1),
                       ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: goal.category.color.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Icon(
-                              goal.category.icon,
-                              color: goal.category.color,
-                              size: 24,
-                            ),
+                    ],
+                  ),
+                  child: buildElevatedContainer(
+                    child: InkWell(
+                      onTap: () {
+                        setState(() => _selectedGoal = goal);
+                        widget.onGoalSelected(goal);
+                        context.go('/goals/${goal.category.id}');
+                      },
+                      child: Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              _getProgressColor(progress),
+                              Colors.white,
+                            ],
+                            stops: [
+                              progress.clamp(0.0, 1.0),
+                              progress.clamp(0.0, 1.0)
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
-                          SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  goal.category.name,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: goal.category.color.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                Text(
-                                  '$entryCount entries this month',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium
-                                      ?.copyWith(
-                                    color: Colors.grey[600],
-                                  ),
+                                child: Icon(
+                                  goal.category.icon,
+                                  color: goal.category.color,
+                                  size: 24,
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      goal.category.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                    Text(
+                                      '$entryCount entries this month',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium
+                                          ?.copyWith(
+                                            color: Colors.grey[600],
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                '\$${currentSpent.toStringAsFixed(0)} / \$${goal.monthlyBudget.toStringAsFixed(0)}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: _getTextColor(progress),
+                                    ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '\$${currentSpent.toStringAsFixed(0)} / \$${goal.monthlyBudget.toStringAsFixed(0)}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: _getTextColor(progress),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),

@@ -172,7 +172,7 @@ class MyApp extends StatelessWidget {
                         height: appHeight,
                         decoration: BoxDecoration(
                           color: Colors.white.withAlpha(200),
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
@@ -182,7 +182,7 @@ class MyApp extends StatelessWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(8),
                           child: child,
                         ),
                       ),

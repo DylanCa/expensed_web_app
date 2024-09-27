@@ -47,7 +47,7 @@ class GoalDetails extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: BorderRadius.circular(2),
             ),
             child: SingleChildScrollView(
               child: Padding(

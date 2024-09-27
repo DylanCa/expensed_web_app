@@ -49,8 +49,8 @@ class SpendingPerCategory extends StatelessWidget {
               toY: amount,
               width: 32,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4),
-                topRight: Radius.circular(4),
+                topLeft: Radius.circular(2),
+                topRight: Radius.circular(2),
               ),
               color: category.color,
               backDrawRodData: BackgroundBarChartRodData(

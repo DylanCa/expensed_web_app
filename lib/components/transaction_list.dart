@@ -325,7 +325,7 @@ class _RoundedExpenseWidgetState extends State<RoundedExpenseWidget> {
         duration: Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: _isHovered ? Colors.grey[100] : Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
               color: Colors.grey
@@ -338,7 +338,7 @@ class _RoundedExpenseWidgetState extends State<RoundedExpenseWidget> {
         ),
         child: InkWell(
           onTap: widget.onTap,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(

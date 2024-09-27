@@ -52,7 +52,7 @@ class _GoalsListState extends State<GoalsList> {
                   duration: Duration(milliseconds: 200),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(2),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey
@@ -85,7 +85,7 @@ class _GoalsListState extends State<GoalsList> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(2),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -96,7 +96,7 @@ class _GoalsListState extends State<GoalsList> {
                                 height: 40,
                                 decoration: BoxDecoration(
                                   color: goal.category.color.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Icon(
                                   goal.category.icon,

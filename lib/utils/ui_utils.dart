@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget buildElevatedContainer({
   required Widget child,
-  double borderRadius = 20,
+  double borderRadius = 8,
   Color? backgroundColor,
 }) {
   return Container(

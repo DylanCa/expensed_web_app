@@ -1,16 +1,3 @@
-# expensed_web_app
+# Expensed.us - Track your Household expenses, categorize them and get better at saving!
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Web App for project Expensed.us developed using Flutter, aiming at learning Flutter paradigms and Dart language.
